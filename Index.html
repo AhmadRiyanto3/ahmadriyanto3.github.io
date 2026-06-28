@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Profesional | Ahmad Riyanto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            color: #333333;
+            line-height: 1.6;
+        }
+        /* Header Profesional - Gaya Korporat */
+        header {
+            background-color: #1a252f;
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 4px solid #2980b9;
+        }
+        header h1 {
+            color: #ffffff;
+            font-size: 2.2rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        header p {
+            color: #3498db;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 950px;
+            margin: auto;
+            padding: 20px;
+        }
+        /* Card Section Modern */
+        section {
+            margin: 25px 0;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+        p.summary {
+            text-align: justify;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+        /* Grid Keahlian dengan Kontras Lembut */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .skills-category {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #2980b9;
+            border-top: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .skills-category h3 {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .skills-category ul {
+            list-style: none;
+        }
+        .skills-category ul li {
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-bottom: 8px;
+            padding-left: 15px;
+            position: relative;
+        }
+        .skills-category ul li::before {
+            content: "✓";
+            color: #2e7d32;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        /* Desain Garis Waktu Pengalaman Profesional */
+        .timeline-item {
+            border-left: 3px solid #cbd5e1;
+            padding-left: 20px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            background-color: #2980b9;
+            border-radius: 50%;
+            position: absolute;
+            left: -8px;
+            top: 6px;
+        }
+        .time {
+            font-size: 0.85rem;
+            color: #2980b9;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        .job-title {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .company {
+            font-style: italic;
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        .timeline-item ul {
+            padding-left: 15px;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+        .timeline-item li {
+            margin-bottom: 6px;
+            text-align: justify;
+        }
+        /* Tombol Aksi & Informasi Workshop */
+        .workshop-container {
+            text-align: center;
+            padding: 15px 0;
+        }
+        .workshop-description {
+            color: #4a5568;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: #2980b9;
+            color: #ffffff;
+            border: 1px solid #2980b9;
+        }
+        .btn-primary:hover {
+            background-color: #1f6696;
+        }
+        .btn-secondary {
+            background-color: #ffffff;
+            color: #2c3e50;
+            border: 1px solid #cbd5e1;
+        }
+        .btn-secondary:hover {
+            background-color: #f8fafc;
+            border-color: #94a3b8;
+        }
+        footer {
+            text-align: center;
+            padding: 25px;
+            font-size: 0.8rem;
+            color: #718096;
+            background-color: #1a252f;
+            margin-top: 40px;
+            border-top: 1px solid #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AHMAD RIYANTO</h1>
+        <p>Teknisi Operasional & Profesional Hardware/Logistik</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Tentang Saya -->
+        <section id="about">
+            <h2>Tentang Saya</h2>
+            <p class="summary">
+                Seorang praktisi teknis yang disiplin, detail, dan berorientasi pada solusi dengan keahlian mendalam di bidang kustomisasi mekanikal, sistem kelistrikan, serta konfigurasi dan optimasi hardware komputer. Memiliki kemampuan analisis sistem yang kuat serta pemecahan masalah (troubleshooting) secara cepat dan efektif. Berkomitmen tinggi untuk menerapkan standar ketelitian industri, manajemen operasional yang rapi, dan efisiensi kerja baik dalam peran Quality Engineering, Operator Produksi, maupun manajemen pergudangan (Logistik/Picker).
+            </p>
+        </section>
+
+        <!-- Keahlian Utama -->
+        <section id="skills">
+            <h2>Keahlian Utama</h2>
+            <div class="skills-grid">
+                <div class="skills-category">
+                    <h3>Teknis & Hardware</h3>
+                    <ul>
+                        <li>Troubleshooting & Perakitan PC</li>
+                        <li>Optimasi OS & Analisis Bottleneck</li>
+                        <li>Kustomisasi Mekanikal & Otomotif</li>
+                        <li>Konversi Fullwave Kelistrikan</li>
+                    </ul>
+                </div>
+                <div class="skills-category">
+                    <h3>Operasional & Industri</h3>
+                    <ul>
+                        <li>Kendali Mutu (Quality Engineering)</li>
+                        <li>Operator Produksi & Pengemasan</li>
+                        <li>Manajemen Inventaris & Picker Gudang</li>
+                        <li>Pemeliharaan Preventif (Maintenance)</li>
+                    </ul>
+                </div>
+                <div class="skills-category">
+                    <h3>Keahlian Tambahan</h3>
+                    <ul>
+                        <li>Analisis Data & Ketelitian Tinggi</li>
+                        <li>Manajemen Waktu & Kerja Tim</li>
+                        <li>Adaptasi Cepat Dokumentasi Teknis</li>
+                        <li>Pemahaman Bahasa Daerah (Jawa Ngapak)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pengalaman Teknis & Proyek -->
+        <section id="experience">
+            <h2>Pengalaman Teknis & Proyek Utama</h2>
+            
+            <div class="timeline-item">
+                <div class="time">Juni 2025 - Sekarang</div>
+                <div class="job-title">Spesialis Konfigurasi Hardware & Optimasi Sistem PC</div>
+                <div class="company">Proyek Mandiri / Profesional Freelance</div>
+                <ul>
+                    <li>Melakukan perakitan, pengujian, dan manajemen aset hardware komputer berspesifikasi tinggi.</li>
+                    <li>Menganalisis dan memecahkan masalah bottleneck pada perangkat keras untuk mencapai efisiensi RAM dan stabilitas sistem yang maksimal.</li>
+                    <li>Melakukan deployment dan kustomisasi sistem operasi Windows minimalis guna memangkas utilisasi daya dan resource yang tidak diperlukan.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="time">Maret 2026 - April 2026</div>
+                <div class="job-title">Perancangan & Troubleshooting Sistem Kelistrikan Kendaraan</div>
+                <div class="company">Proyek Kustomisasi Teknis</div>
+                <ul>
+                    <li>Merancang dan mengonversi kelistrikan sepeda motor ke sistem fullwave murni untuk stabilitas pengisian daya jangka panjang.</li>
+                    <li>Melakukan pemetaan skema elektrikal, kompatibilitas regulator, serta instalasi sistem pencahayaan tambahan dengan perhitungan beban daya yang presisi (menggunakan basis daya baterai MTX9).</li>
+                    <li>Menerapkan metode pemecahan masalah (troubleshooting) kelistrikan untuk mencegah terjadinya arus pendek (short circuit).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Minat Posisi Target -->
+        <section id="career-objective">
+            <h2>Minat Karir & Relevansi Posisi</h2>
+            <div class="timeline-item">
+                <div class="job-title">Quality Engineer / QC</div>
+                <p class="summary" style="font-size: 0.9rem;">Menerapkan standar inspeksi yang ketat, menganalisis kegagalan sistem atau produk, dan memastikan kualitas output kerja sesuai dengan regulasi.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="job-title">Operator Produksi / Packer</div>
+                <p class="summary" style="font-size: 0.9rem;">Mengoperasikan mesin atau perangkat kerja dengan disiplin K3, menjaga konsistensi kecepatan kerja, dan melakukan pengemasan produk secara rapi serta akurat.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="job-title">Picker / Logistik Gudang</div>
+                <p class="summary" style="font-size: 0.9rem;">Melakukan penyusunan, pencatatan, pengambilan (picking), dan penyortiran barang berdasarkan manifest gudang secara cepat, sistematis, dan minim eror.</p>
+            </div>
+        </section>
+
+        <!-- Workshop & Kontak Rekayasa Baru -->
+                <!-- Bagian Kontak yang Baru (Aman dari Error di Acode) -->
+        <section id="contact">
+            <h2>Hubungi Saya</h2>
+            <div class="workshop-container">
+                <p class="workshop-description">
+                    Saya siap memberikan kontribusi terbaik, tenaga, dan keahlian teknis saya untuk perusahaan Anda. Silakan hubungi saya secara langsung melalui kontak di bawah ini:
+                </p>
+                <div class="button-group">
+                    <!-- Tombol WhatsApp Langsung Ke Chat -->
+                    <a href="https://api.whatsapp.com/send?phone=6285173333525" target="_blank" class="btn btn-secondary" style="border-color: #25D366; color: #25D366;">
+    💬 Hubungi via WhatsApp
+</a>
+
+                    <!-- Tombol Gmail Langsung Ke Tulis Email -->
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ahmadriyanto1603@gmail.com" target="_blank" class="btn btn-primary">
+                        ✉ Kirim Email Lamaran
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Ahmad Riyanto. Hak Cipta Dilindungi.</p>
+    </footer>
+
+</body>
+</html>
