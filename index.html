@@ -6,7 +6,6 @@
     <title>Ahmad Riyanto | Portfolio & CV</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- SCRIPT DILETAKKAN DI ATAS AGAR TIDAK TERPOTONG -->
     <script>
         let currentSlide = 0;
 
@@ -18,8 +17,7 @@
                 btnId.classList.toggle('active', lang === 'id');
                 btnEn.classList.toggle('active', lang === 'en');
             }
-            const elements = document.querySelectorAll('[data-id][data-en]');
-            elements.forEach(el => {
+            document.querySelectorAll('[data-id][data-en]').forEach(el => {
                 el.textContent = el.getAttribute('data-' + lang);
             });
         }
@@ -42,8 +40,8 @@
             });
         }
 
-        function moveSlide(direction) {
-            goToSlide(currentSlide + direction);
+        function moveSlide(dir) {
+            goToSlide(currentSlide + dir);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -51,12 +49,10 @@
             const dots = document.querySelectorAll('.dot');
             if (track) {
                 track.addEventListener('scroll', () => {
-                    const index = Math.round(track.scrollLeft / track.clientWidth);
-                    if (index !== currentSlide && index >= 0 && index < dots.length) {
-                        currentSlide = index;
-                        dots.forEach((dot, idx) => {
-                            dot.classList.toggle('active', idx === currentSlide);
-                        });
+                    const idx = Math.round(track.scrollLeft / track.clientWidth);
+                    if (idx !== currentSlide && idx >= 0 && idx < dots.length) {
+                        currentSlide = idx;
+                        dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
                     }
                 }, { passive: true });
             }
@@ -71,16 +67,11 @@
             --accent: #22c55e;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.08);
             --radius: 16px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -90,36 +81,26 @@
             overflow-x: hidden;
         }
 
-        /* Navbar */
         nav {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.92);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border);
             padding: 0.9rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: var(--text-main);
-            text-decoration: none;
-        }
+        .logo { font-size: 1.15rem; font-weight: 800; color: var(--text-main); text-decoration: none; }
+        .logo span { color: var(--primary); }
 
-        .logo span {
-            color: var(--primary);
-        }
-
-        /* Language Switcher */
         .lang-switch {
             display: flex;
             background: var(--bg-card);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            border: 1px solid rgba(56, 189, 248, 0.35);
             border-radius: 999px;
             padding: 3px;
         }
@@ -134,18 +115,14 @@
             padding: 6px 14px;
             border-radius: 999px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: 0.2s;
         }
 
-        .lang-btn.active {
-            background: var(--primary);
-            color: #0f172a;
-        }
+        .lang-btn.active { background: var(--primary); color: #0f172a; }
 
-        /* Hero */
         header {
-            padding: 3.5rem 5% 2.5rem;
-            max-width: 1000px;
+            padding: 3.2rem 5% 2.2rem;
+            max-width: 960px;
             margin: 0 auto;
             text-align: center;
         }
@@ -155,29 +132,16 @@
             background: rgba(56, 189, 248, 0.12);
             color: var(--primary);
             border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 6px 14px;
+            padding: 6px 16px;
             border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.84rem;
+            font-weight: 700;
             margin-bottom: 1rem;
         }
 
-        header h1 {
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            font-weight: 800;
-            margin-bottom: 0.8rem;
-        }
-
-        header h1 span {
-            color: var(--primary);
-        }
-
-        header p {
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto 1.5rem;
-            font-size: 0.98rem;
-        }
+        header h1 { font-size: clamp(2rem, 5vw, 3.1rem); font-weight: 800; margin-bottom: 0.8rem; }
+        header h1 span { color: var(--primary); }
+        header p { color: var(--text-muted); max-width: 720px; margin: 0 auto 1.4rem; font-size: 0.96rem; }
 
         .hero-meta {
             display: flex;
@@ -188,38 +152,15 @@
             font-size: 0.85rem;
         }
 
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 5% 4rem;
-        }
+        .container { max-width: 920px; margin: 0 auto; padding: 0 5% 4rem; }
+        section { margin-bottom: 3.8rem; }
 
-        section {
-            margin-bottom: 4rem;
-        }
+        .section-header { text-align: center; margin-bottom: 1.6rem; }
+        .section-header h2 { font-size: 1.55rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .section-header p { color: var(--text-muted); font-size: 0.88rem; }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 1.8rem;
-        }
-
-        .section-header h2 {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 0.35rem;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* CAROUSEL / SLIDER DENGAN NATIVE SWIPE */
-        .carousel-wrapper {
-            position: relative;
-            max-width: 720px;
-            margin: 0 auto;
-        }
+        /* SLIDER KEAHLIAN */
+        .carousel-wrapper { position: relative; max-width: 700px; margin: 0 auto; }
 
         .carousel-track {
             display: flex;
@@ -229,89 +170,52 @@
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
             border-radius: var(--radius);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             background: var(--bg-card);
             box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
         }
 
-        .carousel-track::-webkit-scrollbar {
-            display: none;
-        }
+        .carousel-track::-webkit-scrollbar { display: none; }
 
-        .skill-slide {
-            min-width: 100%;
-            scroll-snap-align: start;
-            display: flex;
-            flex-direction: column;
-        }
+        .skill-slide { min-width: 100%; scroll-snap-align: start; display: flex; flex-direction: column; }
 
-        .slide-image-box {
-            position: relative;
-            height: 220px;
-            width: 100%;
-            overflow: hidden;
-            background: #0b1120;
-        }
+        .slide-image-box { position: relative; height: 225px; width: 100%; overflow: hidden; background: #0b1120; }
+        .slide-image-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        .slide-image-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .slide-number {
+        .slide-label {
             position: absolute;
             top: 12px;
             left: 12px;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.88);
             color: var(--primary);
-            padding: 5px 12px;
+            padding: 5px 14px;
             border-radius: 999px;
             font-size: 0.78rem;
             font-weight: 700;
             border: 1px solid rgba(56, 189, 248, 0.35);
         }
 
-        .slide-content {
-            padding: 1.5rem;
-        }
+        .slide-content { padding: 1.5rem; }
+        .slide-content h3 { font-size: 1.28rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--text-main); }
+        .slide-content p { color: var(--text-muted); font-size: 0.93rem; margin-bottom: 1.15rem; }
 
-        .slide-content h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.65rem;
-            color: var(--text-main);
-        }
-
-        .slide-content p {
-            color: var(--text-muted);
-            font-size: 0.94rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
         .skill-tag {
             background: rgba(56, 189, 248, 0.1);
             color: var(--primary);
             border: 1px solid rgba(56, 189, 248, 0.25);
             padding: 6px 12px;
             border-radius: 8px;
-            font-size: 0.8rem;
+            font-size: 0.79rem;
             font-weight: 600;
         }
 
-        /* Tombol Panah Diposisikan Tepat di Area Gambar Agar Tidak Menutupi Judul */
         .carousel-btn {
             position: absolute;
-            top: 110px;
+            top: 112px;
             transform: translateY(-50%);
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: rgba(15, 23, 42, 0.85);
             color: var(--text-main);
@@ -320,31 +224,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             z-index: 20;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
 
-        .carousel-btn:active {
-            background: var(--primary);
-            color: #0f172a;
-        }
+        .carousel-btn:active { background: var(--primary); color: #0f172a; }
+        .carousel-btn.prev { left: 10px; }
+        .carousel-btn.next { right: 10px; }
 
-        .carousel-btn.prev {
-            left: 10px;
-        }
-
-        .carousel-btn.next {
-            right: 10px;
-        }
-
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 1rem;
-        }
-
+        .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 1rem; }
         .dot {
             width: 10px;
             height: 10px;
@@ -352,25 +240,17 @@
             background: rgba(255, 255, 255, 0.25);
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
+        .dot.active { width: 28px; background: var(--primary); }
 
-        .dot.active {
-            width: 28px;
-            background: var(--primary);
-        }
-
-        /* Cards */
-        .timeline {
-            display: grid;
-            gap: 1.25rem;
-        }
-
+        /* CARDS */
+        .timeline { display: grid; gap: 1.2rem; }
         .card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 1.45rem;
         }
 
         .card-header {
@@ -382,116 +262,72 @@
             margin-bottom: 0.75rem;
         }
 
-        .card-title {
-            font-size: 1.12rem;
-            font-weight: 700;
-        }
-
-        .card-subtitle {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
+        .card-title { font-size: 1.1rem; font-weight: 700; }
+        .card-subtitle { color: var(--primary); font-weight: 600; font-size: 0.88rem; }
         .card-date {
             background: rgba(255, 255, 255, 0.06);
             color: var(--text-muted);
             padding: 4px 10px;
             border-radius: 999px;
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 600;
         }
 
-        .card ul {
-            padding-left: 1.15rem;
-            color: var(--text-muted);
-            font-size: 0.92rem;
-        }
-
-        .card ul li {
-            margin-bottom: 0.4rem;
-        }
+        .card ul { padding-left: 1.15rem; color: var(--text-muted); font-size: 0.91rem; }
+        .card ul li { margin-bottom: 0.4rem; }
 
         .roles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
             gap: 1rem;
         }
 
         .role-card {
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 1.35rem;
+            padding: 1.3rem;
         }
 
-        .role-card h3 {
-            color: var(--primary);
-            font-size: 1.05rem;
-            margin-bottom: 0.45rem;
-        }
+        .role-card h3 { color: var(--primary); font-size: 1.02rem; margin-bottom: 0.4rem; }
+        .role-card p { color: var(--text-muted); font-size: 0.88rem; }
 
-        .role-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Contact */
         .contact-box {
             background: var(--bg-card);
             border: 1px solid rgba(56, 189, 248, 0.25);
             border-radius: var(--radius);
-            padding: 2rem 1.5rem;
+            padding: 2rem 1.4rem;
             text-align: center;
         }
 
-        .contact-box p {
-            color: var(--text-muted);
-            max-width: 560px;
-            margin: 0.5rem auto 1.5rem;
-            font-size: 0.92rem;
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.85rem;
-        }
+        .contact-box p { color: var(--text-muted); max-width: 540px; margin: 0.5rem auto 1.4rem; font-size: 0.91rem; }
+        .btn-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.8rem; }
 
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.8rem 1.4rem;
+            padding: 0.78rem 1.35rem;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             text-decoration: none;
         }
 
-        .btn-wa {
-            background: var(--accent);
-            color: #052e16;
-        }
-
-        .btn-email {
-            background: var(--primary);
-            color: #0f172a;
-        }
+        .btn-wa { background: var(--accent); color: #052e16; }
+        .btn-email { background: var(--primary); color: #0f172a; }
 
         footer {
             text-align: center;
-            padding: 1.8rem 5%;
-            border-top: 1px solid var(--border-color);
+            padding: 1.6rem 5%;
+            border-top: 1px solid var(--border);
             color: var(--text-muted);
-            font-size: 0.82rem;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <nav>
         <a href="#" class="logo">AHMAD <span>RIYANTO</span></a>
         <div class="lang-switch">
@@ -500,17 +336,16 @@
         </div>
     </nav>
 
-    <!-- HERO -->
     <header>
         <div class="badge" 
-             data-id="Spesialis Logistik & Gudang | Teknisi Jaringan & IT Support" 
-             data-en="Logistics & Warehouse Specialist | Network Technician & IT Support">
-            Spesialis Logistik & Gudang | Teknisi Jaringan & IT Support
+             data-id="Operator CNC • Logistik Gudang • IT Support" 
+             data-en="CNC Operator • Warehouse Logistics • IT Support">
+            Operator CNC • Logistik Gudang • IT Support
         </div>
         <h1>Ahmad <span>Riyanto</span></h1>
-        <p data-id="Tenaga profesional di bidang Operasional Pergudangan (Logistik) dan Teknologi Informasi. Terampil dalam mengoperasikan Warehouse Management System (WMS), perakitan & optimasi hardware komputer, administrasi Microsoft Office, serta kelistrikan mekanikal dengan standar ketelitian dan K3 industri."
-           data-en="Professional in Warehouse Operations (Logistics) and Information Technology. Skilled in operating Warehouse Management Systems (WMS), PC hardware assembly & optimization, Microsoft Office administration, and mechanical electrical systems with high industrial precision and safety standards.">
-            Tenaga profesional di bidang Operasional Pergudangan (Logistik) dan Teknologi Informasi. Terampil dalam mengoperasikan Warehouse Management System (WMS), perakitan & optimasi hardware komputer, administrasi Microsoft Office, serta kelistrikan mekanikal dengan standar ketelitian dan K3 industri.
+        <p data-id="Tenaga profesional di bidang Manufaktur (Operator Mesin CNC), Operasional Pergudangan (Logistik), dan Teknologi Informasi. Terampil dalam mengoperasikan mesin CNC (Boring, Milling, Facing) dengan alat ukur presisi digital, mengoperasikan Warehouse Management System (WMS), serta perakitan hardware komputer dan administrasi Microsoft Office."
+           data-en="Professional in Manufacturing (CNC Machine Operator), Warehouse Operations (Logistics), and Information Technology. Skilled in operating CNC machines (Boring, Milling, Facing) with digital precision measuring tools, operating Warehouse Management Systems (WMS), as well as PC hardware assembly and Microsoft Office administration.">
+            Tenaga profesional di bidang Manufaktur (Operator Mesin CNC), Operasional Pergudangan (Logistik), dan Teknologi Informasi. Terampil dalam mengoperasikan mesin CNC (Boring, Milling, Facing) dengan alat ukur presisi digital, mengoperasikan Warehouse Management System (WMS), serta perakitan hardware komputer dan administrasi Microsoft Office.
         </p>
         <div class="hero-meta">
             <span>📍 Cikarang, Bekasi</span>
@@ -521,7 +356,7 @@
 
     <div class="container">
 
-        <!-- SKILLS CAROUSEL -->
+        <!-- 3 SLIDE KEAHLIAN UTAMA -->
         <section id="skills">
             <div class="section-header">
                 <h2 data-id="Keahlian Utama Saya" data-en="My Core Skills">Keahlian Utama Saya</h2>
@@ -537,23 +372,23 @@
 
                 <div class="carousel-track" id="carouselTrack">
 
-                    <!-- SLIDE 1: KOMPUTER & IT -->
+                    <!-- SLIDE 1: MESIN CNC & MANUFAKTUR -->
                     <div class="skill-slide">
                         <div class="slide-image-box">
-                            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=900&q=80" alt="Komputer & IT">
-                            <span class="slide-number">1 / 5 • IT & Hardware</span>
+                            <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=900&q=80" alt="Operator Mesin CNC">
+                            <span class="slide-label" data-id="Manufaktur & Mesin CNC" data-en="Manufacturing & CNC Machining">Manufaktur & Mesin CNC</span>
                         </div>
                         <div class="slide-content">
-                            <h3 data-id="Komputer, Jaringan & IT Support" data-en="Computer, Networking & IT Support">Komputer, Jaringan & IT Support</h3>
-                            <p data-id="Berpengalaman dalam perakitan komputer spesifikasi tinggi, instalasi & kustomisasi sistem operasi Windows untuk efisiensi performa, analisis bottleneck hardware, serta pemeliharaan jaringan LAN/WAN."
-                               data-en="Experienced in high-spec PC assembly, Windows OS installation & customization for optimal performance, hardware bottleneck analysis, and LAN/WAN network maintenance.">
-                                Berpengalaman dalam perakitan komputer spesifikasi tinggi, instalasi & kustomisasi sistem operasi Windows untuk efisiensi performa, analisis bottleneck hardware, serta pemeliharaan jaringan LAN/WAN.
+                            <h3 data-id="Operator Produksi Mesin CNC" data-en="CNC Machine Production Operator">Operator Produksi Mesin CNC</h3>
+                            <p data-id="Berpengalaman mengoperasikan mesin CNC (Boring, Milling, dan Facing) untuk memproses Raw Material (material mentah) menjadi produk jadi. Terampil melakukan pengukuran kepresisian dimensi, kerataan permukaan atas, serta jarak titik tengah ke sisi samping (mm) menggunakan Jangka Sorong Digital, Micrometer Digital, dan Dial Indicator / Centricator."
+                               data-en="Experienced in operating CNC machines (Boring, Milling, and Facing) to process Raw Materials into finished products. Skilled in measuring dimensional precision, top surface flatness, and center-to-side distances (mm) using Digital Calipers, Digital Micrometers, and Dial Indicators / Centricators.">
+                                Berpengalaman mengoperasikan mesin CNC (Boring, Milling, dan Facing) untuk memproses Raw Material (material mentah) menjadi produk jadi. Terampil melakukan pengukuran kepresisian dimensi, kerataan permukaan atas, serta jarak titik tengah ke sisi samping (mm) menggunakan Jangka Sorong Digital, Micrometer Digital, dan Dial Indicator / Centricator.
                             </p>
                             <div class="skill-tags">
-                                <span class="skill-tag" data-id="Perakitan & Troubleshooting PC" data-en="PC Assembly & Troubleshooting">Perakitan & Troubleshooting PC</span>
-                                <span class="skill-tag" data-id="Optimasi OS & RAM" data-en="OS & RAM Optimization">Optimasi OS & RAM</span>
-                                <span class="skill-tag" data-id="Jaringan LAN/WAN" data-en="LAN/WAN Networking">Jaringan LAN/WAN</span>
-                                <span class="skill-tag" data-id="Pemeliharaan Sistem" data-en="System Maintenance">Pemeliharaan Sistem</span>
+                                <span class="skill-tag">CNC Boring, Milling & Facing</span>
+                                <span class="skill-tag" data-id="Jangka Sorong Digital" data-en="Digital Vernier Caliper">Jangka Sorong Digital</span>
+                                <span class="skill-tag" data-id="Micrometer Digital" data-en="Digital Micrometer">Micrometer Digital</span>
+                                <span class="skill-tag">Dial Indicator / Centricator</span>
                             </div>
                         </div>
                     </div>
@@ -562,13 +397,13 @@
                     <div class="skill-slide">
                         <div class="slide-image-box">
                             <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80" alt="Logistik & Gudang">
-                            <span class="slide-number">2 / 5 • Logistics & Warehouse</span>
+                            <span class="slide-label" data-id="Logistik & Pergudangan" data-en="Logistics & Warehouse">Logistik & Pergudangan</span>
                         </div>
                         <div class="slide-content">
                             <h3 data-id="Operasional Logistik & Pergudangan" data-en="Logistics & Warehouse Operations">Operasional Logistik & Pergudangan</h3>
-                            <p data-id="Menguasai alur kerja pergudangan modern menggunakan Warehouse Management System (WMS), mulai dari pengambilan barang (picking), pengemasan (packing), pemeriksaan (checking), akurasi stok fisik, hingga penggunaan hand pallet sesuai K3."
-                               data-en="Proficient in modern warehouse workflows using Warehouse Management Systems (WMS), covering order picking, packing, checking, physical inventory accuracy, and safe hand pallet operation.">
-                                Menguasai alur kerja pergudangan modern menggunakan Warehouse Management System (WMS), mulai dari pengambilan barang (picking), pengemasan (packing), pemeriksaan (checking), akurasi stok fisik, hingga penggunaan hand pallet sesuai K3.
+                            <p data-id="Menguasai alur kerja pergudangan modern menggunakan Warehouse Management System (WMS), mulai dari pengambilan barang (picking), pengemasan (packing), pemeriksaan (checking), akurasi stok fisik, hingga penggunaan hand pallet sesuai standar K3."
+                               data-en="Proficient in modern warehouse workflows using Warehouse Management Systems (WMS), covering order picking, packing, checking, physical inventory accuracy, and safe hand pallet operation under K3 standards.">
+                                Menguasai alur kerja pergudangan modern menggunakan Warehouse Management System (WMS), mulai dari pengambilan barang (picking), pengemasan (packing), pemeriksaan (checking), akurasi stok fisik, hingga penggunaan hand pallet sesuai standar K3.
                             </p>
                             <div class="skill-tags">
                                 <span class="skill-tag">Warehouse Management System (WMS)</span>
@@ -578,4 +413,15 @@
                             </div>
                         </div>
                     </div>
-                    
+
+                    <!-- SLIDE 3: KOMPUTER, JARINGAN & OFFICE -->
+                    <div class="skill-slide">
+                        <div class="slide-image-box">
+                            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=900&q=80" alt="Komputer & IT">
+                            <span class="slide-label" data-id="IT, Jaringan & Administrasi" data-en="IT, Networking & Admin">IT, Jaringan & Administrasi</span>
+                        </div>
+                        <div class="slide-content">
+                            <h3 data-id="Komputer, Jaringan & Administrasi Data" data-en="Computer, Networking & Data Administration">Komputer, Jaringan & Administrasi Data</h3>
+                            <p data-id="Ahli dalam perakitan dan troubleshooting hardware/software komputer, optimasi sistem operasi Windows, pemeliharaan jaringan LAN/WAN, serta pencatatan data operasional dan pembuatan laporan menggunakan Microsoft Excel & Word."
+                               data-en="Skilled in PC hardware/software assembly and troubleshooting, Windows OS optimization, LAN/WAN network maintenance, as well as operational data entry and reporting using Microsoft Excel & Word.">
+                                Ahli dalam perakitan dan troubleshooting hardware/software komputer, optimasi sistem operasi Windows, pemeliharaan jaringan LAN/WAN, s
