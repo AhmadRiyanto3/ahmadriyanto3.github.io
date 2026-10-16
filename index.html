@@ -1,427 +1,319 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmad Riyanto | Portfolio & CV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <script>
-        let currentSlide = 0;
-
-        function setLanguage(lang) {
-            document.documentElement.lang = lang;
-            const btnId = document.getElementById('btn-id');
-            const btnEn = document.getElementById('btn-en');
-            if (btnId && btnEn) {
-                btnId.classList.toggle('active', lang === 'id');
-                btnEn.classList.toggle('active', lang === 'en');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmad Riyanto | Portfolio & CV</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+let cur = 0;
+function setLanguage(lang) {
+    document.documentElement.lang = lang;
+    document.getElementById('btn-id').classList.toggle('active', lang === 'id');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.querySelectorAll('[data-en]').forEach(el => {
+        if (!el.dataset.id) el.dataset.id = el.textContent.trim();
+        el.textContent = lang === 'en' ? el.dataset.en : el.dataset.id;
+    });
+}
+function goToSlide(i) {
+    const track = document.getElementById('carouselTrack');
+    const dots = document.querySelectorAll('.dot');
+    if (!track) return;
+    cur = (i + 3) % 3;
+    track.scrollTo({ left: track.clientWidth * cur, behavior: 'smooth' });
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === cur));
+}
+function moveSlide(dir) { goToSlide(cur + dir); }
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('carouselTrack');
+    const dots = document.querySelectorAll('.dot');
+    if (track) {
+        track.addEventListener('scroll', () => {
+            const idx = Math.round(track.scrollLeft / track.clientWidth);
+            if (idx !== cur && idx >= 0 && idx < 3) {
+                cur = idx;
+                dots.forEach((d, i) => d.classList.toggle('active', i === cur));
             }
-            document.querySelectorAll('[data-id][data-en]').forEach(el => {
-                el.textContent = el.getAttribute('data-' + lang);
-            });
-        }
-
-        function goToSlide(index) {
-            const track = document.getElementById('carouselTrack');
-            const slides = document.querySelectorAll('.skill-slide');
-            const dots = document.querySelectorAll('.dot');
-            if (!track || slides.length === 0) return;
-
-            const total = slides.length;
-            currentSlide = (index + total) % total;
-            track.scrollTo({
-                left: track.clientWidth * currentSlide,
-                behavior: 'smooth'
-            });
-
-            dots.forEach((dot, idx) => {
-                dot.classList.toggle('active', idx === currentSlide);
-            });
-        }
-
-        function moveSlide(dir) {
-            goToSlide(currentSlide + dir);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const track = document.getElementById('carouselTrack');
-            const dots = document.querySelectorAll('.dot');
-            if (track) {
-                track.addEventListener('scroll', () => {
-                    const idx = Math.round(track.scrollLeft / track.clientWidth);
-                    if (idx !== currentSlide && idx >= 0 && idx < dots.length) {
-                        currentSlide = idx;
-                        dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
-                    }
-                }, { passive: true });
-            }
-        });
-    </script>
-
-    <style>
-        :root {
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
-            --primary: #38bdf8;
-            --accent: #22c55e;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: rgba(255, 255, 255, 0.08);
-            --radius: 16px;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(15, 23, 42, 0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            padding: 0.9rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo { font-size: 1.15rem; font-weight: 800; color: var(--text-main); text-decoration: none; }
-        .logo span { color: var(--primary); }
-
-        .lang-switch {
-            display: flex;
-            background: var(--bg-card);
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            border-radius: 999px;
-            padding: 3px;
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-family: inherit;
-            font-weight: 700;
-            font-size: 0.82rem;
-            padding: 6px 14px;
-            border-radius: 999px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .lang-btn.active { background: var(--primary); color: #0f172a; }
-
-        header {
-            padding: 3.2rem 5% 2.2rem;
-            max-width: 960px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.12);
-            color: var(--primary);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 6px 16px;
-            border-radius: 999px;
-            font-size: 0.84rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        header h1 { font-size: clamp(2rem, 5vw, 3.1rem); font-weight: 800; margin-bottom: 0.8rem; }
-        header h1 span { color: var(--primary); }
-        header p { color: var(--text-muted); max-width: 720px; margin: 0 auto 1.4rem; font-size: 0.96rem; }
-
-        .hero-meta {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .container { max-width: 920px; margin: 0 auto; padding: 0 5% 4rem; }
-        section { margin-bottom: 3.8rem; }
-
-        .section-header { text-align: center; margin-bottom: 1.6rem; }
-        .section-header h2 { font-size: 1.55rem; font-weight: 800; margin-bottom: 0.3rem; }
-        .section-header p { color: var(--text-muted); font-size: 0.88rem; }
-
-        /* SLIDER KEAHLIAN */
-        .carousel-wrapper { position: relative; max-width: 700px; margin: 0 auto; }
-
-        .carousel-track {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
-        }
-
-        .carousel-track::-webkit-scrollbar { display: none; }
-
-        .skill-slide { min-width: 100%; scroll-snap-align: start; display: flex; flex-direction: column; }
-
-        .slide-image-box { position: relative; height: 225px; width: 100%; overflow: hidden; background: #0b1120; }
-        .slide-image-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .slide-label {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: rgba(15, 23, 42, 0.88);
-            color: var(--primary);
-            padding: 5px 14px;
-            border-radius: 999px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            border: 1px solid rgba(56, 189, 248, 0.35);
-        }
-
-        .slide-content { padding: 1.5rem; }
-        .slide-content h3 { font-size: 1.28rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--text-main); }
-        .slide-content p { color: var(--text-muted); font-size: 0.93rem; margin-bottom: 1.15rem; }
-
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-        .skill-tag {
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--primary);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.79rem;
-            font-weight: 600;
-        }
-
-        .carousel-btn {
-            position: absolute;
-            top: 112px;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(15, 23, 42, 0.85);
-            color: var(--text-main);
-            border: 1px solid rgba(56, 189, 248, 0.5);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.05rem;
-            z-index: 20;
-        }
-
-        .carousel-btn:active { background: var(--primary); color: #0f172a; }
-        .carousel-btn.prev { left: 10px; }
-        .carousel-btn.next { right: 10px; }
-
-        .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 1rem; }
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.25);
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .dot.active { width: 28px; background: var(--primary); }
-
-        /* CARDS */
-        .timeline { display: grid; gap: 1.2rem; }
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.45rem;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .card-title { font-size: 1.1rem; font-weight: 700; }
-        .card-subtitle { color: var(--primary); font-weight: 600; font-size: 0.88rem; }
-        .card-date {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text-muted);
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 0.76rem;
-            font-weight: 600;
-        }
-
-        .card ul { padding-left: 1.15rem; color: var(--text-muted); font-size: 0.91rem; }
-        .card ul li { margin-bottom: 0.4rem; }
-
-        .roles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 1rem;
-        }
-
-        .role-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.3rem;
-        }
-
-        .role-card h3 { color: var(--primary); font-size: 1.02rem; margin-bottom: 0.4rem; }
-        .role-card p { color: var(--text-muted); font-size: 0.88rem; }
-
-        .contact-box {
-            background: var(--bg-card);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: var(--radius);
-            padding: 2rem 1.4rem;
-            text-align: center;
-        }
-
-        .contact-box p { color: var(--text-muted); max-width: 540px; margin: 0.5rem auto 1.4rem; font-size: 0.91rem; }
-        .btn-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.8rem; }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.78rem 1.35rem;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.88rem;
-            text-decoration: none;
-        }
-
-        .btn-wa { background: var(--accent); color: #052e16; }
-        .btn-email { background: var(--primary); color: #0f172a; }
-
-        footer {
-            text-align: center;
-            padding: 1.6rem 5%;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-    </style>
+        }, { passive: true });
+    }
+});
+</script>
+<style>
+:root { --bg:#0f172a; --card:#1e293b; --pri:#38bdf8; --acc:#22c55e; --txt:#f8fafc; --mut:#94a3b8; --bdr:rgba(255,255,255,0.08); }
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--txt); line-height:1.6; overflow-x:hidden; }
+nav { position:sticky; top:0; z-index:100; background:rgba(15,23,42,0.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--bdr); padding:0.9rem 5%; display:flex; justify-content:space-between; align-items:center; }
+.logo { font-size:1.15rem; font-weight:800; color:var(--txt); text-decoration:none; }
+.logo span { color:var(--pri); }
+.lang-switch { display:flex; background:var(--card); border:1px solid rgba(56,189,248,0.35); border-radius:99px; padding:3px; }
+.lang-btn { background:transparent; border:none; color:var(--mut); font-family:inherit; font-weight:700; font-size:0.82rem; padding:6px 14px; border-radius:99px; cursor:pointer; }
+.lang-btn.active { background:var(--pri); color:#0f172a; }
+header { padding:3rem 5% 2rem; max-width:920px; margin:0 auto; text-align:center; }
+.badge { display:inline-block; background:rgba(56,189,248,0.12); color:var(--pri); border:1px solid rgba(56,189,248,0.3); padding:6px 16px; border-radius:99px; font-size:0.82rem; font-weight:700; margin-bottom:1rem; }
+header h1 { font-size:clamp(2rem,5vw,3rem); font-weight:800; margin-bottom:0.8rem; }
+header h1 span { color:var(--pri); }
+header p { color:var(--mut); max-width:700px; margin:0 auto 1.3rem; font-size:0.95rem; }
+.hero-meta { display:flex; justify-content:center; flex-wrap:wrap; gap:1rem; color:var(--mut); font-size:0.85rem; }
+.container { max-width:900px; margin:0 auto; padding:0 5% 4rem; }
+section { margin-bottom:3.5rem; }
+.section-header { text-align:center; margin-bottom:1.5rem; }
+.section-header h2 { font-size:1.5rem; font-weight:800; margin-bottom:0.3rem; }
+.section-header p { color:var(--mut); font-size:0.88rem; }
+.carousel-wrapper { position:relative; max-width:680px; margin:0 auto; }
+.carousel-track { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; -webkit-overflow-scrolling:touch; scrollbar-width:none; border-radius:16px; border:1px solid var(--bdr); background:var(--card); box-shadow:0 16px 36px rgba(0,0,0,0.35); }
+.carousel-track::-webkit-scrollbar { display:none; }
+.skill-slide { min-width:100%; scroll-snap-align:start; display:flex; flex-direction:column; }
+.slide-image-box { position:relative; height:220px; width:100%; overflow:hidden; background:#0b1120; }
+.slide-image-box img { width:100%; height:100%; object-fit:cover; }
+.slide-label { position:absolute; top:12px; left:12px; background:rgba(15,23,42,0.88); color:var(--pri); padding:5px 14px; border-radius:99px; font-size:0.78rem; font-weight:700; border:1px solid rgba(56,189,248,0.35); }
+.slide-content { padding:1.5rem; }
+.slide-content h3 { font-size:1.25rem; font-weight:700; margin-bottom:0.6rem; }
+.slide-content p { color:var(--mut); font-size:0.92rem; margin-bottom:1.1rem; }
+.skill-tags { display:flex; flex-wrap:wrap; gap:0.45rem; }
+.skill-tag { background:rgba(56,189,248,0.1); color:var(--pri); border:1px solid rgba(56,189,248,0.25); padding:6px 12px; border-radius:8px; font-size:0.78rem; font-weight:600; }
+.carousel-btn { position:absolute; top:110px; transform:translateY(-50%); width:40px; height:40px; border-radius:50%; background:rgba(15,23,42,0.85); color:var(--txt); border:1px solid rgba(56,189,248,0.5); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1rem; z-index:20; }
+.carousel-btn.prev { left:10px; }
+.carousel-btn.next { right:10px; }
+.carousel-dots { display:flex; justify-content:center; gap:8px; margin-top:1rem; }
+.dot { width:10px; height:10px; border-radius:99px; background:rgba(255,255,255,0.25); border:none; cursor:pointer; transition:0.3s; }
+.dot.active { width:28px; background:var(--pri); }
+.timeline { display:grid; gap:1.2rem; }
+.card { background:var(--card); border:1px solid var(--bdr); border-radius:16px; padding:1.4rem; }
+.card-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+.card-title { font-size:1.08rem; font-weight:700; }
+.card-subtitle { color:var(--pri); font-weight:600; font-size:0.88rem; }
+.card-date { background:rgba(255,255,255,0.06); color:var(--mut); padding:4px 10px; border-radius:99px; font-size:0.76rem; font-weight:600; }
+.card ul { padding-left:1.15rem; color:var(--mut); font-size:0.9rem; }
+.card ul li { margin-bottom:0.4rem; }
+.roles-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1rem; }
+.role-card { background:var(--card); border:1px solid var(--bdr); border-radius:16px; padding:1.3rem; }
+.role-card h3 { color:var(--pri); font-size:1rem; margin-bottom:0.4rem; }
+.role-card p { color:var(--mut); font-size:0.88rem; }
+.contact-box { background:var(--card); border:1px solid rgba(56,189,248,0.25); border-radius:16px; padding:2rem 1.4rem; text-align:center; }
+.contact-box p { color:var(--mut); max-width:540px; margin:0.5rem auto 1.4rem; font-size:0.9rem; }
+.btn-group { display:flex; justify-content:center; flex-wrap:wrap; gap:0.8rem; }
+.btn { display:inline-flex; align-items:center; gap:0.5rem; padding:0.78rem 1.35rem; border-radius:12px; font-weight:700; font-size:0.88rem; text-decoration:none; }
+.btn-wa { background:var(--acc); color:#052e16; }
+.btn-email { background:var(--pri); color:#0f172a; }
+footer { text-align:center; padding:1.5rem 5%; border-top:1px solid var(--bdr); color:var(--mut); font-size:0.8rem; }
+</style>
 </head>
 <body>
 
-    <nav>
-        <a href="#" class="logo">AHMAD <span>RIYANTO</span></a>
-        <div class="lang-switch">
-            <button type="button" class="lang-btn active" id="btn-id" onclick="setLanguage('id')">ID</button>
-            <button type="button" class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
-        </div>
-    </nav>
+<nav>
+    <a href="#" class="logo">AHMAD <span>RIYANTO</span></a>
+    <div class="lang-switch">
+        <button type="button" class="lang-btn active" id="btn-id" onclick="setLanguage('id')">ID</button>
+        <button type="button" class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+    </div>
+</nav>
 
-    <header>
-        <div class="badge" 
-             data-id="Operator CNC • Logistik Gudang • IT Support" 
-             data-en="CNC Operator • Warehouse Logistics • IT Support">
-            Operator CNC • Logistik Gudang • IT Support
-        </div>
-        <h1>Ahmad <span>Riyanto</span></h1>
-        <p data-id="Tenaga profesional di bidang Manufaktur (Operator Mesin CNC), Operasional Pergudangan (Logistik), dan Teknologi Informasi. Terampil dalam mengoperasikan mesin CNC (Boring, Milling, Facing) dengan alat ukur presisi digital, mengoperasikan Warehouse Management System (WMS), serta perakitan hardware komputer dan administrasi Microsoft Office."
-           data-en="Professional in Manufacturing (CNC Machine Operator), Warehouse Operations (Logistics), and Information Technology. Skilled in operating CNC machines (Boring, Milling, Facing) with digital precision measuring tools, operating Warehouse Management Systems (WMS), as well as PC hardware assembly and Microsoft Office administration.">
-            Tenaga profesional di bidang Manufaktur (Operator Mesin CNC), Operasional Pergudangan (Logistik), dan Teknologi Informasi. Terampil dalam mengoperasikan mesin CNC (Boring, Milling, Facing) dengan alat ukur presisi digital, mengoperasikan Warehouse Management System (WMS), serta perakitan hardware komputer dan administrasi Microsoft Office.
-        </p>
-        <div class="hero-meta">
-            <span>📍 Cikarang, Bekasi</span>
-            <span>📞 0851-7333-3525</span>
-            <span>✉️ ahmadriyanto1603@gmail.com</span>
-        </div>
-    </header>
+<header>
+    <div class="badge" data-en="CNC Operator • Warehouse Logistics • IT Support">Operator CNC • Logistik Gudang • IT Support</div>
+    <h1>Ahmad <span>Riyanto</span></h1>
+    <p data-en="Professional in Manufacturing (CNC Machine Operator), Warehouse Operations (Logistics), and Information Technology. Skilled in operating CNC machines (Boring, Milling, Facing) with digital precision measuring tools, operating Warehouse Management Systems (WMS), as well as PC hardware assembly and Microsoft Office administration.">Tenaga profesional di bidang Manufaktur (Operator Mesin CNC), Operasional Pergudangan (Logistik), dan Teknologi Informasi. Terampil dalam mengoperasikan mesin CNC (Boring, Milling, Facing) dengan alat ukur presisi digital, mengoperasikan Warehouse Management System (WMS), serta perakitan hardware komputer dan administrasi Microsoft Office.</p>
+    <div class="hero-meta">
+        <span>📍 Cikarang, Bekasi</span>
+        <span>📞 0851-7333-3525</span>
+        <span>✉️ ahmadriyanto1603@gmail.com</span>
+    </div>
+</header>
 
-    <div class="container">
+<div class="container">
 
-        <!-- 3 SLIDE KEAHLIAN UTAMA -->
-        <section id="skills">
-            <div class="section-header">
-                <h2 data-id="Keahlian Utama Saya" data-en="My Core Skills">Keahlian Utama Saya</h2>
-                <p data-id="Usap gambar ke kiri/kanan atau ketuk tombol panah untuk melihat keahlian lainnya" 
-                   data-en="Swipe left/right or tap the arrow buttons to explore my skills">
-                    Usap gambar ke kiri/kanan atau ketuk tombol panah untuk melihat keahlian lainnya
-                </p>
+    <section id="skills">
+        <div class="section-header">
+            <h2 data-en="My Core Skills">Keahlian Utama Saya</h2>
+            <p data-en="Swipe left/right or tap the arrow buttons to explore my skills">Usap gambar ke kiri/kanan atau ketuk tombol panah untuk melihat keahlian lainnya</p>
+        </div>
+
+        <div class="carousel-wrapper">
+            <button type="button" class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button type="button" class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
+
+            <div class="carousel-track" id="carouselTrack">
+
+                <!-- SLIDE 1: CNC -->
+                <div class="skill-slide">
+                    <div class="slide-image-box">
+                        <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=80" alt="Mesin CNC & Manufaktur">
+                        <span class="slide-label" data-en="Manufacturing & CNC Machining">Manufaktur & Mesin CNC</span>
+                    </div>
+                    <div class="slide-content">
+                        <h3 data-en="CNC Machine Production Operator">Operator Produksi Mesin CNC</h3>
+                        <p data-en="Experienced in operating CNC machines (Boring, Milling, and Facing) to process Raw Materials into finished products. Skilled in measuring dimensional precision, top surface flatness, and center-to-side distances (mm) using Digital Calipers, Digital Micrometers, and Dial Indicators / Centricators.">Berpengalaman mengoperasikan mesin CNC (Boring, Milling, dan Facing) untuk memproses Raw Material (material mentah) menjadi produk jadi. Terampil melakukan pengukuran kepresisian dimensi, kerataan permukaan atas, serta jarak titik tengah ke sisi samping (mm) menggunakan Jangka Sorong Digital, Micrometer Digital, dan Dial Indicator / Centricator.</p>
+                        <div class="skill-tags">
+                            <span class="skill-tag">CNC Boring, Milling & Facing</span>
+                            <span class="skill-tag" data-en="Digital Vernier Caliper">Jangka Sorong Digital</span>
+                            <span class="skill-tag" data-en="Digital Micrometer">Micrometer Digital</span>
+                            <span class="skill-tag">Dial Indicator / Centricator</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 2: GUDANG -->
+                <div class="skill-slide">
+                    <div class="slide-image-box">
+                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80" alt="Logistik & Gudang">
+                        <span class="slide-label" data-en="Logistics & Warehouse">Logistik & Pergudangan</span>
+                    </div>
+                    <div class="slide-content">
+                        <h3 data-en="Logistics & Warehouse Operations">Operasional Logistik & Pergudangan</h3>
+                        <p data-en="Proficient in modern warehouse workflows using Warehouse Management Systems (WMS), covering order picking, packing, checking, physical inventory accuracy, and safe hand pallet operation under K3 standards.">Menguasai alur kerja pergudangan modern menggunakan Warehouse Management System (WMS), mulai dari pengambilan barang (picking), pengemasan (packing), pemeriksaan (checking), akurasi stok fisik, hingga penggunaan hand pallet sesuai standar K3.</p>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Warehouse Management System (WMS)</span>
+                            <span class="skill-tag">Picking, Packing & Checking</span>
+                            <span class="skill-tag">Inventory Control</span>
+                            <span class="skill-tag">Material Handling & Hand Pallet</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 3: IT -->
+                <div class="skill-slide">
+                    <div class="slide-image-box">
+                        <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=900&q=80" alt="Komputer & IT">
+                        <span class="slide-label" data-en="IT, Networking & Admin">IT, Jaringan & Administrasi</span>
+                    </div>
+                    <div class="slide-content">
+                        <h3 data-en="Computer, Networking & Data Administration">Komputer, Jaringan & Administrasi Data</h3>
+                        <p data-en="Skilled in PC hardware/software assembly and troubleshooting, Windows OS optimization, LAN/WAN network maintenance, as well as operational data entry and reporting using Microsoft Excel & Word.">Ahli dalam perakitan dan troubleshooting hardware/software komputer, optimasi sistem operasi Windows, pemeliharaan jaringan LAN/WAN, serta pencatatan data operasional dan pembuatan laporan menggunakan Microsoft Excel & Word.</p>
+                        <div class="skill-tags">
+                            <span class="skill-tag" data-en="PC Assembly & Troubleshooting">Perakitan & Troubleshooting PC</span>
+                            <span class="skill-tag">Microsoft Excel & Word</span>
+                            <span class="skill-tag" data-en="LAN/WAN Networking">Jaringan LAN/WAN</span>
+                            <span class="skill-tag" data-en="OS Optimization">Optimasi Sistem Operasi</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="carousel-wrapper">
-                <button type="button" class="carousel-btn prev" onclick="moveSlide(-1)" aria-label="Previous">&#10094;</button>
-                <button type="button" class="carousel-btn next" onclick="moveSlide(1)" aria-label="Next">&#10095;</button>
+            <div class="carousel-dots">
+                <button type="button" class="dot active" onclick="goToSlide(0)"></button>
+                <button type="button" class="dot" onclick="goToSlide(1)"></button>
+                <button type="button" class="dot" onclick="goToSlide(2)"></button>
+            </div>
+        </div>
+    </section>
 
-                <div class="carousel-track" id="carouselTrack">
+    <!-- PENGALAMAN KERJA -->
+    <section id="experience">
+        <div class="section-header">
+            <h2 data-en="Work Experience & Technical Projects">Pengalaman Kerja & Proyek Teknis</h2>
+        </div>
 
-                    <!-- SLIDE 1: MESIN CNC & MANUFAKTUR -->
-                    <div class="skill-slide">
-                        <div class="slide-image-box">
-                            <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=900&q=80" alt="Operator Mesin CNC">
-                            <span class="slide-label" data-id="Manufaktur & Mesin CNC" data-en="Manufacturing & CNC Machining">Manufaktur & Mesin CNC</span>
-                        </div>
-                        <div class="slide-content">
-                            <h3 data-id="Operator Produksi Mesin CNC" data-en="CNC Machine Production Operator">Operator Produksi Mesin CNC</h3>
-                            <p data-id="Berpengalaman mengoperasikan mesin CNC (Boring, Milling, dan Facing) untuk memproses Raw Material (material mentah) menjadi produk jadi. Terampil melakukan pengukuran kepresisian dimensi, kerataan permukaan atas, serta jarak titik tengah ke sisi samping (mm) menggunakan Jangka Sorong Digital, Micrometer Digital, dan Dial Indicator / Centricator."
-                               data-en="Experienced in operating CNC machines (Boring, Milling, and Facing) to process Raw Materials into finished products. Skilled in measuring dimensional precision, top surface flatness, and center-to-side distances (mm) using Digital Calipers, Digital Micrometers, and Dial Indicators / Centricators.">
-                                Berpengalaman mengoperasikan mesin CNC (Boring, Milling, dan Facing) untuk memproses Raw Material (material mentah) menjadi produk jadi. Terampil melakukan pengukuran kepresisian dimensi, kerataan permukaan atas, serta jarak titik tengah ke sisi samping (mm) menggunakan Jangka Sorong Digital, Micrometer Digital, dan Dial Indicator / Centricator.
-                            </p>
-                            <div class="skill-tags">
-                                <span class="skill-tag">CNC Boring, Milling & Facing</span>
-                                <span class="skill-tag" data-id="Jangka Sorong Digital" data-en="Digital Vernier Caliper">Jangka Sorong Digital</span>
-                                <span class="skill-tag" data-id="Micrometer Digital" data-en="Digital Micrometer">Micrometer Digital</span>
-                                <span class="skill-tag">Dial Indicator / Centricator</span>
-                            </div>
-                        </div>
+        <div class="timeline">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title" data-en="CNC Machine Production Operator">Operator Produksi Mesin CNC</div>
+                        <div class="card-subtitle" data-en="Manufacturing Company">Perusahaan Manufaktur</div>
                     </div>
+                    <span class="card-date" data-en="September 2026 – Present">September 2026 – Sekarang</span>
+                </div>
+                <ul>
+                    <li data-en="Operate CNC production machines (Boring, Milling, and Facing) to process Raw Materials into finished goods according to production targets.">Mengoperasikan mesin produksi CNC (Boring, Milling, dan Facing) untuk mengolah Raw Material (material mentah) menjadi barang jadi sesuai target produksi.</li>
+                    <li data-en="Perform precision inspection and measurement of workpieces using Digital Vernier Calipers and Digital Micrometers.">Melakukan pengecekan dan pengukuran kepresisian benda kerja menggunakan Jangka Sorong Digital (Digital Caliper) dan Micrometer Digital.</li>
+                    <li data-en="Utilize Dial Indicators / Centricators to ensure top surface flatness and accurate center-to-side distances in millimeters (mm).">Menggunakan Dial Indicator / Centricator untuk memastikan kerataan bagian atas permukaan serta akurasi jarak titik tengah ke sisi samping dalam satuan milimeter (mm).</li>
+                    <li data-en="Maintain machine area cleanliness, enforce industrial occupational safety (K3) standards, and ensure consistent machining quality.">Menjaga kebersihan area mesin, menerapkan standar keselamatan kerja (K3) industri, serta memastikan kualitas hasil pemesinan tetap konsisten.</li>
+                </ul>
+            </div>
 
-                    <!-- SLIDE 2: LOGISTIK & GUDANG -->
-                    <div class="skill-slide">
-                        <div class="slide-image-box">
-                            <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80" alt="Logistik & Gudang">
-                            <span class="slide-label" data-id="Logistik & Pergudangan" data-en="Logistics & Warehouse">Logistik & Pergudangan</span>
-                        </div>
-                        <div class="slide-content">
-                            <h3 data-id="Operasional Logistik & Pergudangan" data-en="Logistics & Warehouse Operations">Operasional Logistik & Pergudangan</h3>
-                            <p data-id="Menguasai alur kerja pergudangan modern menggunakan Warehouse Management System (WMS), mulai dari pengambilan barang (picking), pengemasan (packing), pemeriksaan (checking), akurasi stok fisik, hingga penggunaan hand pallet sesuai standar K3."
-                               data-en="Proficient in modern warehouse workflows using Warehouse Management Systems (WMS), covering order picking, packing, checking, physical inventory accuracy, and safe hand pallet operation under K3 standards.">
-                                Menguasai alur kerja pergudangan modern menggunakan Warehouse Management System (WMS), mulai dari pengambilan barang (picking), pengemasan (packing), pemeriksaan (checking), akurasi stok fisik, hingga penggunaan hand pallet sesuai standar K3.
-                            </p>
-                            <div class="skill-tags">
-                                <span class="skill-tag">Warehouse Management System (WMS)</span>
-                                <span class="skill-tag">Picking, Packing & Checking</span>
-                                <span class="skill-tag">Inventory Control</span>
-                                <span class="skill-tag">Material Handling & Hand Pallet</span>
-                            </div>
-                        </div>
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title" data-en="Warehouse Picker / Warehouse Staff">Warehouse Picker / Staf Pergudangan</div>
+                        <div class="card-subtitle">PT Absolut Servis Nusantara</div>
                     </div>
+                    <span class="card-date" data-en="October 2024 – May 2026">Oktober 2024 – Mei 2026</span>
+                </div>
+                <ul>
+                    <li data-en="Accurately operated the Warehouse Management System (WMS) for daily order processing and tracking.">Mengoperasikan Warehouse Management System (WMS) secara akurat untuk pemrosesan dan pelacakan pesanan harian.</li>
+                    <li data-en="Performed product verification, picking, packing, and checking in strict accordance with company SOPs.">Melakukan verifikasi, pemilahan (picking), pengemasan (packing), dan pemeriksaan (checking) produk sesuai SOP.</li>
+                    <li data-en="Recorded and verified inbound/outbound operational goods data using Microsoft Excel and internal systems.">Mencatat serta memverifikasi data operasional barang masuk/keluar menggunakan Microsoft Excel dan sistem internal.</li>
+                    <li data-en="Managed material handling and hand pallet operations following K3 safety standards while maintaining physical inventory accuracy.">Mengelola penanganan material (material handling) dan pengoperasian hand pallet sesuai standar K3 serta menjaga akurasi stok fisik.</li>
+                </ul>
+            </div>
 
-                    <!-- SLIDE 3: KOMPUTER, JARINGAN & OFFICE -->
-                    <div class="skill-slide">
-                        <div class="slide-image-box">
-                            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=900&q=80" alt="Komputer & IT">
-                            <span class="slide-label" data-id="IT, Jaringan & Administrasi" data-en="IT, Networking & Admin">IT, Jaringan & Administrasi</span>
-                        </div>
-                        <div class="slide-content">
-                            <h3 data-id="Komputer, Jaringan & Administrasi Data" data-en="Computer, Networking & Data Administration">Komputer, Jaringan & Administrasi Data</h3>
-                            <p data-id="Ahli dalam perakitan dan troubleshooting hardware/software komputer, optimasi sistem operasi Windows, pemeliharaan jaringan LAN/WAN, serta pencatatan data operasional dan pembuatan laporan menggunakan Microsoft Excel & Word."
-                               data-en="Skilled in PC hardware/software assembly and troubleshooting, Windows OS optimization, LAN/WAN network maintenance, as well as operational data entry and reporting using Microsoft Excel & Word.">
-                                Ahli dalam perakitan dan troubleshooting hardware/software komputer, optimasi sistem operasi Windows, pemeliharaan jaringan LAN/WAN, s
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title" data-en="PC Hardware Configuration & System Optimization Specialist">Spesialis Konfigurasi Hardware & Optimasi Sistem PC</div>
+                        <div class="card-subtitle" data-en="Independent Project / Technical Freelance">Proyek Mandiri / Freelance Teknis</div>
+                    </div>
+                    <span class="card-date" data-en="June 2025 – Present">Juni 2025 – Sekarang</span>
+                </div>
+                <ul>
+                    <li data-en="Conducted assembly, testing, and asset management for high-specification computer hardware.">Melakukan perakitan, pengujian, dan manajemen aset hardware komputer berspesifikasi tinggi.</li>
+                    <li data-en="Analyzed and resolved hardware bottlenecks to achieve maximum RAM efficiency and system stability.">Menganalisis dan memecahkan masalah bottleneck pada perangkat keras untuk mencapai efisiensi RAM dan stabilitas sistem maksimal.</li>
+                    <li data-en="Installed and customized streamlined Windows OS builds to reduce unnecessary system resource usage.">Melakukan instalasi dan kustomisasi sistem operasi Windows minimalis guna memangkas penggunaan resource yang tidak diperlukan.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+        <!-- PENDIDIKAN -->
+    <section id="education">
+        <div class="section-header">
+            <h2 data-en="Education">Pendidikan</h2>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <div class="card-title" data-en="Computer and Network Engineering (TKJ)">Teknik Komputer dan Jaringan (TKJ)</div>
+                    <div class="card-subtitle">SMK Assalafiyah Tegal</div>
+                </div>
+                <span class="card-date" data-en="Graduated 2023">Lulus 2023</span>
+            </div>
+            <ul>
+                <li data-en="Studied LAN/WAN network administration, OS & software installation, as well as computer hardware assembly and maintenance.">Mempelajari administrasi jaringan LAN/WAN, instalasi sistem operasi & software, serta perakitan dan pemeliharaan hardware komputer.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FOKUS POSISI -->
+    <section>
+        <div class="section-header">
+            <h2 data-en="Target Roles & Career Focus">Fokus & Relevansi Posisi</h2>
+        </div>
+        <div class="roles-grid">
+            <div class="role-card">
+                <h3 data-en="CNC / Production Operator">Operator CNC / Produksi</h3>
+                <p data-en="Operating CNC machines (Boring, Milling, Facing) to process raw materials into finished goods with digital precision measurement and K3 safety discipline.">Mengoperasikan mesin CNC (Boring, Milling, Facing) untuk mengolah material mentah menjadi produk jadi dengan pengukuran presisi digital dan disiplin K3.</p>
+            </div>
+            <div class="role-card">
+                <h3 data-en="Logistics / Warehouse Picker">Logistik / Warehouse Picker</h3>
+                <p data-en="WMS operation, organizing, picking, packing, and stock checking executed rapidly, systematically, and with minimal error.">Pengoperasian WMS, penyusunan, pengambilan (picking), pengemasan (packing), dan pengecekan stok barang secara cepat, sistematis, dan minim eror.</p>
+            </div>
+            <div class="role-card">
+                <h3 data-en="IT Support / Hardware Technician">IT Support / Teknisi Hardware</h3>
+                <p data-en="Installation, LAN/WAN network maintenance, OS optimization, Excel data processing, and computer troubleshooting.">Instalasi, pemeliharaan jaringan LAN/WAN, optimasi sistem operasi, pengolahan data Excel, serta troubleshooting komputer.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- KONTAK -->
+    <section id="contact">
+        <div class="contact-box">
+            <h2 data-en="Get In Touch">Hubungi Saya</h2>
+            <p data-en="I am ready to bring my best contribution, dedication, and technical expertise to your company. Feel free to reach out via WhatsApp or Email below:">Saya siap memberikan kontribusi terbaik, dedikasi, dan keahlian teknis saya untuk perusahaan Anda. Silakan hubungi saya melalui WhatsApp atau Email di bawah ini:</p>
+            <div class="btn-group">
+                <a href="https://api.whatsapp.com/send?phone=6285173333525" target="_blank" class="btn btn-wa">
+                    💬 <span data-en="Chat on WhatsApp">Hubungi via WhatsApp</span>
+                </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ahmadriyanto1603@gmail.com" target="_blank" class="btn btn-email">
+                    ✉️ <span data-en="Send an Email">Kirim Email</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <p data-en="© 2026 Ahmad Riyanto. All Rights Reserved.">© 2026 Ahmad Riyanto. Hak Cipta Dilindungi.</p>
+</footer>
+
+</body>
+</html>
