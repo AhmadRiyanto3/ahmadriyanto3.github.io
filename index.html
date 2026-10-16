@@ -3,331 +3,591 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Profesional | Ahmad Riyanto</title>
+    <title>Ahmad Riyanto | Portfolio & CV</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #26354d;
+            --primary: #38bdf8;
+            --primary-dark: #0284c7;
+            --accent: #22c55e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --radius: 16px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
         }
+
         body {
-            background-color: #f4f6f9;
-            color: #333333;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
             line-height: 1.6;
+            overflow-x: hidden;
         }
-        /* Header Profesional - Gaya Korporat */
-        header {
-            background-color: #1a252f;
-            padding: 50px 20px;
-            text-align: center;
-            border-bottom: 4px solid #2980b9;
+
+        /* Navbar */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        header h1 {
-            color: #ffffff;
-            font-size: 2.2rem;
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
             letter-spacing: 0.5px;
-            margin-bottom: 8px;
-            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
         }
-        header p {
-            color: #3498db;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+
+        .logo span {
+            color: var(--primary);
         }
-        .container {
-            max-width: 950px;
-            margin: auto;
-            padding: 20px;
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
-        /* Card Section Modern */
-        section {
-            margin: 25px 0;
-            padding: 30px;
-            background-color: #ffffff;
-            border-radius: 6px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
-            border: 1px solid #e2e8f0;
-        }
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 10px;
-            text-transform: uppercase;
-            font-size: 1.2rem;
-            letter-spacing: 0.5px;
-            font-weight: 700;
-        }
-        p.summary {
-            text-align: justify;
-            color: #4a5568;
-            font-size: 0.95rem;
-        }
-        /* Grid Keahlian dengan Kontras Lembut */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .skills-category {
-            background-color: #f8fafc;
-            padding: 20px;
-            border-radius: 6px;
-            border-left: 4px solid #2980b9;
-            border-top: 1px solid #e2e8f0;
-            border-right: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .skills-category h3 {
-            font-size: 1rem;
-            color: #2c3e50;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-        .skills-category ul {
+
+        .nav-links {
+            display: flex;
+            gap: 1.25rem;
             list-style: none;
         }
-        .skills-category ul li {
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
             font-size: 0.9rem;
-            color: #4a5568;
-            margin-bottom: 8px;
-            padding-left: 15px;
-            position: relative;
+            font-weight: 500;
+            transition: color 0.2s;
         }
-        .skills-category ul li::before {
-            content: "✓";
-            color: #2e7d32;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
+
+        .nav-links a:hover {
+            color: var(--primary);
         }
-        /* Desain Garis Waktu Pengalaman Profesional */
-        .timeline-item {
-            border-left: 3px solid #cbd5e1;
-            padding-left: 20px;
-            margin-bottom: 25px;
-            position: relative;
+
+        /* Language Switcher */
+        .lang-switch {
+            display: flex;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            padding: 3px;
         }
-        .timeline-item::before {
-            content: "";
-            width: 12px;
-            height: 12px;
-            background-color: #2980b9;
-            border-radius: 50%;
-            position: absolute;
-            left: -8px;
-            top: 6px;
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s ease;
         }
-        .time {
-            font-size: 0.85rem;
-            color: #2980b9;
-            font-weight: bold;
-            margin-bottom: 3px;
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: #0f172a;
         }
-        .job-title {
-            font-size: 1.1rem;
-            color: #2c3e50;
-            font-weight: 600;
-        }
-        .company {
-            font-style: italic;
-            color: #718096;
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
-        .timeline-item ul {
-            padding-left: 15px;
-            color: #4a5568;
-            font-size: 0.9rem;
-        }
-        .timeline-item li {
-            margin-bottom: 6px;
-            text-align: justify;
-        }
-        /* Tombol Aksi & Informasi Workshop */
-        .workshop-container {
+
+        /* Hero Section */
+        header {
+            padding: 5rem 5% 3.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
             text-align: center;
-            padding: 15px 0;
         }
-        .workshop-description {
-            color: #4a5568;
+
+        .badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--primary);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+
+        header h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+
+        header h1 span {
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            max-width: 720px;
+            margin: 0 auto 2rem;
+            font-size: 1.05rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Container & Section */
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 0 5% 4rem;
+        }
+
+        section {
+            margin-bottom: 4.5rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
             font-size: 0.95rem;
-            margin-bottom: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
-        .button-group {
+
+        /* SKILLS CAROUSEL / SLIDER */
+        .carousel-wrapper {
+            position: relative;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .carousel-viewport {
+            overflow: hidden;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .skill-slide {
+            min-width: 100%;
+            user-select: none;
+        }
+
+        .slide-image-box {
+            position: relative;
+            height: 280px;
+            width: 100%;
+            overflow: hidden;
+            background: #0b1120;
+        }
+
+        .slide-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+            transition: transform 0.5s ease;
+        }
+
+        .skill-slide:hover .slide-image-box img {
+            transform: scale(1.04);
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(6px);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .slide-content {
+            padding: 2rem;
+        }
+
+        .slide-content h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .slide-content p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .skill-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 10px;
+            gap: 0.5rem;
         }
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: all 0.2s ease-in-out;
+
+        .skill-tag {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        /* Carousel Buttons */
+        .carousel-btn {
+            position: absolute;
+            top: 42%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.85);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            z-index: 10;
         }
-        .btn-primary {
-            background-color: #2980b9;
-            color: #ffffff;
-            border: 1px solid #2980b9;
+
+        .carousel-btn:hover {
+            background: var(--primary);
+            color: #0f172a;
         }
-        .btn-primary:hover {
-            background-color: #1f6696;
+
+        .carousel-btn.prev {
+            left: -22px;
         }
-        .btn-secondary {
-            background-color: #ffffff;
-            color: #2c3e50;
-            border: 1px solid #cbd5e1;
+
+        .carousel-btn.next {
+            right: -22px;
         }
-        .btn-secondary:hover {
-            background-color: #f8fafc;
-            border-color: #94a3b8;
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1.25rem;
         }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 28px;
+            background: var(--primary);
+        }
+
+        /* Timeline / Experience & Education */
+        .timeline {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(56, 189, 248, 0.35);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card-subtitle {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .card-date {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-muted);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .card ul li {
+            margin-bottom: 0.45rem;
+        }
+
+        /* Target Roles Grid */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .role-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .role-card h3 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        /* Contact Section */
+        .contact-box {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .contact-box p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0.5rem auto 1.75rem;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.85rem 1.6rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+        }
+
+        .btn-wa {
+            background: var(--accent);
+            color: #052e16;
+        }
+
+        .btn-email {
+            background: var(--primary);
+            color: #0f172a;
+        }
+
         footer {
             text-align: center;
-            padding: 25px;
-            font-size: 0.8rem;
-            color: #718096;
-            background-color: #1a252f;
-            margin-top: 40px;
-            border-top: 1px solid #2c3e50;
+            padding: 2rem 5%;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .carousel-btn.prev {
+                left: 10px;
+            }
+            .carousel-btn.next {
+                right: 10px;
+            }
+            .slide-image-box {
+                height: 210px;
+            }
+            .slide-content {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- NAVBAR -->
+    <nav>
+        <a href="#" class="logo">AHMAD <span>RIYANTO</span></a>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#skills" data-id="Keahlian" data-en="Skills">Keahlian</a></li>
+                <li><a href="#experience" data-id="Pengalaman" data-en="Experience">Pengalaman</a></li>
+                <li><a href="#education" data-id="Pendidikan" data-en="Education">Pendidikan</a></li>
+                <li><a href="#contact" data-id="Kontak" data-en="Contact">Kontak</a></li>
+            </ul>
+            <div class="lang-switch" aria-label="Language Switcher">
+                <button class="lang-btn active" id="btn-id" onclick="setLanguage('id')">ID</button>
+                <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
     <header>
-        <h1>AHMAD RIYANTO</h1>
-        <p>Teknisi Operasional & Profesional Hardware/Logistik</p>
+        <div class="badge" 
+             data-id="Spesialis Logistik & Gudang | Teknisi Jaringan & IT Support" 
+             data-en="Logistics & Warehouse Specialist | Network Technician & IT Support">
+            Spesialis Logistik & Gudang | Teknisi Jaringan & IT Support
+        </div>
+        <h1>Ahmad <span>Riyanto</span></h1>
+        <p data-id="Tenaga profesional di bidang Operasional Pergudangan (Logistik) dan Teknologi Informasi. Terampil dalam mengoperasikan Warehouse Management System (WMS), perakitan & optimasi hardware komputer, administrasi Microsoft Office, serta kelistrikan mekanikal dengan standar ketelitian dan K3 industri."
+           data-en="Professional in Warehouse Operations (Logistics) and Information Technology. Skilled in operating Warehouse Management Systems (WMS), PC hardware assembly & optimization, Microsoft Office administration, and mechanical electrical systems with high industrial precision and safety standards.">
+            Tenaga profesional di bidang Operasional Pergudangan (Logistik) dan Teknologi Informasi. Terampil dalam mengoperasikan Warehouse Management System (WMS), perakitan & optimasi hardware komputer, administrasi Microsoft Office, serta kelistrikan mekanikal dengan standar ketelitian dan K3 industri.
+        </p>
+        <div class="hero-meta">
+            <span>📍 Cikarang, Bekasi</span>
+            <span>📞 0851-7333-3525</span>
+            <span>✉️ ahmadriyanto1603@gmail.com</span>
+        </div>
     </header>
 
     <div class="container">
-        
-        <!-- Tentang Saya -->
-        <section id="about">
-            <h2>Tentang Saya</h2>
-            <p class="summary">
-                Seorang praktisi teknis yang disiplin, detail, dan berorientasi pada solusi dengan keahlian mendalam di bidang kustomisasi mekanikal, sistem kelistrikan, serta konfigurasi dan optimasi hardware komputer. Memiliki kemampuan analisis sistem yang kuat serta pemecahan masalah (troubleshooting) secara cepat dan efektif. Berkomitmen tinggi untuk menerapkan standar ketelitian industri, manajemen operasional yang rapi, dan efisiensi kerja baik dalam peran Quality Engineering, Operator Produksi, maupun manajemen pergudangan (Logistik/Picker).
-            </p>
-        </section>
 
-        <!-- Keahlian Utama -->
+        <!-- INTERACTIVE SKILLS SLIDER -->
         <section id="skills">
-            <h2>Keahlian Utama</h2>
-            <div class="skills-grid">
-                <div class="skills-category">
-                    <h3>Teknis & Hardware</h3>
-                    <ul>
-                        <li>Troubleshooting & Perakitan PC</li>
-                        <li>Optimasi OS & Analisis Bottleneck</li>
-                        <li>Kustomisasi Mekanikal & Otomotif</li>
-                        <li>Konversi Fullwave Kelistrikan</li>
-                    </ul>
-                </div>
-                <div class="skills-category">
-                    <h3>Operasional & Industri</h3>
-                    <ul>
-                        <li>Kendali Mutu (Quality Engineering)</li>
-                        <li>Operator Produksi & Pengemasan</li>
-                        <li>Manajemen Inventaris & Picker Gudang</li>
-                        <li>Pemeliharaan Preventif (Maintenance)</li>
-                    </ul>
-                </div>
-                <div class="skills-category">
-                    <h3>Keahlian Tambahan</h3>
-                    <ul>
-                        <li>Analisis Data & Ketelitian Tinggi</li>
-                        <li>Manajemen Waktu & Kerja Tim</li>
-                        <li>Adaptasi Cepat Dokumentasi Teknis</li>
-                        <li>Pemahaman Bahasa Daerah (Jawa Ngapak)</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Pengalaman Teknis & Proyek -->
-        <section id="experience">
-            <h2>Pengalaman Teknis & Proyek Utama</h2>
-            
-            <div class="timeline-item">
-                <div class="time">Juni 2025 - Sekarang</div>
-                <div class="job-title">Spesialis Konfigurasi Hardware & Optimasi Sistem PC</div>
-                <div class="company">Proyek Mandiri / Profesional Freelance</div>
-                <ul>
-                    <li>Melakukan perakitan, pengujian, dan manajemen aset hardware komputer berspesifikasi tinggi.</li>
-                    <li>Menganalisis dan memecahkan masalah bottleneck pada perangkat keras untuk mencapai efisiensi RAM dan stabilitas sistem yang maksimal.</li>
-                    <li>Melakukan deployment dan kustomisasi sistem operasi Windows minimalis guna memangkas utilisasi daya dan resource yang tidak diperlukan.</li>
-                </ul>
-            </div>
-
-            <div class="timeline-item">
-                <div class="time">Maret 2026 - April 2026</div>
-                <div class="job-title">Perancangan & Troubleshooting Sistem Kelistrikan Kendaraan</div>
-                <div class="company">Proyek Kustomisasi Teknis</div>
-                <ul>
-                    <li>Merancang dan mengonversi kelistrikan sepeda motor ke sistem fullwave murni untuk stabilitas pengisian daya jangka panjang.</li>
-                    <li>Melakukan pemetaan skema elektrikal, kompatibilitas regulator, serta instalasi sistem pencahayaan tambahan dengan perhitungan beban daya yang presisi (menggunakan basis daya baterai MTX9).</li>
-                    <li>Menerapkan metode pemecahan masalah (troubleshooting) kelistrikan untuk mencegah terjadinya arus pendek (short circuit).</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Minat Posisi Target -->
-        <section id="career-objective">
-            <h2>Minat Karir & Relevansi Posisi</h2>
-            <div class="timeline-item">
-                <div class="job-title">Quality Engineer / QC</div>
-                <p class="summary" style="font-size: 0.9rem;">Menerapkan standar inspeksi yang ketat, menganalisis kegagalan sistem atau produk, dan memastikan kualitas output kerja sesuai dengan regulasi.</p>
-            </div>
-            <div class="timeline-item">
-                <div class="job-title">Operator Produksi / Packer</div>
-                <p class="summary" style="font-size: 0.9rem;">Mengoperasikan mesin atau perangkat kerja dengan disiplin K3, menjaga konsistensi kecepatan kerja, dan melakukan pengemasan produk secara rapi serta akurat.</p>
-            </div>
-            <div class="timeline-item">
-                <div class="job-title">Picker / Logistik Gudang</div>
-                <p class="summary" style="font-size: 0.9rem;">Melakukan penyusunan, pencatatan, pengambilan (picking), dan penyortiran barang berdasarkan manifest gudang secara cepat, sistematis, dan minim eror.</p>
-            </div>
-        </section>
-
-        <!-- Workshop & Kontak Rekayasa Baru -->
-                <!-- Bagian Kontak yang Baru (Aman dari Error di Acode) -->
-        <section id="contact">
-            <h2>Hubungi Saya</h2>
-            <div class="workshop-container">
-                <p class="workshop-description">
-                    Saya siap memberikan kontribusi terbaik, tenaga, dan keahlian teknis saya untuk perusahaan Anda. Silakan hubungi saya secara langsung melalui kontak di bawah ini:
+            <div class="section-header">
+                <h2 data-id="Keahlian Utama Saya" data-en="My Core Skills">Keahlian Utama Saya</h2>
+                <p data-id="Geser atau klik tombol panah untuk melihat detail keahlian di setiap bidang" 
+                   data-en="Swipe or click the arrow buttons to explore my skills across different areas">
+                    Geser atau klik tombol panah untuk melihat detail keahlian di setiap bidang
                 </p>
-                <div class="button-group">
-                    <!-- Tombol WhatsApp Langsung Ke Chat -->
-                    <a href="https://api.whatsapp.com/send?phone=6285173333525" target="_blank" class="btn btn-secondary" style="border-color: #25D366; color: #25D366;">
-    💬 Hubungi via WhatsApp
-</a>
-
-                    <!-- Tombol Gmail Langsung Ke Tulis Email -->
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ahmadriyanto1603@gmail.com" target="_blank" class="btn btn-primary">
-                        ✉ Kirim Email Lamaran
-                    </a>
-                </div>
             </div>
-        </section>
 
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev" onclick="moveSlide(-1)" aria-label="Previous Slide">&#10094;</button>
+                <button class="carousel-btn next" onclick="moveSlide(1)" aria-label="Next Slide">&#10095;</button>
 
-    </div>
+                <div class="carousel-viewport" id="carouselViewport">
+                    <div class="carousel-track" id="carouselTrack">
 
-    <footer>
-        <p>&copy; 2026 Ahmad Riyanto. Hak Cipta Dilindungi.</p>
-    </footer>
+                        <!-- SLIDE 1: KOMPUTER & IT -->
+                        <div class="skill-slide">
+                            <div class="slide-image-box">
+                                <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1000&q=80" alt="Komputer & Hardware">
+                                <span class="slide-number">1 / 5 • IT & Hardware</span>
+                            </div>
+                            <div class="slide-content">
+                                <h3 data-id="Komputer, Jaringan & IT Support" data-en="Computer, Networking & IT Support">Komputer, Jaringan & IT Support</h3>
+                                <p data-id="Berpengalaman dalam perakitan komputer spesifikasi tinggi, instalasi & kustomisasi sistem operasi Windows untuk efisiensi performa, analisis bottleneck hardware, serta pemeliharaan jaringan LAN/WAN."
+                                   data-en="Experienced in high-spec PC assembly, Windows OS installation & customization for optimal performance, hardware bottleneck analysis, and LAN/WAN network maintenance.">
+                                    Berpengalaman dalam perakitan komputer spesifikasi tinggi, instalasi & kustomisasi sistem operasi Windows untuk efisiensi performa, analisis bottleneck hardware, serta pemeliharaan jaringan LAN/WAN.
+                                </p>
+                                <div class="skill-tags">
+                                    <span class="skill-tag" data-id="Perakitan & Troubleshooting PC" data-en="PC Assembly & Troubleshooting">Perakitan & Troubleshooting PC</span>
+                                    <span class="skill-tag" data-id="Optimasi OS & RAM" data-en="OS & RAM Optimization">Optimasi OS & RAM</span>
+                                    <span class="skill-tag" data-id="Jaringan LAN/WAN" data-en="LAN/WAN Networking">Jaringan LAN/WAN</span>
+                                    <span class="skill-tag" data-id="Pemeliharaan Sistem" data-en="System Maintenance">Pemeliharaan Sistem</span>
+                                </div>
+                            </div>
+                        </div>
 
-</body>
-</html>
+                        <!-- SLIDE 2: LOGISTIK & GUDANG -->
+                        <div class="skill-slide">
+                            <div class="slide-image-box">
+                                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1000&q=80" alt="Logistik & Pergudangan">
+                                <span class="slide-number">2 / 5 • Logistics & Warehouse</span>
+                            </div>
+                            <div class="slide-content">
+                                <h3 data-id="Operasional Logistik & Pergudangan" data-en="Logistics & Warehouse Operations">Operasional Logistik & Pergudangan</h3>
+                                <p data-id="Menguasai alur kerja pergudangan modern menggunakan Warehouse Management System (WMS), mulai dari pengambilan barang (picking), pengemasan (packing), pemeriksaan (checking), akurasi stok fisik, hingga penggunaan hand pallet sesuai K3."
+                                   data-en="Proficient in modern warehouse workflows using Warehouse Management Systems (WMS), covering order picking, packing, checking, physical inventory accuracy, and safe hand pallet operation.">
+                                    Menguasai alur kerja pergudangan modern menggunakan Warehouse Management System (WMS), mulai dari pengambilan barang (picking), pengemasan (packing), pemeriksaan (checking), akurasi stok fisik, hingga penggunaan hand pallet sesuai K3.
+                                </p>
+                                <div class="skill-tags">
+                                    <span class="skill-tag">Warehouse Management System (WMS)</span>
+                                    <span class="skill-tag">Picking, Packing & Checking</span>
+                                    <span class="skill-tag">Inventory Control</span>
+                                    
