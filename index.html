@@ -6,7 +6,7 @@
 <title>Ahmad Riyanto | Portfolio & CV</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
-let cur = 0;
+let cur = 0, cncPhotos = [], cncIdx = 0;
 function setLanguage(lang) {
     document.documentElement.lang = lang;
     document.getElementById('btn-id').classList.toggle('active', lang === 'id');
@@ -25,6 +25,12 @@ function goToSlide(i) {
     dots.forEach((d, idx) => d.classList.toggle('active', idx === cur));
 }
 function moveSlide(dir) { goToSlide(cur + dir); }
+function nextCncPhoto() {
+    if (cncPhotos.length > 0) {
+        cncIdx = (cncIdx + 1) % cncPhotos.length;
+        document.getElementById('cnc-foto').src = cncPhotos[cncIdx];
+    }
+}
 document.addEventListener('DOMContentLoaded', () => {
     const track = document.getElementById('carouselTrack');
     const dots = document.querySelectorAll('.dot');
@@ -37,12 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, { passive: true });
     }
-    fetch('https://id.wikipedia.org/api/rest_v1/page/summary/CNC')
+    fetch('https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype:bitmap+CNC+machine+shop+hall&gsrlimit=6&prop=imageinfo&iiprop=url&iiurlwidth=900&format=json&origin=*')
         .then(r => r.json())
         .then(d => {
-            const img = document.getElementById('cnc-foto');
-            if (img && (d.originalimage || d.thumbnail)) {
-                img.src = d.originalimage ? d.originalimage.source : d.thumbnail.source;
+            if (d.query && d.query.pages) {
+                const pages = Object.values(d.query.pages).sort((a, b) => a.index - b.index);
+                cncPhotos = pages.map(p => p.imageinfo && (p.imageinfo[0].thumburl || p.imageinfo[0].url)).filter(Boolean);
+                if (cncPhotos.length > 0) document.getElementById('cnc-foto').src = cncPhotos[0];
             }
         }).catch(() => {});
 });
@@ -74,7 +81,7 @@ section{margin-bottom:3.5rem}
 .skill-slide{min-width:100%;scroll-snap-align:start;display:flex;flex-direction:column}
 .slide-image-box{position:relative;height:230px;width:100%;overflow:hidden;background:#0b1120}
 .slide-image-box img{width:100%;height:100%;object-fit:cover;display:block}
-.slide-label{position:absolute;top:12px;left:12px;background:rgba(15,23,42,0.88);color:var(--pri);padding:5px 14px;border-radius:99px;font-size:0.78rem;font-weight:700;border:1px solid rgba(56,189,248,0.35);z-index:5}
+.slide-label{position:absolute;top:12px;left:12px;background:rgba(15,23,42,0.88);color:var(--pri);padding:5px 14px;border-radius:99px;font-size:0.78rem;font-weight:700;border:1px solid rgba(56,189,248,0.35);z-index:5;cursor:pointer}
 .slide-content{padding:1.5rem}
 .slide-content h3{font-size:1.25rem;font-weight:700;margin-bottom:0.6rem}
 .slide-content p{color:var(--mut);font-size:0.92rem;margin-bottom:1.1rem}
@@ -142,11 +149,11 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
 
             <div class="carousel-track" id="carouselTrack">
 
-                <!-- SLIDE 1: CNC MACHINE (FOTO ASLI MESIN CNC) -->
+                <!-- SLIDE 1: GUDANG / PABRIK MESIN CNC -->
                 <div class="skill-slide">
                     <div class="slide-image-box">
-                        <span class="slide-label" data-en="Manufacturing & CNC Machining">Manufaktur & Mesin CNC</span>
-                        <img id="cnc-foto" src="https://commons.wikimedia.org/wiki/Special:FilePath/CNC_lathe.jpg" alt="Mesin CNC">
+                        <span class="slide-label" onclick="nextCncPhoto()" title="Ketuk untuk ganti sudut foto" data-en="Manufacturing & CNC Machining">Manufaktur & Mesin CNC</span>
+                        <img id="cnc-foto" src="https://commons.wikimedia.org/wiki/Special:FilePath/Machine_shop.jpg" alt="Gudang Mesin CNC">
                     </div>
                     <div class="slide-content">
                         <h3 data-en="CNC Machine Production Operator">Operator Produksi Mesin CNC</h3>
@@ -160,7 +167,7 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
                     </div>
                 </div>
 
-                <!-- SLIDE 2: GUDANG -->
+                <!-- SLIDE 2: GUDANG LOGISTIK -->
                 <div class="skill-slide">
                     <div class="slide-image-box">
                         <span class="slide-label" data-en="Logistics & Warehouse">Logistik & Pergudangan</span>
@@ -261,8 +268,8 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
             </div>
         </div>
     </section>
-    
-   <!-- PENDIDIKAN -->
+
+    <!-- PENDIDIKAN -->
     <section id="education">
         <div class="section-header">
             <h2 data-en="Education">Pendidikan</h2>
