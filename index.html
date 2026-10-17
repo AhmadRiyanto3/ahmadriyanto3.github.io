@@ -31,7 +31,7 @@ function nextCncPhoto() {
         document.getElementById('cnc-foto').src = cncPhotos[cncIdx];
     }
 }
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const track = document.getElementById('carouselTrack');
     const dots = document.querySelectorAll('.dot');
     if (track) {
@@ -43,15 +43,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, { passive: true });
     }
-    fetch('https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype:bitmap+CNC+machine+shop+hall&gsrlimit=6&prop=imageinfo&iiprop=url&iiurlwidth=900&format=json&origin=*')
-        .then(r => r.json())
-        .then(d => {
-            if (d.query && d.query.pages) {
-                const pages = Object.values(d.query.pages).sort((a, b) => a.index - b.index);
-                cncPhotos = pages.map(p => p.imageinfo && (p.imageinfo[0].thumburl || p.imageinfo[0].url)).filter(Boolean);
-                if (cncPhotos.length > 0) document.getElementById('cnc-foto').src = cncPhotos[0];
-            }
-        }).catch(() => {});
+    const urls = [];
+    const wikiPages = [
+        'https://en.wikipedia.org/api/rest_v1/page/summary/Machine_shop',
+        'https://id.wikipedia.org/api/rest_v1/page/summary/CNC',
+        'https://en.wikipedia.org/api/rest_v1/page/summary/Numerical_control',
+        'https://en.wikipedia.org/api/rest_v1/page/summary/Machining'
+    ];
+    for (const u of wikiPages) {
+        try {
+            const r = await fetch(u);
+            const d = await r.json();
+            if (d.originalimage && d.originalimage.source) urls.push(d.originalimage.source);
+            else if (d.thumbnail && d.thumbnail.source) urls.push(d.thumbnail.source);
+        } catch (e) {}
+    }
+    try {
+        const r = await fetch('https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype:bitmap+CNC+milling&gsrlimit=6&prop=imageinfo&iiprop=url&iiurlwidth=900&format=json&origin=*');
+        const d = await r.json();
+        if (d.query && d.query.pages) {
+            Object.values(d.query.pages).forEach(p => {
+                if (p.imageinfo && p.imageinfo[0]) urls.push(p.imageinfo[0].thumburl || p.imageinfo[0].url);
+            });
+        }
+    } catch (e) {}
+    cncPhotos = urls.filter(Boolean);
+    if (cncPhotos.length > 0) document.getElementById('cnc-foto').src = cncPhotos[0];
 });
 </script>
 <style>
@@ -81,7 +98,8 @@ section{margin-bottom:3.5rem}
 .skill-slide{min-width:100%;scroll-snap-align:start;display:flex;flex-direction:column}
 .slide-image-box{position:relative;height:230px;width:100%;overflow:hidden;background:#0b1120}
 .slide-image-box img{width:100%;height:100%;object-fit:cover;display:block}
-.slide-label{position:absolute;top:12px;left:12px;background:rgba(15,23,42,0.88);color:var(--pri);padding:5px 14px;border-radius:99px;font-size:0.78rem;font-weight:700;border:1px solid rgba(56,189,248,0.35);z-index:5;cursor:pointer}
+.slide-label{position:absolute;top:12px;left:12px;background:rgba(15,23,42,0.88);color:var(--pri);padding:5px 14px;border-radius:99px;font-size:0.78rem;font-weight:700;border:1px solid rgba(56,189,248,0.35);z-index:5}
+.photo-btn{position:absolute;top:12px;right:12px;background:rgba(15,23,42,0.88);color:var(--txt);padding:5px 12px;border-radius:99px;font-size:0.75rem;font-weight:600;border:1px solid rgba(255,255,255,0.2);z-index:5;cursor:pointer}
 .slide-content{padding:1.5rem}
 .slide-content h3{font-size:1.25rem;font-weight:700;margin-bottom:0.6rem}
 .slide-content p{color:var(--mut);font-size:0.92rem;margin-bottom:1.1rem}
@@ -152,8 +170,9 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
                 <!-- SLIDE 1: GUDANG / PABRIK MESIN CNC -->
                 <div class="skill-slide">
                     <div class="slide-image-box">
-                        <span class="slide-label" onclick="nextCncPhoto()" title="Ketuk untuk ganti sudut foto" data-en="Manufacturing & CNC Machining">Manufaktur & Mesin CNC</span>
-                        <img id="cnc-foto" src="https://commons.wikimedia.org/wiki/Special:FilePath/Machine_shop.jpg" alt="Gudang Mesin CNC">
+                        <span class="slide-label" data-en="Manufacturing & CNC Machining">Manufaktur & Mesin CNC</span>
+                        <button type="button" class="photo-btn" onclick="nextCncPhoto()">🔄 Ganti Foto</button>
+                        <img id="cnc-foto" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80" alt="Mesin CNC">
                     </div>
                     <div class="slide-content">
                         <h3 data-en="CNC Machine Production Operator">Operator Produksi Mesin CNC</h3>
@@ -212,8 +231,7 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
             </div>
         </div>
     </section>
-
-    <!-- PENGALAMAN KERJA -->
+        <!-- PENGALAMAN KERJA -->
     <section id="experience">
         <div class="section-header">
             <h2 data-en="Work Experience & Technical Projects">Pengalaman Kerja & Proyek Teknis</h2>
