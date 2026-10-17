@@ -40,63 +40,63 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <style>
-:root { --bg:#0f172a; --card:#1e293b; --pri:#38bdf8; --acc:#22c55e; --txt:#f8fafc; --mut:#94a3b8; --bdr:rgba(255,255,255,0.08); }
-* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
-body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--txt); line-height:1.6; overflow-x:hidden; }
-nav { position:sticky; top:0; z-index:100; background:rgba(15,23,42,0.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--bdr); padding:0.9rem 5%; display:flex; justify-content:space-between; align-items:center; }
-.logo { font-size:1.15rem; font-weight:800; color:var(--txt); text-decoration:none; }
-.logo span { color:var(--pri); }
-.lang-switch { display:flex; background:var(--card); border:1px solid rgba(56,189,248,0.35); border-radius:99px; padding:3px; }
-.lang-btn { background:transparent; border:none; color:var(--mut); font-family:inherit; font-weight:700; font-size:0.82rem; padding:6px 14px; border-radius:99px; cursor:pointer; }
-.lang-btn.active { background:var(--pri); color:#0f172a; }
-header { padding:3rem 5% 2rem; max-width:920px; margin:0 auto; text-align:center; }
-.badge { display:inline-block; background:rgba(56,189,248,0.12); color:var(--pri); border:1px solid rgba(56,189,248,0.3); padding:6px 16px; border-radius:99px; font-size:0.82rem; font-weight:700; margin-bottom:1rem; }
-header h1 { font-size:clamp(2rem,5vw,3rem); font-weight:800; margin-bottom:0.8rem; }
-header h1 span { color:var(--pri); }
-header p { color:var(--mut); max-width:700px; margin:0 auto 1.3rem; font-size:0.95rem; }
-.hero-meta { display:flex; justify-content:center; flex-wrap:wrap; gap:1rem; color:var(--mut); font-size:0.85rem; }
-.container { max-width:900px; margin:0 auto; padding:0 5% 4rem; }
-section { margin-bottom:3.5rem; }
-.section-header { text-align:center; margin-bottom:1.5rem; }
-.section-header h2 { font-size:1.5rem; font-weight:800; margin-bottom:0.3rem; }
-.section-header p { color:var(--mut); font-size:0.88rem; }
-.carousel-wrapper { position:relative; max-width:680px; margin:0 auto; }
-.carousel-track { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; -webkit-overflow-scrolling:touch; scrollbar-width:none; border-radius:16px; border:1px solid var(--bdr); background:var(--card); box-shadow:0 16px 36px rgba(0,0,0,0.35); }
-.carousel-track::-webkit-scrollbar { display:none; }
-.skill-slide { min-width:100%; scroll-snap-align:start; display:flex; flex-direction:column; }
-.slide-image-box { position:relative; height:220px; width:100%; overflow:hidden; background:#0b1120; }
-.slide-image-box img { width:100%; height:100%; object-fit:cover; }
-.slide-label { position:absolute; top:12px; left:12px; background:rgba(15,23,42,0.88); color:var(--pri); padding:5px 14px; border-radius:99px; font-size:0.78rem; font-weight:700; border:1px solid rgba(56,189,248,0.35); }
-.slide-content { padding:1.5rem; }
-.slide-content h3 { font-size:1.25rem; font-weight:700; margin-bottom:0.6rem; }
-.slide-content p { color:var(--mut); font-size:0.92rem; margin-bottom:1.1rem; }
-.skill-tags { display:flex; flex-wrap:wrap; gap:0.45rem; }
-.skill-tag { background:rgba(56,189,248,0.1); color:var(--pri); border:1px solid rgba(56,189,248,0.25); padding:6px 12px; border-radius:8px; font-size:0.78rem; font-weight:600; }
-.carousel-btn { position:absolute; top:110px; transform:translateY(-50%); width:40px; height:40px; border-radius:50%; background:rgba(15,23,42,0.85); color:var(--txt); border:1px solid rgba(56,189,248,0.5); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1rem; z-index:20; }
-.carousel-btn.prev { left:10px; }
-.carousel-btn.next { right:10px; }
-.carousel-dots { display:flex; justify-content:center; gap:8px; margin-top:1rem; }
-.dot { width:10px; height:10px; border-radius:99px; background:rgba(255,255,255,0.25); border:none; cursor:pointer; transition:0.3s; }
-.dot.active { width:28px; background:var(--pri); }
-.timeline { display:grid; gap:1.2rem; }
-.card { background:var(--card); border:1px solid var(--bdr); border-radius:16px; padding:1.4rem; }
-.card-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
-.card-title { font-size:1.08rem; font-weight:700; }
-.card-subtitle { color:var(--pri); font-weight:600; font-size:0.88rem; }
-.card-date { background:rgba(255,255,255,0.06); color:var(--mut); padding:4px 10px; border-radius:99px; font-size:0.76rem; font-weight:600; }
-.card ul { padding-left:1.15rem; color:var(--mut); font-size:0.9rem; }
-.card ul li { margin-bottom:0.4rem; }
-.roles-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1rem; }
-.role-card { background:var(--card); border:1px solid var(--bdr); border-radius:16px; padding:1.3rem; }
-.role-card h3 { color:var(--pri); font-size:1rem; margin-bottom:0.4rem; }
-.role-card p { color:var(--mut); font-size:0.88rem; }
-.contact-box { background:var(--card); border:1px solid rgba(56,189,248,0.25); border-radius:16px; padding:2rem 1.4rem; text-align:center; }
-.contact-box p { color:var(--mut); max-width:540px; margin:0.5rem auto 1.4rem; font-size:0.9rem; }
-.btn-group { display:flex; justify-content:center; flex-wrap:wrap; gap:0.8rem; }
-.btn { display:inline-flex; align-items:center; gap:0.5rem; padding:0.78rem 1.35rem; border-radius:12px; font-weight:700; font-size:0.88rem; text-decoration:none; }
-.btn-wa { background:var(--acc); color:#052e16; }
-.btn-email { background:var(--pri); color:#0f172a; }
-footer { text-align:center; padding:1.5rem 5%; border-top:1px solid var(--bdr); color:var(--mut); font-size:0.8rem; }
+:root{--bg:#0f172a;--card:#1e293b;--pri:#38bdf8;--acc:#22c55e;--txt:#f8fafc;--mut:#94a3b8;--bdr:rgba(255,255,255,0.08)}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;overflow-x:hidden}
+nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--bdr);padding:0.9rem 5%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:1.15rem;font-weight:800;color:var(--txt);text-decoration:none}
+.logo span{color:var(--pri)}
+.lang-switch{display:flex;background:var(--card);border:1px solid rgba(56,189,248,0.35);border-radius:99px;padding:3px}
+.lang-btn{background:transparent;border:none;color:var(--mut);font-family:inherit;font-weight:700;font-size:0.82rem;padding:6px 14px;border-radius:99px;cursor:pointer}
+.lang-btn.active{background:var(--pri);color:#0f172a}
+header{padding:3rem 5% 2rem;max-width:920px;margin:0 auto;text-align:center}
+.badge{display:inline-block;background:rgba(56,189,248,0.12);color:var(--pri);border:1px solid rgba(56,189,248,0.3);padding:6px 16px;border-radius:99px;font-size:0.82rem;font-weight:700;margin-bottom:1rem}
+header h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:0.8rem}
+header h1 span{color:var(--pri)}
+header p{color:var(--mut);max-width:700px;margin:0 auto 1.3rem;font-size:0.95rem}
+.hero-meta{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;color:var(--mut);font-size:0.85rem}
+.container{max-width:900px;margin:0 auto;padding:0 5% 4rem}
+section{margin-bottom:3.5rem}
+.section-header{text-align:center;margin-bottom:1.5rem}
+.section-header h2{font-size:1.5rem;font-weight:800;margin-bottom:0.3rem}
+.section-header p{color:var(--mut);font-size:0.88rem}
+.carousel-wrapper{position:relative;max-width:680px;margin:0 auto}
+.carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-radius:16px;border:1px solid var(--bdr);background:var(--card);box-shadow:0 16px 36px rgba(0,0,0,0.35)}
+.carousel-track::-webkit-scrollbar{display:none}
+.skill-slide{min-width:100%;scroll-snap-align:start;display:flex;flex-direction:column}
+.slide-image-box{position:relative;height:225px;width:100%;overflow:hidden;background:#0b1120}
+.slide-image-box img,.slide-image-box svg{width:100%;height:100%;object-fit:cover;display:block}
+.slide-label{position:absolute;top:12px;left:12px;background:rgba(15,23,42,0.88);color:var(--pri);padding:5px 14px;border-radius:99px;font-size:0.78rem;font-weight:700;border:1px solid rgba(56,189,248,0.35);z-index:5}
+.slide-content{padding:1.5rem}
+.slide-content h3{font-size:1.25rem;font-weight:700;margin-bottom:0.6rem}
+.slide-content p{color:var(--mut);font-size:0.92rem;margin-bottom:1.1rem}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.45rem}
+.skill-tag{background:rgba(56,189,248,0.1);color:var(--pri);border:1px solid rgba(56,189,248,0.25);padding:6px 12px;border-radius:8px;font-size:0.78rem;font-weight:600}
+.carousel-btn{position:absolute;top:112px;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(15,23,42,0.85);color:var(--txt);border:1px solid rgba(56,189,248,0.5);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;z-index:20}
+.carousel-btn.prev{left:10px}
+.carousel-btn.next{right:10px}
+.carousel-dots{display:flex;justify-content:center;gap:8px;margin-top:1rem}
+.dot{width:10px;height:10px;border-radius:99px;background:rgba(255,255,255,0.25);border:none;cursor:pointer;transition:0.3s}
+.dot.active{width:28px;background:var(--pri)}
+.timeline{display:grid;gap:1.2rem}
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:1.4rem}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem}
+.card-title{font-size:1.08rem;font-weight:700}
+.card-subtitle{color:var(--pri);font-weight:600;font-size:0.88rem}
+.card-date{background:rgba(255,255,255,0.06);color:var(--mut);padding:4px 10px;border-radius:99px;font-size:0.76rem;font-weight:600}
+.card ul{padding-left:1.15rem;color:var(--mut);font-size:0.9rem}
+.card ul li{margin-bottom:0.4rem}
+.roles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+.role-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:1.3rem}
+.role-card h3{color:var(--pri);font-size:1rem;margin-bottom:0.4rem}
+.role-card p{color:var(--mut);font-size:0.88rem}
+.contact-box{background:var(--card);border:1px solid rgba(56,189,248,0.25);border-radius:16px;padding:2rem 1.4rem;text-align:center}
+.contact-box p{color:var(--mut);max-width:540px;margin:0.5rem auto 1.4rem;font-size:0.9rem}
+.btn-group{display:flex;justify-content:center;flex-wrap:wrap;gap:0.8rem}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.78rem 1.35rem;border-radius:12px;font-weight:700;font-size:0.88rem;text-decoration:none}
+.btn-wa{background:var(--acc);color:#052e16}
+.btn-email{background:var(--pri);color:#0f172a}
+footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color:var(--mut);font-size:0.8rem}
 </style>
 </head>
 <body>
@@ -134,11 +134,66 @@ footer { text-align:center; padding:1.5rem 5%; border-top:1px solid var(--bdr); 
 
             <div class="carousel-track" id="carouselTrack">
 
-                <!-- SLIDE 1: CNC -->
+                <!-- SLIDE 1: CNC MACHINE (DENGAN VISUAL MESIN CNC KABIN & MONITOR KONTROL) -->
                 <div class="skill-slide">
                     <div class="slide-image-box">
-                        <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=80" alt="Mesin CNC & Manufaktur">
                         <span class="slide-label" data-en="Manufacturing & CNC Machining">Manufaktur & Mesin CNC</span>
+                        <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                            <defs>
+                                <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+                                <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#cbd5e1"/></linearGradient>
+                                <linearGradient id="door" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3a8a"/><stop offset="100%" stop-color="#0f172a"/></linearGradient>
+                                <linearGradient id="win" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.35"/><stop offset="100%" stop-color="#0284c7" stop-opacity="0.1"/></linearGradient>
+                            </defs>
+                            <rect width="800" height="400" fill="url(#bg)"/>
+                            <!-- Lantai & Garis Pabrik -->
+                            <polygon points="0,340 800,340 800,400 0,400" fill="#090d16"/>
+                            <line x1="0" y1="340" x2="800" y2="340" stroke="#38bdf8" stroke-width="2" stroke-opacity="0.3"/>
+                            <!-- Lampu Indikator Atas -->
+                            <rect x="235" y="22" width="12" height="32" rx="4" fill="#334155"/>
+                            <circle cx="241" cy="28" r="5" fill="#22c55e"/>
+                            <circle cx="241" cy="40" r="5" fill="#38bdf8"/>
+                            <!-- Base Bawah Mesin CNC -->
+                            <polygon points="150,310 565,310 580,355 135,355" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                            <rect x="155" y="322" width="405" height="22" fill="#0f172a"/>
+                            <!-- Bodi Utama Kabin Putih (Model VE 1020 / Haas) -->
+                            <rect x="155" y="52" width="405" height="260" rx="6" fill="url(#body)" stroke="#94a3b8" stroke-width="2"/>
+                            <!-- Panel Samping Kiri -->
+                            <rect x="172" y="95" width="52" height="175" rx="4" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                            <rect x="180" y="105" width="36" height="155" fill="#0ea5e9" fill-opacity="0.2"/>
+                            <!-- Label Seri Mesin -->
+                            <rect x="242" y="68" width="95" height="26" rx="4" fill="#0f172a"/>
+                            <text x="290" y="85" fill="#38bdf8" font-family="sans-serif" font-size="13" font-weight="800" text-anchor="middle">CNC VMC-20</text>
+                            <!-- Pintu Geser Biru Tua Ganda -->
+                            <rect x="350" y="75" width="195" height="225" rx="4" fill="url(#door)" stroke="#334155" stroke-width="2"/>
+                            <line x1="447" y1="75" x2="447" y2="300" stroke="#090d16" stroke-width="3"/>
+                            <!-- Ruang Dalam Mesin & Spindle CNC (Terlihat dari Kaca) -->
+                            <rect x="368" y="102" width="66" height="135" rx="4" fill="#090d16" stroke="#64748b" stroke-width="2"/>
+                            <rect x="460" y="102" width="66" height="135" rx="4" fill="#090d16" stroke="#64748b" stroke-width="2"/>
+                            <!-- Spindle Head & Benda Kerja di Dalam Kaca -->
+                            <rect x="430" y="105" width="34" height="45" fill="#94a3b8"/>
+                            <polygon points="438,150 456,150 451,182 443,182" fill="#38bdf8"/>
+                            <rect x="395" y="192" width="105" height="22" fill="#64748b"/>
+                            <rect x="380" y="214" width="135" height="14" fill="#334155"/>
+                            <!-- Efek Kaca Pintu -->
+                            <rect x="368" y="102" width="66" height="135" rx="4" fill="url(#win)"/>
+                            <rect x="460" y="102" width="66" height="135" rx="4" fill="url(#win)"/>
+                            <!-- Handle Pintu -->
+                            <rect x="436" y="155" width="5" height="36" rx="2" fill="#e2e8f0"/>
+                            <rect x="453" y="155" width="5" height="36" rx="2" fill="#e2e8f0"/>
+                            <!-- Lengan & Panel Monitor Kontrol CNC (Kanan) -->
+                            <path d="M560,115 L605,115 L605,145" fill="none" stroke="#475569" stroke-width="10" stroke-linecap="round"/>
+                            <rect x="572" y="135" width="96" height="130" rx="6" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+                            <!-- Layar Koordinat Digital CNC -->
+                            <rect x="582" y="146" width="76" height="52" rx="3" fill="#090d16" stroke="#38bdf8" stroke-width="1.5"/>
+                            <text x="588" y="162" fill="#22c55e" font-family="monospace" font-size="10" font-weight="bold">X: 125.040</text>
+                            <text x="588" y="175" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">Y: 080.000</text>
+                            <text x="588" y="188" fill="#facc15" font-family="monospace" font-size="10" font-weight="bold">Z: -14.500</text>
+                            <!-- Tombol Panel & Emergency Stop -->
+                            <rect x="582" y="206" width="48" height="44" rx="2" fill="#1e293b"/>
+                            <circle cx="644" cy="218" r="8" fill="#ef4444" stroke="#fef08a" stroke-width="2"/>
+                            <circle cx="644" cy="240" r="9" fill="#0f172a" stroke="#94a3b8" stroke-width="1.5"/>
+                        </svg>
                     </div>
                     <div class="slide-content">
                         <h3 data-en="CNC Machine Production Operator">Operator Produksi Mesin CNC</h3>
@@ -197,8 +252,7 @@ footer { text-align:center; padding:1.5rem 5%; border-top:1px solid var(--bdr); 
             </div>
         </div>
     </section>
-
-    <!-- PENGALAMAN KERJA -->
+        <!-- PENGALAMAN KERJA -->
     <section id="experience">
         <div class="section-header">
             <h2 data-en="Work Experience & Technical Projects">Pengalaman Kerja & Proyek Teknis</h2>
@@ -253,7 +307,8 @@ footer { text-align:center; padding:1.5rem 5%; border-top:1px solid var(--bdr); 
             </div>
         </div>
     </section>
-        <!-- PENDIDIKAN -->
+
+    <!-- PENDIDIKAN -->
     <section id="education">
         <div class="section-header">
             <h2 data-en="Education">Pendidikan</h2>
