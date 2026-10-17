@@ -6,7 +6,7 @@
 <title>Ahmad Riyanto | Portfolio & CV</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
-let cur = 0, cncPhotos = [], cncIdx = 0;
+let cur = 0;
 function setLanguage(lang) {
     document.documentElement.lang = lang;
     document.getElementById('btn-id').classList.toggle('active', lang === 'id');
@@ -25,12 +25,6 @@ function goToSlide(i) {
     dots.forEach((d, idx) => d.classList.toggle('active', idx === cur));
 }
 function moveSlide(dir) { goToSlide(cur + dir); }
-function nextCncPhoto() {
-    if (cncPhotos.length > 0) {
-        cncIdx = (cncIdx + 1) % cncPhotos.length;
-        document.getElementById('cnc-foto').src = cncPhotos[cncIdx];
-    }
-}
 document.addEventListener('DOMContentLoaded', async () => {
     const track = document.getElementById('carouselTrack');
     const dots = document.querySelectorAll('.dot');
@@ -43,32 +37,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }, { passive: true });
     }
-    const urls = [];
-    const wikiPages = [
-        'https://en.wikipedia.org/api/rest_v1/page/summary/Machine_shop',
-        'https://id.wikipedia.org/api/rest_v1/page/summary/CNC',
-        'https://en.wikipedia.org/api/rest_v1/page/summary/Numerical_control',
-        'https://en.wikipedia.org/api/rest_v1/page/summary/Machining'
-    ];
-    for (const u of wikiPages) {
-        try {
-            const r = await fetch(u);
-            const d = await r.json();
-            if (d.originalimage && d.originalimage.source) urls.push(d.originalimage.source);
-            else if (d.thumbnail && d.thumbnail.source) urls.push(d.thumbnail.source);
-        } catch (e) {}
-    }
     try {
-        const r = await fetch('https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=filetype:bitmap+CNC+milling&gsrlimit=6&prop=imageinfo&iiprop=url&iiurlwidth=900&format=json&origin=*');
+        const q = encodeURIComponent('filetype:bitmap CNC (factory OR hall OR machines OR production) -machinist -worker -operator -person -people -navy -man -woman -training -wood');
+        const r = await fetch('https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=' + q + '&gsrlimit=15&prop=imageinfo&iiprop=url|dimensions|extmetadata&iiurlwidth=900&format=json&origin=*');
         const d = await r.json();
         if (d.query && d.query.pages) {
-            Object.values(d.query.pages).forEach(p => {
-                if (p.imageinfo && p.imageinfo[0]) urls.push(p.imageinfo[0].thumburl || p.imageinfo[0].url);
-            });
+            const bad = /machinist|worker|operator|person|people|man|woman|navy|military|portrait|human|student|boy|girl|wood|laser|plasma/i;
+            const list = Object.values(d.query.pages)
+                .sort((a, b) => a.index - b.index)
+                .filter(p => {
+                    if (!p.imageinfo || !p.imageinfo[0]) return false;
+                    const info = p.imageinfo[0];
+                    if (info.width < info.height) return false;
+                    const meta = JSON.stringify(info.extmetadata || {}) + ' ' + p.title;
+                    return !bad.test(meta);
+                });
+            if (list.length > 0) {
+                document.getElementById('cnc-foto').src = list[0].imageinfo[0].thumburl || list[0].imageinfo[0].url;
+            }
         }
     } catch (e) {}
-    cncPhotos = urls.filter(Boolean);
-    if (cncPhotos.length > 0) document.getElementById('cnc-foto').src = cncPhotos[0];
 });
 </script>
 <style>
@@ -99,7 +87,6 @@ section{margin-bottom:3.5rem}
 .slide-image-box{position:relative;height:230px;width:100%;overflow:hidden;background:#0b1120}
 .slide-image-box img{width:100%;height:100%;object-fit:cover;display:block}
 .slide-label{position:absolute;top:12px;left:12px;background:rgba(15,23,42,0.88);color:var(--pri);padding:5px 14px;border-radius:99px;font-size:0.78rem;font-weight:700;border:1px solid rgba(56,189,248,0.35);z-index:5}
-.photo-btn{position:absolute;top:12px;right:12px;background:rgba(15,23,42,0.88);color:var(--txt);padding:5px 12px;border-radius:99px;font-size:0.75rem;font-weight:600;border:1px solid rgba(255,255,255,0.2);z-index:5;cursor:pointer}
 .slide-content{padding:1.5rem}
 .slide-content h3{font-size:1.25rem;font-weight:700;margin-bottom:0.6rem}
 .slide-content p{color:var(--mut);font-size:0.92rem;margin-bottom:1.1rem}
@@ -171,8 +158,7 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
                 <div class="skill-slide">
                     <div class="slide-image-box">
                         <span class="slide-label" data-en="Manufacturing & CNC Machining">Manufaktur & Mesin CNC</span>
-                        <button type="button" class="photo-btn" onclick="nextCncPhoto()">🔄 Ganti Foto</button>
-                        <img id="cnc-foto" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80" alt="Mesin CNC">
+                        <img id="cnc-foto" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect width='800' height='400' fill='%230b1120'/%3E%3C/svg%3E" alt="Gudang Mesin CNC">
                     </div>
                     <div class="slide-content">
                         <h3 data-en="CNC Machine Production Operator">Operator Produksi Mesin CNC</h3>
