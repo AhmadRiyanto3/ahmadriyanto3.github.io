@@ -84,54 +84,62 @@ nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,0.92);backdrop-fi
 .lang-switch{display:flex;background:var(--card);border:1px solid rgba(56,189,248,0.35);border-radius:99px;padding:3px}
 .lang-btn{background:transparent;border:none;color:var(--mut);font-family:inherit;font-weight:700;font-size:0.82rem;padding:6px 14px;border-radius:99px;cursor:pointer}
 .lang-btn.active{background:var(--pri);color:#0f172a}
-header{padding:3rem 5% 2rem;max-width:920px;margin:0 auto;text-align:center}
-.badge{display:inline-block;background:rgba(56,189,248,0.12);color:var(--pri);border:1px solid rgba(56,189,248,0.3);padding:6px 16px;border-radius:99px;font-size:0.82rem;font-weight:700;margin-bottom:1rem}
-header h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:0.8rem}
+header{padding:2.6rem 5% 1.8rem;max-width:920px;margin:0 auto;text-align:center}
+.status-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.3);padding:5px 14px;border-radius:99px;font-size:0.78rem;font-weight:700;margin-bottom:0.75rem}
+.pulse{width:8px;height:8px;background:#22c55e;border-radius:50%;box-shadow:0 0 0 rgba(34,197,94,0.7);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.badge{display:block;width:fit-content;margin:0 auto 0.9rem;background:rgba(56,189,248,0.12);color:var(--pri);border:1px solid rgba(56,189,248,0.3);padding:6px 16px;border-radius:99px;font-size:0.82rem;font-weight:700}
+header h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:0.75rem}
 header h1 span{color:var(--pri)}
-header p{color:var(--mut);max-width:700px;margin:0 auto 1.3rem;font-size:0.95rem}
-.hero-meta{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;color:var(--mut);font-size:0.85rem}
-.container{max-width:900px;margin:0 auto;padding:0 5% 4rem}
+header p{color:var(--mut);max-width:700px;margin:0 auto 1.2rem;font-size:0.94rem}
+.hero-meta{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;color:var(--mut);font-size:0.84rem;margin-bottom:1.8rem}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem;max-width:680px;margin:0 auto}
+@media(min-width:640px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-box{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:0.9rem 0.6rem;text-align:center}
+.stat-num{font-size:1.25rem;font-weight:800;color:var(--pri);line-height:1.2;margin-bottom:0.2rem}
+.stat-lbl{font-size:0.75rem;color:var(--mut);font-weight:600}
+.container{max-width:900px;margin:0 auto;padding:0.5rem 5% 4rem}
 section{margin-bottom:3.5rem}
 .section-header{text-align:center;margin-bottom:1.5rem}
-.section-header h2{font-size:1.5rem;font-weight:800;margin-bottom:0.3rem}
-.section-header p{color:var(--mut);font-size:0.88rem}
+.section-header h2{font-size:1.45rem;font-weight:800;margin-bottom:0.3rem}
+.section-header p{color:var(--mut);font-size:0.86rem}
 .carousel-wrapper{position:relative;max-width:680px;margin:0 auto}
 .carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-radius:16px;border:1px solid var(--bdr);background:var(--card);box-shadow:0 16px 36px rgba(0,0,0,0.35)}
 .carousel-track::-webkit-scrollbar{display:none}
 .skill-slide{min-width:100%;scroll-snap-align:start;display:flex;flex-direction:column}
-.slide-image-box{position:relative;height:230px;width:100%;overflow:hidden;background:#0b1120}
+.slide-image-box{position:relative;height:225px;width:100%;overflow:hidden;background:#0b1120}
 .slide-image-box img{width:100%;height:100%;object-fit:cover;display:block}
 .slide-label{position:absolute;top:12px;left:12px;background:rgba(15,23,42,0.88);color:var(--pri);padding:5px 14px;border-radius:99px;font-size:0.78rem;font-weight:700;border:1px solid rgba(56,189,248,0.35);z-index:5}
-.slide-content{padding:1.5rem}
-.slide-content h3{font-size:1.25rem;font-weight:700;margin-bottom:0.6rem}
-.slide-content p{color:var(--mut);font-size:0.92rem;margin-bottom:1.1rem}
+.slide-content{padding:1.45rem}
+.slide-content h3{font-size:1.22rem;font-weight:700;margin-bottom:0.55rem}
+.slide-content p{color:var(--mut);font-size:0.91rem;margin-bottom:1.05rem}
 .skill-tags{display:flex;flex-wrap:wrap;gap:0.45rem}
-.skill-tag{background:rgba(56,189,248,0.1);color:var(--pri);border:1px solid rgba(56,189,248,0.25);padding:6px 12px;border-radius:8px;font-size:0.78rem;font-weight:600}
-.carousel-btn{position:absolute;top:115px;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(15,23,42,0.85);color:var(--txt);border:1px solid rgba(56,189,248,0.5);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;z-index:20}
+.skill-tag{background:rgba(56,189,248,0.1);color:var(--pri);border:1px solid rgba(56,189,248,0.25);padding:5px 11px;border-radius:8px;font-size:0.77rem;font-weight:600}
+.carousel-btn{position:absolute;top:112px;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(15,23,42,0.85);color:var(--txt);border:1px solid rgba(56,189,248,0.5);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;z-index:20}
 .carousel-btn.prev{left:10px}
 .carousel-btn.next{right:10px}
 .carousel-dots{display:flex;justify-content:center;gap:8px;margin-top:1rem}
 .dot{width:10px;height:10px;border-radius:99px;background:rgba(255,255,255,0.25);border:none;cursor:pointer;transition:0.3s}
 .dot.active{width:28px;background:var(--pri)}
-.timeline{display:grid;gap:1.2rem}
-.card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:1.4rem}
-.card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem}
-.card-title{font-size:1.08rem;font-weight:700}
-.card-subtitle{color:var(--pri);font-weight:600;font-size:0.88rem}
-.card-date{background:rgba(255,255,255,0.06);color:var(--mut);padding:4px 10px;border-radius:99px;font-size:0.76rem;font-weight:600}
-.card ul{padding-left:1.15rem;color:var(--mut);font-size:0.9rem}
-.card ul li{margin-bottom:0.4rem}
-.roles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
-.role-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:1.3rem}
-.role-card h3{color:var(--pri);font-size:1rem;margin-bottom:0.4rem}
-.role-card p{color:var(--mut);font-size:0.88rem}
-.contact-box{background:var(--card);border:1px solid rgba(56,189,248,0.25);border-radius:16px;padding:2rem 1.4rem;text-align:center}
-.contact-box p{color:var(--mut);max-width:540px;margin:0.5rem auto 1.4rem;font-size:0.9rem}
+.timeline{display:grid;gap:1.15rem}
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:1.35rem}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.7rem}
+.card-title{font-size:1.06rem;font-weight:700}
+.card-subtitle{color:var(--pri);font-weight:600;font-size:0.86rem}
+.card-date{background:rgba(255,255,255,0.06);color:var(--mut);padding:4px 10px;border-radius:99px;font-size:0.75rem;font-weight:600}
+.card ul{padding-left:1.15rem;color:var(--mut);font-size:0.89rem}
+.card ul li{margin-bottom:0.38rem}
+.roles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0.95rem}
+.role-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:1.25rem}
+.role-card h3{color:var(--pri);font-size:0.98rem;margin-bottom:0.4rem}
+.role-card p{color:var(--mut);font-size:0.87rem}
+.contact-box{background:var(--card);border:1px solid rgba(56,189,248,0.25);border-radius:16px;padding:1.9rem 1.3rem;text-align:center}
+.contact-box p{color:var(--mut);max-width:540px;margin:0.5rem auto 1.3rem;font-size:0.89rem}
 .btn-group{display:flex;justify-content:center;flex-wrap:wrap;gap:0.8rem}
-.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.78rem 1.35rem;border-radius:12px;font-weight:700;font-size:0.88rem;text-decoration:none}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.3rem;border-radius:12px;font-weight:700;font-size:0.87rem;text-decoration:none}
 .btn-wa{background:var(--acc);color:#052e16}
 .btn-email{background:var(--pri);color:#0f172a}
-footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color:var(--mut);font-size:0.8rem}
+footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color:var(--mut);font-size:0.78rem}
 </style>
 </head>
 <body>
@@ -145,6 +153,10 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
 </nav>
 
 <header>
+    <div class="status-pill">
+        <span class="pulse"></span>
+        <span data-en="Cikarang Domicile • Ready for Shift Work & Overtime">Domisili Cikarang • Siap Kerja Sistem Shift & Lembur</span>
+    </div>
     <div class="badge" data-en="CNC Operator • Warehouse Logistics • IT Support">Operator CNC • Logistik Gudang • IT Support</div>
     <h1>Ahmad <span>Riyanto</span></h1>
     <p data-en="Professional in Manufacturing (CNC Machine Operator), Warehouse Operations (Logistics), and Information Technology. Skilled in operating CNC machines (Boring, Milling, Facing) with digital precision measuring tools, operating Warehouse Management Systems (WMS), as well as PC hardware assembly and Microsoft Office administration.">Tenaga profesional di bidang Manufaktur (Operator Mesin CNC), Operasional Pergudangan (Logistik), dan Teknologi Informasi. Terampil dalam mengoperasikan mesin CNC (Boring, Milling, Facing) dengan alat ukur presisi digital, mengoperasikan Warehouse Management System (WMS), serta perakitan hardware komputer dan administrasi Microsoft Office.</p>
@@ -152,6 +164,26 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
         <span>📍 Cikarang, Bekasi</span>
         <span>📞 0851-7333-3525</span>
         <span>✉️ ahmadriyanto1603@gmail.com</span>
+    </div>
+
+    <!-- HIGHLIGHT STATISTIK UNTUK HRD -->
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="stat-num" data-en="2+ Yrs">2+ Thn</div>
+            <div class="stat-lbl" data-en="Industrial Experience">Pengalaman Industri</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-num">3 Mesin</div>
+            <div class="stat-lbl">CNC Boring, Milling, Facing</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-num">0.01 mm</div>
+            <div class="stat-lbl" data-en="Digital Tool Precision">Presisi Alat Ukur Digital</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-num">5R & K3</div>
+            <div class="stat-lbl" data-en="100% SOP Compliance">100% Disiplin SOP Pabrik</div>
+        </div>
     </div>
 </header>
 
@@ -232,7 +264,30 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
             </div>
         </div>
     </section>
-        <!-- PENGALAMAN KERJA -->
+    
+    <!-- STANDAR KERJA & BUDAYA INDUSTRI (5R/5S & K3) -->
+    <section id="standards">
+        <div class="section-header">
+            <h2 data-en="Industrial Work Culture & Standards">Budaya Kerja & Standar Industri</h2>
+            <p data-en="Consistent implementation of factory discipline, safety, and quality control">Penerapan disiplin lingkungan pabrik, keselamatan kerja, dan kendali mutu</p>
+        </div>
+        <div class="roles-grid">
+            <div class="role-card">
+                <h3 data-en="5S / 5R Workplace Culture">Budaya Kerja 5R / 5S</h3>
+                <p data-en="Consistently applying Seiri, Seiton, Seiso, Seiketsu, and Shitsuke (Ringkas, Rapi, Resik, Rawat, Rajin) to keep CNC machine areas and warehouse aisles clean, organized, and productive.">Menerapkan prinsip Ringkas, Rapi, Resik, Rawat, dan Rajin (Seiri, Seiton, Seiso, Seiketsu, Shitsuke) untuk menjaga area mesin CNC maupun gudang tetap bersih, tertata, dan produktif.</p>
+            </div>
+            <div class="role-card">
+                <h3 data-en="OHS (K3) & SOP Discipline">Disiplin K3 & Kepatuhan SOP</h3>
+                <p data-en="Prioritizing occupational safety (Zero Accident) through proper PPE usage, safe machine operation, and strict adherence to company Standard Operating Procedures.">Mengutamakan keselamatan kerja (Zero Accident) melalui penggunaan APD lengkap, pengoperasian mesin/hand pallet yang aman, serta kepatuhan penuh terhadap SOP perusahaan.</p>
+            </div>
+            <div class="role-card">
+                <h3 data-en="Self-Inspection & Quality">Self-Inspection (Kendali Mutu)</h3>
+                <p data-en="Performing thorough independent checks on every machined workpiece and warehouse order to prevent defects (No Defect) and ensure dimensional accuracy.">Melakukan pengecekan mandiri secara teliti pada setiap benda kerja hasil mesin CNC maupun pesanan gudang guna mencegah produk cacat (No Defect) dan menjamin akurasi.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PENGALAMAN KERJA -->
     <section id="experience">
         <div class="section-header">
             <h2 data-en="Work Experience & Technical Projects">Pengalaman Kerja & Proyek Teknis</h2>
@@ -251,7 +306,7 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
                     <li data-en="Operate CNC production machines (Boring, Milling, and Facing) to process Raw Materials into finished goods according to production targets.">Mengoperasikan mesin produksi CNC (Boring, Milling, dan Facing) untuk mengolah Raw Material (material mentah) menjadi barang jadi sesuai target produksi.</li>
                     <li data-en="Perform precision inspection and measurement of workpieces using Digital Vernier Calipers and Digital Micrometers.">Melakukan pengecekan dan pengukuran kepresisian benda kerja menggunakan Jangka Sorong Digital (Digital Caliper) dan Micrometer Digital.</li>
                     <li data-en="Utilize Dial Indicators / Centricators to ensure top surface flatness and accurate center-to-side distances in millimeters (mm).">Menggunakan Dial Indicator / Centricator untuk memastikan kerataan bagian atas permukaan serta akurasi jarak titik tengah ke sisi samping dalam satuan milimeter (mm).</li>
-                    <li data-en="Maintain machine area cleanliness, enforce industrial occupational safety (K3) standards, and ensure consistent machining quality.">Menjaga kebersihan area mesin, menerapkan standar keselamatan kerja (K3) industri, serta memastikan kualitas hasil pemesinan tetap konsisten.</li>
+                    <li data-en="Implement 5R/5S workplace culture and industrial occupational safety (K3) standards to ensure consistent machining quality.">Menerapkan budaya kerja 5R/5S serta standar keselamatan kerja (K3) industri guna memastikan kualitas hasil pemesinan tetap konsisten.</li>
                 </ul>
             </div>
 
@@ -315,7 +370,7 @@ footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color
         <div class="roles-grid">
             <div class="role-card">
                 <h3 data-en="CNC / Production Operator">Operator CNC / Produksi</h3>
-                <p data-en="Operating CNC machines (Boring, Milling, Facing) to process raw materials into finished goods with digital precision measurement and K3 safety discipline.">Mengoperasikan mesin CNC (Boring, Milling, Facing) untuk mengolah material mentah menjadi produk jadi dengan pengukuran presisi digital dan disiplin K3.</p>
+                <p data-en="Operating CNC machines (Boring, Milling, Facing) to process raw materials into finished goods with digital precision measurement, 5S, and K3 safety discipline.">Mengoperasikan mesin CNC (Boring, Milling, Facing) untuk mengolah material mentah menjadi produk jadi dengan pengukuran presisi digital, 5R/5S, dan disiplin K3.</p>
             </div>
             <div class="role-card">
                 <h3 data-en="Logistics / Warehouse Picker">Logistik / Warehouse Picker</h3>
