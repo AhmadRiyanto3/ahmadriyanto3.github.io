@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Riyanto | Portfolio Website</title>
+    <meta name="description" content="Portofolio Profesional Ahmad Riyanto - Operator Produksi CNC, Staf Pergudangan (Warehouse), dan Teknisi IT (TKJ).">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Scroll Animation CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        darkBg: '#030014',
+                    },
+                    animation: {
+                        'blob': 'blob 10s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'spin-reverse-slow': 'spinReverse 15s linear infinite',
+                        'float-slow': 'floatSlow 4s ease-in-out infinite',
+                        'float-delayed': 'floatSlow 4.5s ease-in-out 1s infinite',
+                        'float-alt': 'floatAlt 4.2s ease-in-out 0.5s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -45px) scale(1.08)' },
+                            '66%': { transform: 'translate(-25px, 25px) scale(0.94)' },
+                        },
+                        spinReverse: {
+                            'from': { transform: 'rotate(360deg)' },
+                            'to': { transform: 'rotate(0deg)' },
+                        },
+                        floatSlow: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        floatAlt: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-10px) rotate(2deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #030014;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        body.splash-lock {
+            overflow: hidden;
+        }
+        /* Subtle Grid Background */
+        .bg-grid {
+            background-size: 38px 38px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        /* Glassmorphism Card with 1000ms Smooth Transitions */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.035);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(168, 85, 247, 0.45);
+            box-shadow: 0 14px 36px -10px rgba(139, 92, 246, 0.3);
+        }
+        /* Dark Neon CTA Button */
+        .btn-neon-dark {
+            background: rgba(8, 4, 28, 0.85);
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.25), inset 0 0 15px rgba(99, 102, 241, 0.12);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .btn-neon-dark:hover {
+            border-color: rgba(168, 85, 247, 0.75);
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.45), inset 0 0 20px rgba(139, 92, 246, 0.25);
+            transform: translateY(-3px) scale(1.02);
+        }
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 55%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gradient-purple {
+            background: linear-gradient(90deg, #818cf8 0%, #a855f7 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Active Tab Button */
+        .tab-active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.28) 0%, rgba(168, 85, 247, 0.28) 100%);
+            border-color: rgba(168, 85, 247, 0.65);
+            color: #ffffff;
+            box-shadow: 0 0 28px rgba(139, 92, 246, 0.32);
+        }
+
+        /* DUAL ANIMATION ENGINE: BOTH CARD/LOGO AND INNER TEXT POP UP INDEPENDENTLY */
+        [data-aos] {
+            transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+        .dual-anim .anim-logo {
+            opacity: 0;
+            transform: scale(0.55) translateY(18px) rotate(-8deg);
+            transition: opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1) 0.12s,
+                        transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s;
+        }
+        .dual-anim .anim-text {
+            opacity: 0;
+            transform: translateY(22px) scale(0.94);
+            filter: blur(4px);
+            transition: opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1) 0.22s,
+                        transform 0.85s cubic-bezier(0.25, 1, 0.5, 1) 0.22s,
+                        filter 0.85s cubic-bezier(0.25, 1, 0.5, 1) 0.22s;
+        }
+        .dual-anim .anim-text-2 {
+            opacity: 0;
+            transform: translateY(22px) scale(0.94);
+            filter: blur(4px);
+            transition: opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1) 0.34s,
+                        transform 0.85s cubic-bezier(0.25, 1, 0.5, 1) 0.34s,
+                        filter 0.85s cubic-bezier(0.25, 1, 0.5, 1) 0.34s;
+        }
+        .dual-anim .anim-text-3 {
+            opacity: 0;
+            transform: translateY(18px) scale(0.95);
+            filter: blur(3px);
+            transition: opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1) 0.46s,
+                        transform 0.85s cubic-bezier(0.25, 1, 0.5, 1) 0.46s,
+                        filter 0.85s cubic-bezier(0.25, 1, 0.5, 1) 0.46s;
+        }
+        /* Trigger inner logo + text pop-up when parent OR ancestor enters viewport */
+        .dual-anim.aos-animate .anim-logo,
+        .aos-animate .dual-anim .anim-logo,
+        .dual-anim.tab-pop-active .anim-logo {
+            opacity: 1;
+            transform: scale(1) translateY(0) rotate(0deg);
+        }
+        .dual-anim.aos-animate .anim-text,
+        .dual-anim.aos-animate .anim-text-2,
+        .dual-anim.aos-animate .anim-text-3,
+        .aos-animate .dual-anim .anim-text,
+        .aos-animate .dual-anim .anim-text-2,
+        .aos-animate .dual-anim .anim-text-3,
+        .dual-anim.tab-pop-active .anim-text,
+        .dual-anim.tab-pop-active .anim-text-2,
+        .dual-anim.tab-pop-active .anim-text-3 {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        /* Welcome Splash Animations (Exact 1000ms Easing) */
+        #welcomeScreen {
+            transition: opacity 0.95s cubic-bezier(0.25, 1, 0.5, 1), transform 0.95s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.95s;
+        }
+        #welcomeScreen.hide-splash {
+            opacity: 0;
+            transform: scale(1.08);
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .splash-icon-pop {
+            display: inline-flex;
+            animation: splashIconAnim 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        .splash-word-pop {
+            display: inline-block;
+            animation: splashWordAnim 0.9s cubic-bezier(0.25, 1, 0.5, 1) both;
+        }
+        @keyframes splashIconAnim {
+            0% {
+                opacity: 0;
+                transform: translateY(-25px) scale(0.5);
+                filter: blur(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0px);
+            }
+        }
+        @keyframes splashWordAnim {
+            0% {
+                opacity: 0;
+                transform: translateY(28px) scale(0.9);
+                filter: blur(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0px);
+            }
+        }
+        @keyframes cardPopSmooth {
+            0% {
+                opacity: 0;
+                transform: translateY(26px) scale(0.94);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030014;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6366f1, #a855f7);
+            border-radius: 4px;
+        }
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-grid relative selection:bg-purple-500 selection:text-white splash-lock">
+
+    <!-- WELCOME SPLASH SCREEN -->
+    <div id="welcomeScreen" class="fixed inset-0 z-[100] bg-[#030014] flex flex-col items-center justify-center px-6 text-center overflow-hidden">
+        <!-- Ambient Radial Glows inside Splash -->
+        <div class="absolute w-80 h-80 sm:w-[420px] sm:h-[420px] bg-purple-600/25 rounded-full filter blur-[110px] pointer-events-none"></div>
+        <div class="absolute w-72 h-72 bg-indigo-600/20 rounded-full filter blur-[100px] pointer-events-none"></div>
+
+        <!-- 3 Glowing Top Icons (Individual Staggered Pop-Up) -->
+        <div class="relative z-10 flex items-center justify-center gap-5 sm:gap-6 mb-8">
+            <div style="animation-delay: 0.1s;" class="splash-icon-pop w-13 h-13 sm:w-14 sm:h-14 p-3.5 rounded-full bg-[#120b2e]/90 border border-purple-400/30 shadow-[0_0_30px_rgba(168,85,247,0.45)] flex items-center justify-center text-white">
+                <i data-lucide="code-2" class="w-6 h-6"></i>
+            </div>
+            <div style="animation-delay: 0.25s;" class="splash-icon-pop w-13 h-13 sm:w-14 sm:h-14 p-3.5 rounded-full bg-[#120b2e]/90 border border-purple-400/30 shadow-[0_0_30px_rgba(168,85,247,0.45)] flex items-center justify-center text-white">
+                <i data-lucide="user" class="w-6 h-6"></i>
+            </div>
+            <div style="animation-delay: 0.4s;" class="splash-icon-pop w-13 h-13 sm:w-14 sm:h-14 p-3.5 rounded-full bg-[#120b2e]/90 border border-purple-400/30 shadow-[0_0_30px_rgba(168,85,247,0.45)] flex items-center justify-center text-white">
+                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Welcome Heading with Word-by-Word Pop Up -->
+        <div class="relative z-10 space-y-2 mb-8">
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-wide text-white flex flex-wrap justify-center gap-x-3.5">
+                <span class="splash-word-pop" style="animation-delay: 0.35s;">Welcome</span>
+                <span class="splash-word-pop" style="animation-delay: 0.5s;">To</span>
+                <span class="splash-word-pop" style="animation-delay: 0.65s;">My</span>
+            </h1>
+            <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-wide pt-1 flex flex-wrap justify-center gap-x-3.5">
+                <span class="text-gradient-purple splash-word-pop" style="animation-delay: 0.8s;">Portfolio</span>
+                <span class="text-gradient-purple splash-word-pop" style="animation-delay: 0.95s;">Website</span>
+            </h2>
+        </div>
+
+        <!-- Glowing Domain Pill with Typing Animation -->
+        <div class="relative z-10 splash-word-pop" style="animation-delay: 1.1s;">
+            <div class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-purple-950/35 border border-purple-500/30 shadow-[0_0_40px_rgba(139,92,246,0.4)]">
+                <i data-lucide="globe" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400"></i>
+                <span id="splashDomainText" class="text-sm sm:text-lg font-medium text-gradient-purple"></span>
+                <span class="cursor-blink text-purple-400 font-bold">|</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ambient Background Neon Blobs -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-[-8%] left-[-10%] w-96 h-96 bg-indigo-600/20 rounded-full filter blur-[125px] animate-blob"></div>
+        <div class="absolute top-[25%] right-[-10%] w-96 h-96 bg-purple-600/20 rounded-full filter blur-[125px] animate-blob" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-[-10%] left-[18%] w-96 h-96 bg-blue-600/15 rounded-full filter blur-[125px] animate-blob" style="animation-delay: 4s;"></div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#030014]/75 border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+            <a href="#home" class="text-xl font-extrabold tracking-tight text-gradient-purple">
+                AhmadRiyanto<span class="text-pink-500">.</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#home" class="hover:text-white transition duration-300" data-i18n="nav_home">Beranda</a>
+                <a href="#about" class="hover:text-white transition duration-300" data-i18n="nav_about">Tentang</a>
+                <a href="#showcase" class="hover:text-white transition duration-300" data-i18n="nav_showcase">Keahlian</a>
+                <a href="#experience" class="hover:text-white transition duration-300" data-i18n="nav_exp">Pengalaman</a>
+                <a href="#contact" class="hover:text-white transition duration-300" data-i18n="nav_contact">Kontak</a>
+            </nav>
+
+            <!-- Language Toggle & Mobile Menu Button -->
+            <div class="flex items-center gap-3">
+                <button id="langToggle" onclick="toggleLanguage()" class="px-3.5 py-1.5 rounded-full text-xs font-bold border border-purple-500/40 bg-purple-500/10 hover:bg-purple-500/20 text-purple-200 transition duration-300 flex items-center gap-1.5">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <span id="langLabel">ID</span>
+                </button>
+                <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 transition">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden border-b border-white/10 bg-[#030014]/95 px-6 py-4 space-y-3 text-sm font-medium text-gray-300">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 hover:text-purple-400" data-i18n="nav_home">Beranda</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 hover:text-purple-400" data-i18n="nav_about">Tentang</a>
+            <a href="#showcase" onclick="toggleMobileMenu()" class="block py-2 hover:text-purple-400" data-i18n="nav_showcase">Keahlian</a>
+            <a href="#experience" onclick="toggleMobileMenu()" class="block py-2 hover:text-purple-400" data-i18n="nav_exp">Pengalaman</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 hover:text-purple-400" data-i18n="nav_contact">Kontak</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-6xl mx-auto px-5 pt-28 md:pt-36 pb-20 overflow-hidden">
+
+        <!-- HERO SECTION -->
+        <section id="home" class="min-h-[85vh] flex flex-col lg:flex-row items-center justify-between gap-12 py-6">
+            <!-- Left Column: Staggered Text Pop-Ups -->
+            <div class="w-full lg:w-6/12 space-y-6 text-left">
+                <!-- Glowing Badge (Both Icon + Text Pop Up) -->
+                <div data-aos="zoom-in" data-aos-duration="1000" class="dual-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border-purple-500/30 text-xs font-medium text-purple-300">
+                    <span class="anim-logo inline-flex"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-400"></i></span>
+                    <span class="anim-text" data-i18n="hero_badge">Siap Berkontribusi & Bekerja Presisi</span>
+                </div>
+
+                <!-- Main Title with Staggered Word/Line Pop-Up -->
+                <div class="space-y-2">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.15]">
+                        <span data-aos="fade-right" data-aos-duration="1000" data-aos-delay="100" class="block text-white" data-i18n="hero_greeting">Profesional</span>
+                        <span data-aos="fade-up" data-aos-duration="1000" data-aos-delay="220" class="block text-gradient" data-i18n="hero_main_skills">CNC, Warehouse & IT</span>
+                    </h1>
+                </div>
+
+                <!-- Typing Subtitle -->
+                <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="320" class="flex items-center text-lg sm:text-xl font-semibold text-gray-300 h-8">
+                    <span id="typingText" class="text-gradient-purple"></span>
+                    <span class="cursor-blink ml-1 text-purple-400">|</span>
+                </div>
+
+                <!-- Description Text Pop-Up -->
+                <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="420">
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl" data-i18n="hero_desc">
+                        Menciptakan hasil kerja manufaktur CNC yang presisi, pengelolaan stok pergudangan WMS yang terstruktur, serta dukungan teknis IT & jaringan yang andal untuk produktivitas industri.
+                    </p>
+                </div>
+
+                <!-- Quick Skill Pills Pop-Up -->
+                <div class="flex flex-wrap gap-2 pt-1">
+                    <div data-aos="zoom-in-up" data-aos-duration="900" data-aos-delay="480" class="dual-anim px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-300">
+                        <span class="anim-text inline-block" data-i18n="hero_pill_1">Turning, Facing, Boring, Grooving</span>
+                    </div>
+                    <div data-aos="zoom-in-up" data-aos-duration="900" data-aos-delay="560" class="dual-anim px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-300">
+                        <span class="anim-text inline-block" data-i18n="hero_pill_2">WMS & FIFO/LIFO</span>
+                    </div>
+                    <div data-aos="zoom-in-up" data-aos-duration="900" data-aos-delay="640" class="dual-anim px-3.5 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-300">
+                        <span class="anim-text inline-block" data-i18n="hero_pill_3">IT & LAN/WAN</span>
+                    </div>
+                </div>
+
+                <!-- Dark Glowing CTA Buttons (Both Text & Icon Animate) -->
+                <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-4 pt-3 max-w-md">
+                    <a href="#showcase" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="550" class="dual-anim btn-neon-dark px-6 py-3.5 rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2.5">
+                        <span class="anim-text" data-i18n="btn_showcase">Projects</span>
+                        <span class="anim-logo inline-flex"><i data-lucide="external-link" class="w-4 h-4 text-purple-300"></i></span>
+                    </a>
+                    <a href="#contact" data-aos="zoom-in-left" data-aos-duration="1000" data-aos-delay="650" class="dual-anim btn-neon-dark px-6 py-3.5 rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2.5">
+                        <span class="anim-text" data-i18n="btn_contact">Contact</span>
+                        <span class="anim-logo inline-flex"><i data-lucide="mail" class="w-4 h-4 text-purple-300"></i></span>
+                    </a>
+                </div>
+
+                <!-- Social Icons -->
+                <div class="flex items-center gap-3.5 pt-2">
+                    <a href="https://github.com/AhmadRiyanto3" target="_blank" rel="noopener noreferrer" data-aos="fade-up" data-aos-duration="900" data-aos-delay="650" class="dual-anim p-3 rounded-xl glass-card text-gray-300 hover:text-white" title="GitHub">
+                        <span class="anim-logo inline-flex">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="https://wa.me/6285173333525" target="_blank" rel="noopener noreferrer" data-aos="fade-up" data-aos-duration="900" data-aos-delay="730" class="dual-anim p-3 rounded-xl glass-card text-gray-300 hover:text-white" title="WhatsApp">
+                        <span class="anim-logo inline-flex"><i data-lucide="message-circle" class="w-5 h-5"></i></span>
+                    </a>
+                    <a href="mailto:ahmadriyanto1603@gmail.com" data-aos="fade-up" data-aos-duration="900" data-aos-delay="810" class="dual-anim p-3 rounded-xl glass-card text-gray-300 hover:text-white" title="Email">
+                        <span class="anim-logo inline-flex"><i data-lucide="mail" class="w-5 h-5"></i></span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Column: Animated Illustration for CNC, Warehouse & IT -->
+            <div class="w-full lg:w-6/12 flex justify-center pt-4 lg:pt-0" data-aos="fade-left" data-aos-duration="1100" data-aos-delay="250">
+                <div class="relative w-full max-w-[440px] h-[360px] sm:h-[410px] flex items-center justify-center select-none">
+                    <!-- Ambient Purple/Blue Glow Behind Illustration -->
+                    <div class="absolute inset-6 bg-gradient-to-tr from-indigo-600/30 via-purple-600/25 to-teal-400/20 rounded-full filter blur-[65px] animate-pulse-slow"></div>
+
+                    <!-- Top-Right Large Rotating CNC Gear SVG -->
+                    <svg class="absolute top-2 right-12 w-28 h-28 sm:w-32 sm:h-32 text-slate-300/80 animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <circle cx="12" cy="12" r="3.5" fill="#030014" stroke="currentColor" stroke-width="1.8"/>
+                    </svg>
+
+                    <!-- Middle-Right Smaller Rotating Gear SVG -->
+                    <svg class="absolute top-36 right-2 w-16 h-16 sm:w-20 sm:h-20 text-slate-300/75 animate-spin-reverse-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <circle cx="12" cy="12" r="3.2" fill="#030014" stroke="currentColor" stroke-width="1.8"/>
+                    </svg>
+
+                    <!-- Bottom-Left Rotating CNC Gear SVG -->
+                    <svg class="absolute bottom-14 left-4 w-24 h-24 sm:w-28 sm:h-28 text-slate-300/75 animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <circle cx="12" cy="12" r="3.5" fill="#030014" stroke="currentColor" stroke-width="1.8"/>
+                    </svg>
+
+                    <!-- Central Monitor / Control Screen -->
+                    <div class="relative z-10 animate-float-slow flex flex-col items-center">
+                        <div class="w-64 sm:w-76 h-44 sm:h-52 rounded-2xl bg-gradient-to-b from-indigo-500/90 to-indigo-700/90 p-2.5 shadow-[0_20px_50px_rgba(79,70,229,0.45)] border border-indigo-300/40 relative">
+                            <div class="w-full h-full rounded-xl bg-[#161936] border-2 border-teal-400/80 p-3.5 flex flex-col justify-between overflow-hidden relative">
+                                <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+                                    </div>
+                                    <span class="text-[10px] font-bold tracking-wider text-teal-300 uppercase">CNC • WMS • IT</span>
+                                </div>
+
+                                <div class="space-y-2 my-auto">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-1.5 rounded bg-amber-400"></span>
+                                        <span class="w-24 h-1.5 rounded bg-indigo-400/70"></span>
+                                        <span class="text-[9px] text-teal-300 font-semibold">CNC QC</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-1.5 rounded bg-teal-400"></span>
+                                        <span class="w-32 h-1.5 rounded bg-purple-400/70"></span>
+                                        <span class="text-[9px] text-purple-300 font-semibold">WMS</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-5 h-1.5 rounded bg-pink-400"></span>
+                                        <span class="w-20 h-1.5 rounded bg-sky-400/70"></span>
+                                        <span class="text-[9px] text-sky-300 font-semibold">LAN/WAN</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-8 h-1.5 rounded bg-amber-300"></span>
+                                        <span class="w-16 h-1.5 rounded bg-indigo-300/60"></span>
+                                    </div>
+                                </div>
+
+                                <div class="text-[10px] text-gray-300 font-medium flex justify-between items-center pt-1 border-t border-white/10">
+                                    <span>5R / 5S & K3</span>
+                                    <span class="text-teal-400 font-bold">100% READY</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-16 h-5 bg-slate-300/80 rounded-b-sm"></div>
+                        <div class="w-36 h-2.5 bg-slate-200/90 rounded-full shadow-lg"></div>
+                        <div class="w-56 h-3.5 bg-slate-400/30 rounded-full -mt-1 blur-[1px]"></div>
+                    </div>
+
+                    <!-- Floating Badge 1 (Top-Left): CNC Terminal Card -->
+                    <div class="absolute top-8 left-3 sm:left-5 z-20 animate-float-delayed">
+                        <div class="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-[#1e2246] border-2 border-teal-400 shadow-[0_10px_25px_rgba(45,212,191,0.3)] p-2.5 flex flex-col justify-center gap-1.5">
+                            <div class="flex items-center gap-1">
+                                <span class="text-[9px] font-extrabold text-teal-300">CNC</span>
+                                <i data-lucide="gauge" class="w-3.5 h-3.5 text-amber-400 ml-auto"></i>
+                            </div>
+                            <div class="w-full h-1.5 rounded bg-indigo-400/80"></div>
+                            <div class="w-3/4 h-1.5 rounded bg-teal-400/80"></div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Badge 2 (Middle-Left): Teal Gear Icon Box -->
+                    <div class="absolute top-32 left-2 sm:left-4 z-20 animate-float-alt">
+                        <div class="w-13 h-13 sm:w-14 sm:h-14 p-3 rounded-2xl bg-gradient-to-br from-teal-400 to-emerald-500 shadow-[0_10px_25px_rgba(20,184,166,0.4)] flex items-center justify-center text-white">
+                            <i data-lucide="settings" class="w-7 h-7 animate-spin-slow"></i>
+                        </div>
+                    </div>
+
+                    <!-- Floating Badge 3 (Bottom-Left): IT & Code </> Box -->
+                    <div class="absolute bottom-20 left-12 sm:left-16 z-20 animate-float-slow">
+                        <div class="px-3.5 py-2.5 rounded-2xl bg-gradient-to-br from-teal-400 to-cyan-500 shadow-[0_10px_25px_rgba(45,212,191,0.4)] flex items-center gap-1.5 text-white font-extrabold text-sm">
+                            <i data-lucide="code-2" class="w-5 h-5"></i>
+                            <span class="text-xs">TKJ / IT</span>
+                        </div>
+                    </div>
+
+                    <!-- Floating Badge 4 (Top-Right): Warehouse / WMS Cloud Box -->
+                    <div class="absolute top-12 right-4 sm:right-6 z-20 animate-float-alt">
+                        <div class="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-gradient-to-br from-teal-400 to-emerald-500 shadow-[0_12px_28px_rgba(20,184,166,0.4)] flex flex-col items-center justify-center text-white p-2">
+                            <i data-lucide="package-check" class="w-7 h-7"></i>
+                            <span class="text-[9px] font-extrabold tracking-tight mt-0.5">WMS</span>
+                        </div>
+                    </div>
+
+                    <!-- Floating Badge 5 (Bottom-Right): Mobile Handheld / WMS Scanner with Checkmark -->
+                    <div class="absolute bottom-8 right-5 sm:right-8 z-20 animate-float-delayed flex flex-col items-center">
+                        <div class="w-16 sm:w-18 h-28 sm:h-32 rounded-2xl bg-gradient-to-b from-indigo-500 to-indigo-800 border-2 border-indigo-300/60 shadow-[0_15px_30px_rgba(79,70,229,0.5)] p-2 flex flex-col items-center justify-between">
+                            <div class="w-6 h-1 rounded-full bg-indigo-200/60"></div>
+                            <div class="w-10 h-10 rounded-xl bg-teal-400 flex items-center justify-center text-white shadow-inner">
+                                <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                            </div>
+                            <span class="text-[8px] font-bold text-indigo-100 uppercase tracking-wider">QC PASS</span>
+                        </div>
+                        <div class="w-24 h-2.5 bg-slate-300/80 rounded-full mt-1"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT ME SECTION -->
+        <section id="about" class="py-20">
+            <!-- Heading & Subtitle with Independent Pop-Ups -->
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div data-aos="zoom-in-up" data-aos-duration="1000">
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-gradient-purple mb-3" data-i18n="about_heading">About Me</h2>
+                </div>
+                <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150" class="dual-anim inline-flex items-center justify-center gap-3 text-gray-400 text-xs sm:text-base">
+                    <span class="anim-logo inline-flex"><i data-lucide="sparkles" class="w-4 h-4 text-purple-400 shrink-0"></i></span>
+                    <p class="anim-text" data-i18n="about_sub">Menggabungkan ketelitian manufaktur CNC, kecepatan logistik Warehouse, dan solusi teknis IT</p>
+                    <span class="anim-logo inline-flex"><i data-lucide="sparkles" class="w-4 h-4 text-purple-400 shrink-0"></i></span>
+                </div>
+            </div>
+
+            <!-- About Glass Container -->
+            <div class="glass-card rounded-3xl p-6 sm:p-10 mb-8" data-aos="fade-up" data-aos-duration="1000">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <!-- Left Text Column -->
+                    <div class="lg:col-span-8 space-y-4">
+                        <div data-aos="fade-right" data-aos-duration="1000" data-aos-delay="100">
+                            <h3 class="text-xl sm:text-2xl font-bold text-white">
+                                <span data-i18n="about_hello">Halo, Saya</span> <span class="text-gradient">Ahmad Riyanto</span>
+                            </h3>
+                        </div>
+                        <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                            <p class="text-gray-300 text-sm sm:text-base leading-relaxed" data-i18n="about_p1">
+                                Saya adalah lulusan Teknik Komputer dan Jaringan (TKJ) dari SMK Assalafiyah Tegal yang memiliki pengalaman kerja nyata lintas industri di bidang Manufaktur Mesin CNC serta Operasional Pergudangan (Warehouse).
+                            </p>
+                        </div>
+                        <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                            <p class="text-gray-400 text-sm sm:text-base leading-relaxed" data-i18n="about_p2">
+                                Saat ini saya berfokus sebagai Operator Produksi CNC di PT Bima Manufaktur Jaya, menjalankan proses pemesinan presisi (Turning, Facing, Boring, Grooving) serta inspeksi kualitas dimensi menggunakan Jangka Sorong dan Mikrometer Digital. Latar belakang saya di pergudangan dan IT menjadikan saya adaptif terhadap sistem digital maupun disiplin keselamatan kerja (K3 & 5R/5S).
+                            </p>
+                        </div>
+                        <div class="pt-3 flex flex-wrap gap-3">
+                            <a href="#contact" data-aos="zoom-in-up" data-aos-duration="900" data-aos-delay="380" class="dual-anim px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 text-white flex items-center gap-2 shadow-lg shadow-purple-600/25">
+                                <span class="anim-logo inline-flex"><i data-lucide="send" class="w-4 h-4"></i></span>
+                                <span class="anim-text" data-i18n="about_btn_contact">Hubungi Sekarang</span>
+                            </a>
+                            <a href="#showcase" data-aos="zoom-in-up" data-aos-duration="900" data-aos-delay="460" class="dual-anim px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-purple-500/40 text-purple-300 hover:bg-purple-500/10 flex items-center gap-2">
+                                <span class="anim-logo inline-flex"><i data-lucide="layers" class="w-4 h-4"></i></span>
+                                <span class="anim-text" data-i18n="about_btn_skills">Eksplorasi Keahlian</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Info Box (All Labels & Values Fully Translated) -->
+                    <div class="lg:col-span-4 bg-white/[0.02] border border-white/10 rounded-2xl p-5 space-y-3 text-sm" data-aos="zoom-in-left" data-aos-duration="1000" data-aos-delay="200">
+                        <div class="dual-anim flex justify-between py-2 border-b border-white/10" data-aos="fade-up" data-aos-delay="260">
+                            <span class="anim-text text-gray-400" data-i18n="info_loc_label">Domisili</span>
+                            <span class="anim-text-2 font-semibold text-white" data-i18n="info_loc_val">Cikarang Selatan, Bekasi</span>
+                        </div>
+                        <div class="dual-anim flex justify-between py-2 border-b border-white/10" data-aos="fade-up" data-aos-delay="340">
+                            <span class="anim-text text-gray-400" data-i18n="info_edu_label">Pendidikan</span>
+                            <span class="anim-text-2 font-semibold text-white" data-i18n="info_edu_val">SMK TKJ (2023)</span>
+                        </div>
+                        <div class="dual-anim flex justify-between py-2 border-b border-white/10" data-aos="fade-up" data-aos-delay="420">
+                            <span class="anim-text text-gray-400" data-i18n="info_role_label">Posisi Saat Ini</span>
+                            <span class="anim-text-2 font-semibold text-purple-400" data-i18n="info_role_val">Operator Produksi CNC</span>
+                        </div>
+                        <div class="dual-anim flex justify-between py-2" data-aos="fade-up" data-aos-delay="500">
+                            <span class="anim-text text-gray-400" data-i18n="info_email_label">Email</span>
+                            <span class="anim-text-2 font-semibold text-white truncate max-w-[180px]">ahmadriyanto1603@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 Interactive Metric Cards (BOTH Card/Logo AND Texts Pop Up Together) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div onclick="switchTab('cnc')" class="dual-anim cursor-pointer glass-card rounded-2xl p-6 flex items-center justify-between" data-aos="fade-up-right" data-aos-duration="1000" data-aos-delay="100">
+                    <div>
+                        <div class="anim-text text-3xl font-extrabold text-white mb-1">3</div>
+                        <div class="anim-text-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="stat_1_title">Bidang Keahlian Utama</div>
+                        <div class="anim-text-3 text-[11px] text-purple-400 mt-1" data-i18n="stat_1_sub">CNC, Warehouse & IT Support</div>
+                    </div>
+                    <div class="anim-logo p-3.5 rounded-2xl bg-indigo-500/15 text-indigo-400">
+                        <i data-lucide="award" class="w-7 h-7"></i>
+                    </div>
+                </div>
+
+                <div onclick="switchTab('warehouse')" class="dual-anim cursor-pointer glass-card rounded-2xl p-6 flex items-center justify-between" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="220">
+                    <div>
+                        <div class="anim-text text-3xl font-extrabold text-white mb-1">2+</div>
+                        <div class="anim-text-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="stat_2_title">Tahun Pengalaman</div>
+                        <div class="anim-text-3 text-[11px] text-purple-400 mt-1" data-i18n="stat_2_sub">Manufaktur & Logistik</div>
+                    </div>
+                    <div class="anim-logo p-3.5 rounded-2xl bg-purple-500/15 text-purple-400">
+                        <i data-lucide="briefcase" class="w-7 h-7"></i>
+                    </div>
+                </div>
+
+                <div onclick="switchTab('it')" class="dual-anim cursor-pointer glass-card rounded-2xl p-6 flex items-center justify-between" data-aos="fade-up-left" data-aos-duration="1000" data-aos-delay="340">
+                    <div>
+                        <div class="anim-text text-3xl font-extrabold text-white mb-1">100%</div>
+                        <div class="anim-text-2 text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="stat_3_title">Standar Keselamatan</div>
+                        <div class="anim-text-3 text-[11px] text-purple-400 mt-1" data-i18n="stat_3_sub">Kepatuhan K3 & Budaya 5R/5S</div>
+                    </div>
+                    <div class="anim-logo p-3.5 rounded-2xl bg-pink-500/15 text-pink-400">
+                        <i data-lucide="shield-check" class="w-7 h-7"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO SHOWCASE SECTION (3-Tab Switcher Fixed so All 3 Logos & Texts Always Render Clearly) -->
+        <section id="showcase" class="py-20">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <div data-aos="zoom-in-up" data-aos-duration="1000">
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-gradient-purple mb-3" data-i18n="showcase_heading">Portfolio Showcase</h2>
+                </div>
+                <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150">
+                    <p class="text-gray-400 text-sm" data-i18n="showcase_sub">Jelajahi kompetensi teknis saya melalui tiga pilar keahlian di bawah ini.</p>
+                </div>
+            </div>
+
+            <!-- Interactive Tab Buttons (Fixed Visibility + Staggered AOS) -->
+            <div class="glass-card p-2 rounded-2xl max-w-2xl mx-auto mb-10 grid grid-cols-3 gap-2" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-delay="150">
+                <button id="tabBtn-cnc" onclick="switchTab('cnc')" class="dual-anim tab-active py-3 px-3 rounded-xl text-xs sm:text-sm font-bold transition duration-300 flex flex-col sm:flex-row items-center justify-center gap-2 border border-transparent">
+                    <span class="anim-logo inline-flex"><i data-lucide="cog" class="w-4 h-4"></i></span>
+                    <span class="anim-text" data-i18n="tab_cnc">CNC & QC</span>
+                </button>
+                <button id="tabBtn-warehouse" onclick="switchTab('warehouse')" class="dual-anim py-3 px-3 rounded-xl text-xs sm:text-sm font-bold text-gray-300 hover:text-white transition duration-300 flex flex-col sm:flex-row items-center justify-center gap-2 border border-transparent">
+                    <span class="anim-logo inline-flex"><i data-lucide="package" class="w-4 h-4"></i></span>
+                    <span class="anim-text" data-i18n="tab_wh">Warehouse</span>
+                </button>
+                <button id="tabBtn-it" onclick="switchTab('it')" class="dual-anim py-3 px-3 rounded-xl text-xs sm:text-sm font-bold text-gray-300 hover:text-white transition duration-300 flex flex-col sm:flex-row items-center justify-center gap-2 border border-transparent">
+                    <span class="anim-logo inline-flex"><i data-lucide="terminal" class="w-4 h-4"></i></span>
+                    <span class="anim-text" data-i18n="tab_it">IT & Tools</span>
+                </button>
+            </div>
+
+            <!-- TAB 1 CONTENT: CNC & MANUFACTURING -->
+            <div id="tabContent-cnc" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="dual-anim glass-card rounded-2xl p-6 space-y-4" data-aos="fade-up-right" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="anim-logo w-11 h-11 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                        <i data-lucide="settings" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="anim-text text-lg font-bold text-white" data-i18n="cnc_1_title">Operasi Mesin Produksi CNC</h3>
+                    <p class="anim-text-2 text-gray-400 text-sm leading-relaxed" data-i18n="cnc_1_desc">
+                        Mengoperasikan mesin CNC untuk proses pemesinan presisi meliputi Turning, Facing, Boring, dan Grooving sesuai spesifikasi lembar kerja dan target produksi harian.
+                    </p>
+                    <div class="anim-text-3 flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Turning</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Facing</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Boring</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Grooving</span>
+                    </div>
+                </div>
+
+                <div class="dual-anim glass-card rounded-2xl p-6 space-y-4" data-aos="fade-up-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="anim-logo w-11 h-11 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                        <i data-lucide="ruler" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="anim-text text-lg font-bold text-white" data-i18n="cnc_2_title">Inspeksi Alat Ukur Presisi</h3>
+                    <p class="anim-text-2 text-gray-400 text-sm leading-relaxed" data-i18n="cnc_2_desc">
+                        Melakukan pengecekan kualitas dimensi benda kerja secara akurat menggunakan Jangka Sorong dan Mikrometer Digital untuk memastikan toleransi ukuran sesuai standar Quality Control (QC).
+                    </p>
+                    <div class="anim-text-3 flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20" data-i18n="tag_caliper">Jangka Sorong</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20" data-i18n="tag_micrometer">Mikrometer Digital</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">Quality Control</span>
+                    </div>
+                </div>
+
+                <div class="dual-anim glass-card rounded-2xl p-6 space-y-4" data-aos="fade-up-right" data-aos-duration="1000" data-aos-delay="280">
+                    <div class="anim-logo w-11 h-11 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center">
+                        <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="anim-text text-lg font-bold text-white" data-i18n="cnc_3_title">Setup Benda Kerja & Gambar Kerja</h3>
+                    <p class="anim-text-2 text-gray-400 text-sm leading-relaxed" data-i18n="cnc_3_desc">
+                        Memasang benda kerja pada chuck/fixture dengan presisi, memantau kondisi pahat potong (cutting tool), serta memahami instruksi dan toleransi pada gambar teknik produksi.
+                    </p>
+                    <div class="anim-text-3 flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-300 border border-blue-500/20">Workpiece Setup</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-300 border border-blue-500/20" data-i18n="tag_sop_mfg">SOP Manufaktur</span>
+                    </div>
+                </div>
+
+                <div class="dual-anim glass-card rounded-2xl p-6 space-y-4" data-aos="fade-up-left" data-aos-duration="1000" data-aos-delay="360">
+                    <div class="anim-logo w-11 h-11 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                        <i data-lucide="hard-hat" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="anim-text text-lg font-bold text-white" data-i18n="cnc_4_title">Penerapan K3 & Budaya 5R/5S</h3>
+                    <p class="anim-text-2 text-gray-400 text-sm leading-relaxed" data-i18n="cnc_4_desc">
+                        Menjalankan prosedur Keselamatan dan Kesehatan Kerja (K3) secara ketat di area mesin serta menjaga kerapian, kebersihan, dan perawatan harian area kerja dengan metode 5R/5S.
+                    </p>
+                    <div class="anim-text-3 flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20" data-i18n="tag_k3_ind">K3 Industri</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">5R / 5S</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2 CONTENT: WAREHOUSE & LOGISTICS -->
+            <div id="tabContent-warehouse" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="dual-anim glass-card rounded-2xl p-6 space-y-4">
+                    <div class="anim-logo w-11 h-11 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                        <i data-lucide="scan-barcode" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="anim-text text-lg font-bold text-white" data-i18n="wh_1_title">Warehouse Management System (WMS)</h3>
+                    <p class="anim-text-2 text-gray-400 text-sm leading-relaxed" data-i18n="wh_1_desc">
+                        Mengoperasikan sistem WMS dan Microsoft Excel untuk pemindaian barang, pembaruan lokasi rak penyimpanan, serta pencatatan mutasi keluar-masuk barang secara real-time.
+                    </p>
+                    <div class="anim-text-3 flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">WMS</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20" data-i18n="tag_accurate_data">Data Akurat</span>
+                    </div>
+                </div>
+
+                <div class="dual-anim glass-card rounded-2xl p-6 space-y-4">
+                    <div class="anim-logo w-11 h-11 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                        <i data-lucide="boxes" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="anim-text text-lg font-bold text-white" data-i18n="wh_2_title">Picking, Packing & Order Fulfillment</h3>
+                    <p class="anim-text-2 text-gray-400 text-sm leading-relaxed" data-i18n="wh_2_desc">
+                        Melaksanakan pengambilan barang (picking) sesuai picking list, pengemasan (packing) yang aman, serta verifikasi kuantitas pesanan sebelum proses pengiriman (dispatch).
+                    </p>
+                    <div class="anim-text-3 flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Picking</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Packing</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Order Fulfillment</span>
+                    </div>
+                </div>
+
+                <div class="dual-anim glass-card rounded-2xl p-6 space-y-4">
+                    <div class="anim-logo w-11 h-11 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center">
+                        <i data-lucide="clipboard-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="anim-text text-lg font-bold text-white" data-i18n="wh_3_title">Kontrol Stok (FIFO/LIFO & Stock Opname)</h3>
+                    <p class="anim-text-2 text-gray-400 text-sm leading-relaxed" data-i18n="wh_3_desc">
+                        Menerapkan perputaran barang dengan metode FIFO dan LIFO serta melakukan pengecekan stok fisik berkala (stock opname) untuk mencegah selisih inventori.
+                    </p>
+                    <div class="anim-text-3 flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-pink-500/10 text-pink-300 border border-pink-500/20">FIFO / LIFO</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-pink-500/10 text-pink-300 border border-pink-500/20">Stock Opname</span>
+                    </div>
+                </div>
+
+                <div class="dual-anim glass-card rounded-2xl p-6 space-y-4">
+                    <div class="anim-logo w-11 h-11 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+                        <i data-lucide="truck" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="anim-text text-lg font-bold text-white" data-i18n="wh_4_title">Material Handling (Hand Pallet)</h3>
+                    <p class="anim-text-2 text-gray-400 text-sm leading-relaxed" data-i18n="wh_4_desc">
+                        Terampil memindahkan dan menyusun palet muatan barang di area gudang menggunakan Hand Pallet secara aman sesuai pedoman K3 pergudangan.
+                    </p>
+                    <div class="anim-text-3 flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20">Hand Pallet</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20">Material Handling</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3 CONTENT: IT, NETWORK & TECH STACK (All 6 Cards Fully Translated in ID & EN) -->
+            <div id="tabContent-it" class="hidden grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="dual-anim glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="anim-logo p-3 rounded-xl bg-indigo-500/20 text-indigo-400"><i data-lucide="wrench" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="anim-text font-bold text-sm text-white" data-i18n="it_1_title">PC Troubleshooting</h4>
+                        <p class="anim-text-2 text-xs text-gray-400" data-i18n="it_1_desc">Perakitan PC, diagnosa Hardware & instalasi OS/Software</p>
+                    </div>
+                </div>
+                <div class="dual-anim glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="anim-logo p-3 rounded-xl bg-purple-500/20 text-purple-400"><i data-lucide="network" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="anim-text font-bold text-sm text-white" data-i18n="it_2_title">Jaringan LAN / WAN</h4>
+                        <p class="anim-text-2 text-xs text-gray-400" data-i18n="it_2_desc">Instalasi kabel UTP, crimping, konfigurasi IP & Router</p>
+                    </div>
+                </div>
+                <div class="dual-anim glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="anim-logo p-3 rounded-xl bg-emerald-500/20 text-emerald-400"><i data-lucide="table" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="anim-text font-bold text-sm text-white" data-i18n="it_3_title">Microsoft Excel</h4>
+                        <p class="anim-text-2 text-xs text-gray-400" data-i18n="it_3_desc">Pengolahan data laporan stok, produksi & rekap harian</p>
+                    </div>
+                </div>
+                <div class="dual-anim glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="anim-logo p-3 rounded-xl bg-blue-500/20 text-blue-400"><i data-lucide="file-text" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="anim-text font-bold text-sm text-white" data-i18n="it_4_title">Microsoft Word</h4>
+                        <p class="anim-text-2 text-xs text-gray-400" data-i18n="it_4_desc">Penyusunan dokumen administrasi & laporan kerja</p>
+                    </div>
+                </div>
+                <div class="dual-anim glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="anim-logo p-3 rounded-xl bg-pink-500/20 text-pink-400"><i data-lucide="gauge" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="anim-text font-bold text-sm text-white" data-i18n="it_5_title">Alat Ukur Presisi</h4>
+                        <p class="anim-text-2 text-xs text-gray-400" data-i18n="it_5_desc">Jangka Sorong & Mikrometer Digital</p>
+                    </div>
+                </div>
+                <div class="dual-anim glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="anim-logo p-3 rounded-xl bg-amber-500/20 text-amber-400"><i data-lucide="database" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="anim-text font-bold text-sm text-white" data-i18n="it_6_title">Sistem WMS</h4>
+                        <p class="anim-text-2 text-xs text-gray-400" data-i18n="it_6_desc">Manajemen inventori gudang terkomputerisasi</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE & EDUCATION SECTION -->
+        <section id="experience" class="py-20">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div data-aos="zoom-in-up" data-aos-duration="1000">
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-gradient-purple mb-3" data-i18n="exp_heading">Pengalaman & Pendidikan</h2>
+                </div>
+                <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150">
+                    <p class="text-gray-400 text-sm" data-i18n="exp_sub">Rekam jejak karier profesional dan latar belakang pendidikan saya.</p>
+                </div>
+            </div>
+
+            <div class="space-y-6 max-w-4xl mx-auto">
+                <!-- Exp 1: CNC -->
+                <div class="dual-anim glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                        <div>
+                            <span class="anim-text inline-block px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 mb-2" data-i18n="exp1_date">
+                                September 2026 – Sekarang
+                            </span>
+                            <h3 class="anim-text-2 text-xl font-bold text-white" data-i18n="exp1_role">Operator Produksi CNC</h3>
+                            <p class="anim-text-3 text-sm text-purple-400 font-medium" data-i18n="exp1_company">PT Bima Manufaktur Jaya</p>
+                        </div>
+                        <div class="anim-logo p-3 rounded-2xl bg-white/5 self-start">
+                            <i data-lucide="factory" class="w-6 h-6 text-indigo-400"></i>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-300 list-disc list-inside leading-relaxed">
+                        <li class="anim-text" data-i18n="exp1_b1">Mengoperasikan mesin produksi CNC untuk proses Turning, Facing, Boring, dan Grooving sesuai standar operasional prosedur (SOP).</li>
+                        <li class="anim-text-2" data-i18n="exp1_b2">Melaksanakan pemeriksaan kualitas dimensi (Quality Control) secara presisi menggunakan Jangka Sorong dan Mikrometer Digital.</li>
+                        <li class="anim-text-3" data-i18n="exp1_b3">Menerapkan disiplin Keselamatan dan Kesehatan Kerja (K3) serta menjaga kerapian lingkungan kerja dengan prinsip 5R/5S.</li>
+                    </ul>
+                </div>
+
+                <!-- Exp 2: Warehouse -->
+                <div class="dual-anim glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                        <div>
+                            <span class="anim-text inline-block px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-2" data-i18n="exp2_date">
+                                Oktober 2024 – Mei 2026
+                            </span>
+                            <h3 class="anim-text-2 text-xl font-bold text-white" data-i18n="exp2_role">Warehouse Picker / Staf Pergudangan</h3>
+                            <p class="anim-text-3 text-sm text-purple-400 font-medium" data-i18n="exp2_company">PT Absolut Servis Nusantara (Vendor PT Paragon Technology and Innovation)</p>
+                        </div>
+                        <div class="anim-logo p-3 rounded-2xl bg-white/5 self-start">
+                            <i data-lucide="warehouse" class="w-6 h-6 text-purple-400"></i>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-300 list-disc list-inside leading-relaxed">
+                        <li class="anim-text" data-i18n="exp2_b1">Menjalankan proses order fulfillment meliputi picking, packing, dan penyortiran barang secara cepat dan akurat menggunakan sistem WMS.</li>
+                        <li class="anim-text-2" data-i18n="exp2_b2">Mengelola pencatatan stok dengan Microsoft Excel, melaksanakan stock opname berkala, serta menerapkan sistem rotasi FIFO/LIFO.</li>
+                        <li class="anim-text-3" data-i18n="exp2_b3">Mengoperasikan Hand Pallet untuk pemindahan material secara aman sesuai standar K3 pergudangan.</li>
+                    </ul>
+                </div>
+
+                <!-- Education: SMK -->
+                <div class="dual-anim glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="250">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                        <div>
+                            <span class="anim-text inline-block px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/20 text-pink-300 border border-pink-500/30 mb-2">
+                                2020 – 2023
+                            </span>
+                            <h3 class="anim-text-2 text-xl font-bold text-white" data-i18n="edu_role">Teknik Komputer dan Jaringan (TKJ)</h3>
+                            <p class="anim-text-3 text-sm text-purple-400 font-medium">SMK Assalafiyah Tegal</p>
+                        </div>
+                        <div class="anim-logo p-3 rounded-2xl bg-white/5 self-start">
+                            <i data-lucide="graduation-cap" class="w-6 h-6 text-pink-400"></i>
+                        </div>
+                    </div>
+                    <p class="anim-text-2 text-sm text-gray-300 leading-relaxed" data-i18n="edu_desc">
+                        Fokus pada perakitan komputer, troubleshooting perangkat keras dan perangkat lunak, administrasi jaringan LAN/WAN, serta pengoperasian aplikasi perkantoran Microsoft Word dan Microsoft Excel.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="py-20">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div data-aos="zoom-in-up" data-aos-duration="1000">
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-gradient-purple mb-3" data-i18n="contact_heading">Hubungi Saya</h2>
+                </div>
+                <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150">
+                    <p class="text-gray-400 text-sm" data-i18n="contact_sub">Tertarik untuk berdiskusi atau bekerja sama? Kirim pesan langsung melalui formulir atau kontak di bawah ini.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Contact Cards -->
+                <div class="lg:col-span-5 space-y-4">
+                    <a href="https://wa.me/6285173333525" target="_blank" rel="noopener noreferrer" class="dual-anim glass-card rounded-2xl p-5 flex items-center gap-4 block" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="100">
+                        <div class="anim-logo p-3.5 rounded-xl bg-emerald-500/20 text-emerald-400">
+                            <i data-lucide="message-circle" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="anim-text text-xs text-gray-400" data-i18n="contact_wa_label">WhatsApp / Telepon</div>
+                            <div class="anim-text-2 text-sm font-bold text-white">0851-7333-3525</div>
+                        </div>
+                    </a>
+
+                    <a href="mailto:ahmadriyanto1603@gmail.com" class="dual-anim glass-card rounded-2xl p-5 flex items-center gap-4 block" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+                        <div class="anim-logo p-3.5 rounded-xl bg-indigo-500/20 text-indigo-400">
+                            <i data-lucide="mail" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="anim-text text-xs text-gray-400" data-i18n="contact_email_label">Email</div>
+                            <div class="anim-text-2 text-sm font-bold text-white">ahmadriyanto1603@gmail.com</div>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/AhmadRiyanto3" target="_blank" rel="noopener noreferrer" class="dual-anim glass-card rounded-2xl p-5 flex items-center gap-4 block" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="300">
+                        <div class="anim-logo p-3.5 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="anim-text text-xs text-gray-400" data-i18n="contact_web_label">GitHub & Web</div>
+                            <div class="anim-text-2 text-sm font-bold text-white">ahmadriyanto3.github.io</div>
+                        </div>
+                    </a>
+
+                    <div class="dual-anim glass-card rounded-2xl p-5 flex items-center gap-4" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="400">
+                        <div class="anim-logo p-3.5 rounded-xl bg-pink-500/20 text-pink-400">
+                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="anim-text text-xs text-gray-400" data-i18n="info_loc_label">Domisili</div>
+                            <div class="anim-text-2 text-sm font-bold text-white" data-i18n="contact_loc_val">Cikarang Selatan, Kabupaten Bekasi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direct WhatsApp Message Form -->
+                <div class="dual-anim lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                        <span class="anim-logo inline-flex"><i data-lucide="send" class="w-5 h-5 text-purple-400"></i></span>
+                        <span class="anim-text" data-i18n="form_title">Kirim Pesan Cepat</span>
+                    </h3>
+                    <form onsubmit="sendToWhatsApp(event)" class="space-y-4">
+                        <div class="anim-text">
+                            <label class="block text-xs font-medium text-gray-400 mb-1.5" data-i18n="form_name">Nama Anda / Perusahaan</label>
+                            <input type="text" id="waName" required data-i18n-placeholder="form_name_ph" placeholder="Contoh: HRD PT Maju Jaya" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition">
+                        </div>
+                        <div class="anim-text-2">
+                            <label class="block text-xs font-medium text-gray-400 mb-1.5" data-i18n="form_msg">Pesan</label>
+                            <textarea id="waMessage" rows="4" required data-i18n-placeholder="form_msg_ph" placeholder="Halo Ahmad, kami tertarik dengan profil Anda..." class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition"></textarea>
+                        </div>
+                        <button type="submit" class="anim-text-3 w-full py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-purple-600/25 transition duration-300 flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            <span data-i18n="form_btn">Kirim via WhatsApp</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-8 text-center text-xs text-gray-500 relative z-10">
+        <div class="max-w-6xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 <span class="text-gray-300 font-semibold">Ahmad Riyanto</span>. <span data-i18n="footer_rights">Seluruh Hak Cipta Dilindungi.</span></p>
+            <p class="text-gray-400" data-i18n="footer_loc">Cikarang Selatan, Kabupaten Bekasi</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Render Lucide Icons
+        lucide.createIcons();
+
+        // Welcome Splash Screen Typing & Smooth 1000ms Transition
+        const splashTargetText = "ahmadriyanto3.github.io";
+        const splashTextEl = document.getElementById("splashDomainText");
+        let splashIdx = 0;
+
+        function typeSplashDomain() {
+            if (splashIdx <= splashTargetText.length) {
+                splashTextEl.textContent = splashTargetText.substring(0, splashIdx);
+                splashIdx++;
+                setTimeout(typeSplashDomain, 55);
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            setTimeout(typeSplashDomain, 850);
+
+            // Fade out welcome screen smoothly after domain finishes typing
+            setTimeout(() => {
+                const splash = document.getElementById("welcomeScreen");
+                splash.classList.add("hide-splash");
+                document.body.classList.remove("splash-lock");
+
+                // Initialize AOS with exact 1000ms duration & smooth cubic-bezier easing
+                AOS.init({
+                    duration: 1000,
+                    easing: 'ease-out-cubic',
+                    once: false,
+                    mirror: true,
+                    offset: 45
+                });
+            }, 2650);
+        });
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Showcase 3-Tab Switcher with Simultaneous Card/Logo + Inner Text Pop-Up
+        function switchTab(tabName) {
+            const tabs = ['cnc', 'warehouse', 'it'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tabBtn-' + t);
+                const content = document.getElementById('tabContent-' + t);
+                if (t === tabName) {
+                    btn.classList.add('tab-active');
+                    btn.classList.remove('text-gray-300');
+                    content.classList.remove('hidden');
+                    content.classList.add('grid');
+
+                    // Animate BOTH card, logo, and inner texts on tab switch
+                    const cards = content.children;
+                    Array.from(cards).forEach((card, idx) => {
+                        card.classList.remove('tab-pop-active');
+                        card.style.animation = 'none';
+                        card.offsetHeight; // force reflow
+                        card.style.animation = `cardPopSmooth 0.85s cubic-bezier(0.25, 1, 0.5, 1) ${idx * 0.1}s both`;
+                        setTimeout(() => {
+                            card.classList.add('tab-pop-active');
+                        }, idx * 100 + 40);
+                    });
+                } else {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('text-gray-300');
+                    content.classList.add('hidden');
+                    content.classList.remove('grid');
+                }
+            });
+            setTimeout(() => {
+                AOS.refresh();
+            }, 60);
+        }
+
+        // Send Form Directly to WhatsApp
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+            const name = document.getElementById('waName').value.trim();
+            const msg = document.getElementById('waMessage').value.trim();
+            const intro = currentLang === 'en'
+                ? `Hello Ahmad Riyanto, I am ${name}.`
+                : `Halo Ahmad Riyanto, saya ${name}.`;
+            const text = encodeURIComponent(`${intro}\n\n${msg}`);
+            window.open(`https://wa.me/6285173333525?text=${text}`, '_blank');
+        }
+
+        // Complete Bilingual Dictionary (100% Coverage for ID & EN)
+        let currentLang = 'id';
+        const translations = {
+            id: {
+                nav_home: "Beranda",
+                nav_about: "Tentang",
+                nav_showcase: "Keahlian",
+                nav_exp: "Pengalaman",
+                nav_contact: "Kontak",
+                hero_badge: "Siap Berkontribusi & Bekerja Presisi",
+                hero_greeting: "Profesional",
+                hero_main_skills: "CNC, Warehouse & IT",
+                hero_desc: "Menciptakan hasil kerja manufaktur CNC yang presisi, pengelolaan stok pergudangan WMS yang terstruktur, serta dukungan teknis IT & jaringan yang andal untuk produktivitas industri.",
+                hero_pill_1: "Turning, Facing, Boring, Grooving",
+                hero_pill_2: "WMS & FIFO/LIFO",
+                hero_pill_3: "IT & LAN/WAN",
+                btn_showcase: "Projects",
+                btn_contact: "Contact",
+                about_heading: "Tentang Saya",
+                about_sub: "Menggabungkan ketelitian manufaktur CNC, kecepatan logistik Warehouse, dan solusi teknis IT",
+                about_hello: "Halo, Saya",
+                about_p1: "Saya adalah lulusan Teknik Komputer dan Jaringan (TKJ) dari SMK Assalafiyah Tegal yang memiliki pengalaman kerja nyata lintas industri di bidang Manufaktur Mesin CNC serta Operasional Pergudangan (Warehouse).",
+                about_p2: "Saat ini saya berfokus sebagai Operator Produksi CNC di PT Bima Manufaktur Jaya, menjalankan proses pemesinan presisi (Turning, Facing, Boring, Grooving) serta inspeksi kualitas dimensi menggunakan Jangka Sorong dan Mikrometer Digital. Latar belakang saya di pergudangan dan IT menjadikan saya adaptif terhadap sistem digital maupun disiplin keselamatan kerja (K3 & 5R/5S).",
+                about_btn_contact: "Hubungi Sekarang",
+                about_btn_skills: "Eksplorasi Keahlian",
+                info_loc_label: "Domisili",
+                info_loc_val: "Cikarang Selatan, Bekasi",
+                info_edu_label: "Pendidikan",
+                info_edu_val: "SMK TKJ (2023)",
+                info_role_label: "Posisi Saat Ini",
+                info_role_val: "Operator Produksi CNC",
+                info_email_label: "Email",
+                stat_1_title: "Bidang Keahlian Utama",
+                stat_1_sub: "CNC, Warehouse & IT Support",
+                stat_2_title: "Tahun Pengalaman",
+                stat_2_sub: "Manufaktur & Logistik",
+                stat_3_title: "Standar Keselamatan",
+                stat_3_sub: "Kepatuhan K3 & Budaya 5R/5S",
+                showcase_heading: "Portfolio Showcase",
+                showcase_sub: "Jelajahi kompetensi teknis saya melalui tiga pilar keahlian di bawah ini.",
+                tab_cnc: "CNC & QC",
+                tab_wh: "Warehouse",
+                tab_it: "IT & Tools",
+                cnc_1_title: "Operasi Mesin Produksi CNC",
+                cnc_1_desc: "Mengoperasikan mesin CNC untuk proses pemesinan presisi meliputi Turning, Facing, Boring, dan Grooving sesuai spesifikasi lembar kerja dan target produksi harian.",
+                cnc_2_title: "Inspeksi Alat Ukur Presisi",
+                cnc_2_desc: "Melakukan pengecekan kualitas dimensi benda kerja secara akurat menggunakan Jangka Sorong dan Mikrometer Digital untuk memastikan toleransi ukuran sesuai standar Quality Control (QC).",
+                tag_caliper: "Jangka Sorong",
+                tag_micrometer: "Mikrometer Digital",
+                cnc_3_title: "Setup Benda Kerja & Gambar Kerja",
+                cnc_3_desc: "Memasang benda kerja pada chuck/fixture dengan presisi, memantau kondisi pahat potong (cutting tool), serta memahami instruksi dan toleransi pada gambar teknik produksi.",
+                tag_sop_mfg: "SOP Manufaktur",
+                cnc_4_title: "Penerapan K3 & Budaya 5R/5S",
+                cnc_4_desc: "Menjalankan prosedur Keselamatan dan Kesehatan Kerja (K3) secara ketat di area mesin serta menjaga kerapian, kebersihan, dan perawatan harian area kerja dengan metode 5R/5S.",
+                tag_k3_ind: "K3 Industri",
+                wh_1_title: "Warehouse Management System (WMS)",
+                wh_1_desc: "Mengoperasikan sistem WMS dan Microsoft Excel untuk pemindaian barang, pembaruan lokasi rak penyimpanan, serta pencatatan mutasi keluar-masuk barang secara real-time.",
+                tag_accurate_data: "Data Akurat",
+                wh_2_title: "Picking, Packing & Order Fulfillment",
+                wh_2_desc: "Melaksanakan pengambilan barang (picking) sesuai picking list, pengemasan (packing) yang aman, serta verifikasi kuantitas pesanan sebelum proses pengiriman (dispatch).",
+                wh_3_title: "Kontrol Stok (FIFO/LIFO & Stock Opname)",
+                wh_3_desc: "Menerapkan perputaran barang dengan metode FIFO dan LIFO serta melakukan pengecekan stok fisik berkala (stock opname) untuk mencegah selisih inventori.",
+                wh_4_title: "Material Handling (Hand Pallet)",
+                wh_4_desc: "Terampil memindahkan dan menyusun palet muatan barang di area gudang menggunakan Hand Pallet secara aman sesuai pedoman K3 pergudangan.",
+                it_1_title: "PC Troubleshooting",
+                it_1_desc: "Perakitan PC, diagnosa Hardware & instalasi OS/Software",
+                it_2_title: "Jaringan LAN / WAN",
+                it_2_desc: "Instalasi kabel UTP, crimping, konfigurasi IP & Router",
+                it_3_title: "Microsoft Excel",
+                it_3_desc: "Pengolahan data laporan stok, produksi & rekap harian",
+                it_4_title: "Microsoft Word",
+                it_4_desc: "Penyusunan dokumen administrasi & laporan kerja",
+                it_5_title: "Alat Ukur Presisi",
+                it_5_desc: "Jangka Sorong & Mikrometer Digital",
+                it_6_title: "Sistem WMS",
+                it_6_desc: "Manajemen inventori gudang terkomputerisasi",
+                exp_heading: "Pengalaman & Pendidikan",
+                exp_sub: "Rekam jejak karier profesional dan latar belakang pendidikan saya.",
+                exp1_date: "September 2026 – Sekarang",
+                exp1_role: "Operator Produksi CNC",
+                exp1_company: "PT Bima Manufaktur Jaya",
+                exp1_b1: "Mengoperasikan mesin produksi CNC untuk proses Turning, Facing, Boring, dan Grooving sesuai standar operasional prosedur (SOP).",
+                exp1_b2: "Melaksanakan pemeriksaan kualitas dimensi (Quality Control) secara presisi menggunakan Jangka Sorong dan Mikrometer Digital.",
+                exp1_b3: "Menerapkan disiplin Keselamatan dan Kesehatan Kerja (K3) serta menjaga kerapian lingkungan kerja dengan prinsip 5R/5S.",
+                exp2_date: "Oktober 2024 – Mei 2026",
+                exp2_role: "Warehouse Picker / Staf Pergudangan",
+                exp2_company: "PT Absolut Servis Nusantara (Vendor PT Paragon Technology and Innovation)",
+                exp2_b1: "Menjalankan proses order fulfillment meliputi picking, packing, dan penyortiran barang secara cepat dan akurat menggunakan sistem WMS.",
+                exp2_b2: "Mengelola pencatatan stok dengan Microsoft Excel, melaksanakan stock opname berkala, serta menerapkan sistem rotasi FIFO/LIFO.",
+                exp2_b3: "Mengoperasikan Hand Pallet untuk pemindahan material secara aman sesuai standar K3 pergudangan.",
+                edu_role: "Teknik Komputer dan Jaringan (TKJ)",
+                edu_desc: "Fokus pada perakitan komputer, troubleshooting perangkat keras dan perangkat lunak, administrasi jaringan LAN/WAN, serta pengoperasian aplikasi perkantoran Microsoft Word dan Microsoft Excel.",
+                contact_heading: "Hubungi Saya",
+                contact_sub: "Tertarik untuk berdiskusi atau bekerja sama? Kirim pesan langsung melalui formulir atau kontak di bawah ini.",
+                contact_wa_label: "WhatsApp / Telepon",
+                contact_email_label: "Email",
+                contact_web_label: "GitHub & Web",
+                contact_loc_val: "Cikarang Selatan, Kabupaten Bekasi",
+                form_title: "Kirim Pesan Cepat",
+                form_name: "Nama Anda / Perusahaan",
+                form_name_ph: "Contoh: HRD PT Maju Jaya",
+                form_msg: "Pesan",
+                form_msg_ph: "Halo Ahmad, kami tertarik dengan profil Anda...",
+                form_btn: "Kirim via WhatsApp",
+                footer_rights: "Seluruh Hak Cipta Dilindungi.",
+                footer_loc: "Cikarang Selatan, Kabupaten Bekasi"
+            },
+            en: {
+                nav_home: "Home",
+                nav_about: "About",
+                nav_showcase: "Showcase",
+                nav_exp: "Experience",
+                nav_contact: "Contact",
+                hero_badge: "Ready to Contribute & Deliver Precision",
+                hero_greeting: "Multi-Skilled",
+                hero_main_skills: "CNC, Warehouse & IT",
+                hero_desc: "Delivering high-precision CNC machining results, structured WMS warehouse inventory management, and reliable IT & network technical support for industrial productivity.",
+                hero_pill_1: "Turning, Facing, Boring, Grooving",
+                hero_pill_2: "WMS & FIFO/LIFO",
+                hero_pill_3: "IT & LAN/WAN",
+                btn_showcase: "Projects",
+                btn_contact: "Contact",
+                about_heading: "About Me",
+                about_sub: "Transforming precision manufacturing, warehouse logistics, and IT into reliable performance",
+                about_hello: "Hello, I'm",
+                about_p1: "I am a Computer and Network Engineering (TKJ) graduate from SMK Assalafiyah Tegal with hands-on cross-industry experience in CNC Manufacturing and Warehouse Operations.",
+                about_p2: "Currently working as a CNC Production Machine Operator at PT Bima Manufaktur Jaya, performing precision machining (Turning, Facing, Boring, Grooving) and dimensional quality inspections using Vernier Calipers and Digital Micrometers. My background in warehousing and IT makes me highly adaptable to digital systems and strict workplace safety standards (OHS/K3 & 5S).",
+                about_btn_contact: "Get In Touch",
+                about_btn_skills: "Explore Showcase",
+                info_loc_label: "Location",
+                info_loc_val: "South Cikarang, Bekasi",
+                info_edu_label: "Education",
+                info_edu_val: "Vocational High School - TKJ (2023)",
+                info_role_label: "Current Role",
+                info_role_val: "CNC Production Operator",
+                info_email_label: "Email",
+                stat_1_title: "Core Skill Pillars",
+                stat_1_sub: "CNC, Warehouse & IT Support",
+                stat_2_title: "Years of Experience",
+                stat_2_sub: "Manufacturing & Logistics",
+                stat_3_title: "Safety Commitment",
+                stat_3_sub: "OHS (K3) & 5S Compliance",
+                showcase_heading: "Portfolio Showcase",
+                showcase_sub: "Explore my technical competencies across three core pillars below.",
+                tab_cnc: "CNC & QC",
+                tab_wh: "Warehouse",
+                tab_it: "IT & Tools",
+                cnc_1_title: "CNC Production Machining",
+                cnc_1_desc: "Operating CNC machines for precision Turning, Facing, Boring, and Grooving operations according to technical work sheets and daily production targets.",
+                cnc_2_title: "Precision Measurement & QC",
+                cnc_2_desc: "Performing accurate dimensional quality inspections using Vernier Calipers and Digital Micrometers to ensure strict Quality Control (QC) tolerances.",
+                tag_caliper: "Vernier Caliper",
+                tag_micrometer: "Digital Micrometer",
+                cnc_3_title: "Workpiece Setup & Technical Drawings",
+                cnc_3_desc: "Mounting workpieces onto chucks/fixtures with precision, monitoring cutting tool wear, and interpreting manufacturing technical drawings.",
+                tag_sop_mfg: "Manufacturing SOP",
+                cnc_4_title: "OHS (K3) & 5S Implementation",
+                cnc_4_desc: "Strictly executing Occupational Health and Safety (K3) procedures in machining areas and maintaining daily workplace organization using 5S methodology.",
+                tag_k3_ind: "Industrial OHS (K3)",
+                wh_1_title: "Warehouse Management System (WMS)",
+                wh_1_desc: "Operating WMS software and Microsoft Excel for item scanning, rack location updates, and real-time inbound/outbound inventory tracking.",
+                tag_accurate_data: "Accurate Data",
+                wh_2_title: "Picking, Packing & Order Fulfillment",
+                wh_2_desc: "Executing accurate item picking based on picking lists, secure packing, and quantity verification prior to dispatch.",
+                wh_3_title: "Inventory Control (FIFO/LIFO & Stock Opname)",
+                wh_3_desc: "Applying FIFO and LIFO stock rotation principles and conducting periodic physical stock counts (stock opname) to maintain inventory accuracy.",
+                wh_4_title: "Material Handling (Hand Pallet)",
+                wh_4_desc: "Safely moving and organizing palletized goods across warehouse zones using Hand Pallets in compliance with warehouse safety standards.",
+                it_1_title: "PC Troubleshooting",
+                it_1_desc: "PC assembly, hardware diagnostics & OS/Software installation",
+                it_2_title: "LAN / WAN Networking",
+                it_2_desc: "UTP cabling, crimping, IP & Router configuration",
+                it_3_title: "Microsoft Excel",
+                it_3_desc: "Inventory data processing, production & daily reporting",
+                it_4_title: "Microsoft Word",
+                it_4_desc: "Administrative documentation & work report preparation",
+                it_5_title: "Precision Measuring Tools",
+                it_5_desc: "Vernier Calipers & Digital Micrometers",
+                it_6_title: "WMS System",
+                it_6_desc: "Computerized warehouse inventory management",
+                exp_heading: "Experience & Education",
+                exp_sub: "My professional career track record and educational background.",
+                exp1_date: "September 2026 – Present",
+                exp1_role: "CNC Production Machine Operator",
+                exp1_company: "PT Bima Manufaktur Jaya",
+                exp1_b1: "Operate CNC production machinery for Turning, Facing, Boring, and Grooving processes in accordance with Standard Operating Procedures (SOP).",
+                exp1_b2: "Conduct precision dimensional Quality Control checks using Vernier Calipers and Digital Micrometers.",
+                exp1_b3: "Enforce strict Occupational Health & Safety (K3) protocols and maintain workplace organization through 5S standards.",
+                exp2_date: "October 2024 – May 2026",
+                exp2_role: "Warehouse Picker / Warehouse Staff",
+                exp2_company: "PT Absolut Servis Nusantara (Vendor for PT Paragon Technology and Innovation)",
+                exp2_b1: "Executed end-to-end order fulfillment including fast and accurate picking, packing, and sorting using Warehouse Management System (WMS).",
+                exp2_b2: "Managed inventory records via Microsoft Excel, conducted periodic stock opname, and applied FIFO/LIFO inventory rotation.",
+                exp2_b3: "Operated Hand Pallets for safe material handling across warehouse areas following OHS/K3 guidelines.",
+                edu_role: "Computer and Network Engineering (TKJ)",
+                edu_desc: "Focused on PC assembly, hardware and software troubleshooting, LAN/WAN network administration, and office productivity tools (Microsoft Word & Excel).",
+                contact_heading: "Contact Me",
+                contact_sub: "Interested in discussing an opportunity? Send a direct message via the form or contact links below.",
+                contact_wa_label: "WhatsApp / Phone",
+                contact_email_label: "Email",
+                contact_web_label: "GitHub & Web",
+                contact_loc_val: "South Cikarang, Bekasi Regency",
+                form_title: "Send Quick Message",
+                form_name: "Your Name / Company",
+                form_name_ph: "Example: HRD PT Maju Jaya",
+                form_msg: "Message",
+                form_msg_ph: "Hello Ahmad, we are interested in your profile...",
+                form_btn: "Send via WhatsApp",
+                footer_rights: "All Rights Reserved.",
+                footer_loc: "South Cikarang, Bekasi Regency"
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'id' ? 'en' : 'id';
+            document.getElementById('langLabel').textContent = currentLang.toUpperCase();
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                    el.style.animation = 'none';
+                    el.offsetHeight;
+                    el.style.animation = 'splashWordAnim 0.65s cubic-bezier(0.25, 1, 0.5, 1)';
+                }
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[currentLang][key]) {
+                    el.setAttribute('placeholder', translations[currentLang][key]);
+                }
+            });
+            roleIndex = 0;
+            charIndex = 0;
+            isDeleting = false;
+        }
+
+        // Smooth Typing Effect for Hero Subtitle (100ms typing, 50ms deleting, 2000ms pause)
+        const roles = {
+            id: [
+                "Operator Produksi CNC",
+                "Spesialis Warehouse & WMS",
+                "Teknisi IT & Jaringan (TKJ)"
+            ],
+            en: [
+                "CNC Production Machine Operator",
+                "Warehouse & WMS Specialist",
+                "IT & Network Technician"
+            ]
+        };
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingEl = document.getElementById('typingText');
+
+        function typeEffect() {
+            const currentRoles = roles[currentLang];
+            const currentWord = currentRoles[roleIndex];
+
+            if (isDeleting) {
+                typingEl.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingEl.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let speed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                speed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % currentRoles.length;
+                speed = 400;
+            }
+
+            setTimeout(typeEffect, speed);
+        }
+        typeEffect();
+    </script>
+</body>
+</html>
