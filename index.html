@@ -1,409 +1,947 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ahmad Riyanto | Portfolio & CV</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script>
-let cur = 0;
-function setLanguage(lang) {
-    document.documentElement.lang = lang;
-    document.getElementById('btn-id').classList.toggle('active', lang === 'id');
-    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-    document.querySelectorAll('[data-en]').forEach(el => {
-        if (!el.dataset.id) el.dataset.id = el.textContent.trim();
-        el.textContent = lang === 'en' ? el.dataset.en : el.dataset.id;
-    });
-}
-function goToSlide(i) {
-    const track = document.getElementById('carouselTrack');
-    const dots = document.querySelectorAll('.dot');
-    if (!track) return;
-    cur = (i + 3) % 3;
-    track.scrollTo({ left: track.clientWidth * cur, behavior: 'smooth' });
-    dots.forEach((d, idx) => d.classList.toggle('active', idx === cur));
-}
-function moveSlide(dir) { goToSlide(cur + dir); }
-document.addEventListener('DOMContentLoaded', async () => {
-    const track = document.getElementById('carouselTrack');
-    const dots = document.querySelectorAll('.dot');
-    if (track) {
-        track.addEventListener('scroll', () => {
-            const idx = Math.round(track.scrollLeft / track.clientWidth);
-            if (idx !== cur && idx >= 0 && idx < 3) {
-                cur = idx;
-                dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Riyanto | Portfolio</title>
+    <meta name="description" content="Portofolio Profesional Ahmad Riyanto - Operator Produksi CNC, Staf Pergudangan (Warehouse), dan Teknisi IT (TKJ).">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        darkBg: '#030014',
+                    },
+                    animation: {
+                        'blob': 'blob 8s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
             }
-        }, { passive: true });
-    }
-    const img = document.getElementById('cnc-foto');
-    if (!img) return;
-    const bad = /\b(man|men|woman|women|person|people|worker|workers|machinist|operator|navy|military|soldier|student|boy|girl|wood|laser|portrait)\b/i;
-    const urls = [];
-    try {
-        const q = encodeURIComponent('filetype:bitmap ("CNC machines" OR "machining centers" OR "CNC factory" OR "CNC workshop") -person -worker -machinist -navy');
-        const r = await fetch('https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=' + q + '&gsrlimit=12&prop=imageinfo&iiprop=url|dimensions|extmetadata&iiurlwidth=900&format=json&origin=*');
-        const d = await r.json();
-        if (d.query && d.query.pages) {
-            Object.values(d.query.pages)
-                .sort((a, b) => a.index - b.index)
-                .forEach(p => {
-                    const info = p.imageinfo && p.imageinfo[0];
-                    if (!info || info.width <= info.height) return;
-                    const desc = (info.extmetadata && info.extmetadata.ImageDescription && info.extmetadata.ImageDescription.value) || '';
-                    const txt = (p.title + ' ' + desc).replace(/<[^>]*>/g, ' ');
-                    if (!bad.test(txt)) urls.push(info.thumburl || info.url);
-                });
         }
-    } catch (e) {}
-    try {
-        const r2 = await fetch('https://id.wikipedia.org/api/rest_v1/page/summary/CNC');
-        const d2 = await r2.json();
-        if (d2.originalimage) urls.push(d2.originalimage.source);
-        else if (d2.thumbnail) urls.push(d2.thumbnail.source);
-    } catch (e) {}
-    for (const u of urls) {
-        const ok = await new Promise(res => {
-            const t = new Image();
-            t.onload = () => res(true);
-            t.onerror = () => res(false);
-            t.src = u;
-        });
-        if (ok) { img.src = u; break; }
-    }
-});
-</script>
-<style>
-:root{--bg:#0f172a;--card:#1e293b;--pri:#38bdf8;--acc:#22c55e;--txt:#f8fafc;--mut:#94a3b8;--bdr:rgba(255,255,255,0.08)}
-*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;overflow-x:hidden}
-nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--bdr);padding:0.9rem 5%;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:1.15rem;font-weight:800;color:var(--txt);text-decoration:none}
-.logo span{color:var(--pri)}
-.lang-switch{display:flex;background:var(--card);border:1px solid rgba(56,189,248,0.35);border-radius:99px;padding:3px}
-.lang-btn{background:transparent;border:none;color:var(--mut);font-family:inherit;font-weight:700;font-size:0.82rem;padding:6px 14px;border-radius:99px;cursor:pointer}
-.lang-btn.active{background:var(--pri);color:#0f172a}
-header{padding:2.6rem 5% 1.8rem;max-width:920px;margin:0 auto;text-align:center}
-.status-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.3);padding:5px 14px;border-radius:99px;font-size:0.78rem;font-weight:700;margin-bottom:0.75rem}
-.pulse{width:8px;height:8px;background:#22c55e;border-radius:50%;box-shadow:0 0 0 rgba(34,197,94,0.7);animation:pulse 1.8s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
-.badge{display:block;width:fit-content;margin:0 auto 0.9rem;background:rgba(56,189,248,0.12);color:var(--pri);border:1px solid rgba(56,189,248,0.3);padding:6px 16px;border-radius:99px;font-size:0.82rem;font-weight:700}
-header h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:0.75rem}
-header h1 span{color:var(--pri)}
-header p{color:var(--mut);max-width:700px;margin:0 auto 1.2rem;font-size:0.94rem}
-.hero-meta{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;color:var(--mut);font-size:0.84rem;margin-bottom:1.8rem}
-.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem;max-width:680px;margin:0 auto}
-@media(min-width:640px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
-.stat-box{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:0.9rem 0.6rem;text-align:center}
-.stat-num{font-size:1.25rem;font-weight:800;color:var(--pri);line-height:1.2;margin-bottom:0.2rem}
-.stat-lbl{font-size:0.75rem;color:var(--mut);font-weight:600}
-.container{max-width:900px;margin:0 auto;padding:0.5rem 5% 4rem}
-section{margin-bottom:3.5rem}
-.section-header{text-align:center;margin-bottom:1.5rem}
-.section-header h2{font-size:1.45rem;font-weight:800;margin-bottom:0.3rem}
-.section-header p{color:var(--mut);font-size:0.86rem}
-.carousel-wrapper{position:relative;max-width:680px;margin:0 auto}
-.carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-radius:16px;border:1px solid var(--bdr);background:var(--card);box-shadow:0 16px 36px rgba(0,0,0,0.35)}
-.carousel-track::-webkit-scrollbar{display:none}
-.skill-slide{min-width:100%;scroll-snap-align:start;display:flex;flex-direction:column}
-.slide-image-box{position:relative;height:225px;width:100%;overflow:hidden;background:#0b1120}
-.slide-image-box img{width:100%;height:100%;object-fit:cover;display:block}
-.slide-label{position:absolute;top:12px;left:12px;background:rgba(15,23,42,0.88);color:var(--pri);padding:5px 14px;border-radius:99px;font-size:0.78rem;font-weight:700;border:1px solid rgba(56,189,248,0.35);z-index:5}
-.slide-content{padding:1.45rem}
-.slide-content h3{font-size:1.22rem;font-weight:700;margin-bottom:0.55rem}
-.slide-content p{color:var(--mut);font-size:0.91rem;margin-bottom:1.05rem}
-.skill-tags{display:flex;flex-wrap:wrap;gap:0.45rem}
-.skill-tag{background:rgba(56,189,248,0.1);color:var(--pri);border:1px solid rgba(56,189,248,0.25);padding:5px 11px;border-radius:8px;font-size:0.77rem;font-weight:600}
-.carousel-btn{position:absolute;top:112px;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(15,23,42,0.85);color:var(--txt);border:1px solid rgba(56,189,248,0.5);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;z-index:20}
-.carousel-btn.prev{left:10px}
-.carousel-btn.next{right:10px}
-.carousel-dots{display:flex;justify-content:center;gap:8px;margin-top:1rem}
-.dot{width:10px;height:10px;border-radius:99px;background:rgba(255,255,255,0.25);border:none;cursor:pointer;transition:0.3s}
-.dot.active{width:28px;background:var(--pri)}
-.timeline{display:grid;gap:1.15rem}
-.card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:1.35rem}
-.card-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.7rem}
-.card-title{font-size:1.06rem;font-weight:700}
-.card-subtitle{color:var(--pri);font-weight:600;font-size:0.86rem}
-.card-date{background:rgba(255,255,255,0.06);color:var(--mut);padding:4px 10px;border-radius:99px;font-size:0.75rem;font-weight:600}
-.card ul{padding-left:1.15rem;color:var(--mut);font-size:0.89rem}
-.card ul li{margin-bottom:0.38rem}
-.roles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0.95rem}
-.role-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:1.25rem}
-.role-card h3{color:var(--pri);font-size:0.98rem;margin-bottom:0.4rem}
-.role-card p{color:var(--mut);font-size:0.87rem}
-.contact-box{background:var(--card);border:1px solid rgba(56,189,248,0.25);border-radius:16px;padding:1.9rem 1.3rem;text-align:center}
-.contact-box p{color:var(--mut);max-width:540px;margin:0.5rem auto 1.3rem;font-size:0.89rem}
-.btn-group{display:flex;justify-content:center;flex-wrap:wrap;gap:0.8rem}
-.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.3rem;border-radius:12px;font-weight:700;font-size:0.87rem;text-decoration:none}
-.btn-wa{background:var(--acc);color:#052e16}
-.btn-email{background:var(--pri);color:#0f172a}
-footer{text-align:center;padding:1.5rem 5%;border-top:1px solid var(--bdr);color:var(--mut);font-size:0.78rem}
-</style>
+    </script>
+
+    <style>
+        body {
+            background-color: #030014;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        /* Grid Background ala EkiZR */
+        .bg-grid {
+            background-size: 36px 36px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.25);
+            transform: translateY(-4px);
+        }
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gradient-blue {
+            background: linear-gradient(90deg, #818cf8 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Active Tab Button */
+        .tab-active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(168, 85, 247, 0.25) 100%);
+            border-color: rgba(168, 85, 247, 0.6);
+            color: #ffffff;
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.3);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030014;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6366f1, #a855f7);
+            border-radius: 4px;
+        }
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-grid relative selection:bg-purple-500 selection:text-white">
 
-<nav>
-    <a href="#" class="logo">AHMAD <span>RIYANTO</span></a>
-    <div class="lang-switch">
-        <button type="button" class="lang-btn active" id="btn-id" onclick="setLanguage('id')">ID</button>
-        <button type="button" class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
-    </div>
-</nav>
-
-<header>
-    <div class="status-pill">
-        <span class="pulse"></span>
-        <span data-en="Cikarang Domicile • Ready for Shift Work & Overtime">Domisili Cikarang • Siap Kerja Sistem Shift & Lembur</span>
-    </div>
-    <div class="badge" data-en="CNC Operator • Warehouse Logistics • IT Support">Operator CNC • Logistik Gudang • IT Support</div>
-    <h1>Ahmad <span>Riyanto</span></h1>
-    <p data-en="Professional in Manufacturing (CNC Machine Operator), Warehouse Operations (Logistics), and Information Technology. Skilled in operating CNC machines (Turning, Facing, Boring, Grooving) with digital precision measuring tools, operating Warehouse Management Systems (WMS), as well as PC hardware assembly and Microsoft Office administration.">Tenaga profesional di bidang Manufaktur (Operator Mesin CNC), Operasional Pergudangan (Logistik), dan Teknologi Informasi. Terampil dalam mengoperasikan mesin CNC (Turning, Facing, Boring, Grooving) dengan alat ukur presisi digital, mengoperasikan Warehouse Management System (WMS), serta perakitan hardware komputer dan administrasi Microsoft Office.</p>
-    <div class="hero-meta">
-        <span>📍 Cikarang, Bekasi</span>
-        <span>📞 0851-7333-3525</span>
-        <span>✉️ ahmadriyanto1603@gmail.com</span>
+    <!-- Ambient Neon Blobs (EkiZR Background Effect) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-indigo-600/20 rounded-full filter blur-[120px] animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-purple-600/20 rounded-full filter blur-[120px] animate-blob" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-96 h-96 bg-blue-600/15 rounded-full filter blur-[120px] animate-blob" style="animation-delay: 4s;"></div>
     </div>
 
-    <div class="stats-grid">
-        <div class="stat-box">
-            <div class="stat-num" data-en="2+ Yrs">2+ Thn</div>
-            <div class="stat-lbl" data-en="Industrial Experience">Pengalaman Industri</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-num">4 Proses</div>
-            <div class="stat-lbl">Turning, Facing, Boring, Grooving</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-num">0.01 mm</div>
-            <div class="stat-lbl" data-en="Digital Tool Precision">Presisi Alat Ukur Digital</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-num">5R & K3</div>
-            <div class="stat-lbl" data-en="100% SOP Compliance">100% Disiplin SOP Pabrik</div>
-        </div>
-    </div>
-</header>
+    <!-- Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#030014]/70 border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+            <a href="#home" class="text-xl font-extrabold tracking-tight text-gradient">
+                AhmadRiyanto<span class="text-white">.</span>
+            </a>
 
-<div class="container">
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#home" class="hover:text-white transition" data-i18n="nav_home">Beranda</a>
+                <a href="#about" class="hover:text-white transition" data-i18n="nav_about">Tentang</a>
+                <a href="#showcase" class="hover:text-white transition" data-i18n="nav_showcase">Keahlian</a>
+                <a href="#experience" class="hover:text-white transition" data-i18n="nav_exp">Pengalaman</a>
+                <a href="#contact" class="hover:text-white transition" data-i18n="nav_contact">Kontak</a>
+            </nav>
 
-    <section id="skills">
-        <div class="section-header">
-            <h2 data-en="My Core Skills">Keahlian Utama Saya</h2>
-            <p data-en="Swipe left/right or tap the arrow buttons to explore my skills">Usap gambar ke kiri/kanan atau ketuk tombol panah untuk melihat keahlian lainnya</p>
+            <!-- Language Toggle & Mobile Menu Button -->
+            <div class="flex items-center gap-3">
+                <button id="langToggle" onclick="toggleLanguage()" class="px-3 py-1.5 rounded-full text-xs font-bold border border-purple-500/40 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 transition flex items-center gap-1.5">
+                    <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                    <span id="langLabel">ID</span>
+                </button>
+                <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
         </div>
 
-        <div class="carousel-wrapper">
-            <button type="button" class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
-            <button type="button" class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden border-b border-white/10 bg-[#030014]/95 px-6 py-4 space-y-3 text-sm font-medium text-gray-300">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 hover:text-purple-400" data-i18n="nav_home">Beranda</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 hover:text-purple-400" data-i18n="nav_about">Tentang</a>
+            <a href="#showcase" onclick="toggleMobileMenu()" class="block py-2 hover:text-purple-400" data-i18n="nav_showcase">Keahlian</a>
+            <a href="#experience" onclick="toggleMobileMenu()" class="block py-2 hover:text-purple-400" data-i18n="nav_exp">Pengalaman</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 hover:text-purple-400" data-i18n="nav_contact">Kontak</a>
+        </div>
+    </header>
 
-            <div class="carousel-track" id="carouselTrack">
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-6xl mx-auto px-5 pt-28 md:pt-36 pb-20">
 
-                <!-- SLIDE 1: GUDANG / PABRIK MESIN CNC -->
-                <div class="skill-slide">
-                    <div class="slide-image-box">
-                        <span class="slide-label" data-en="Manufacturing & CNC Machining">Manufaktur & Mesin CNC</span>
-                        <img id="foto-cnc-asli" alt="Mesin CNC" style="background:#0b1120">
-                        <script>fetch('https://id.wikipedia.org/api/rest_v1/page/summary/CNC').then(r=>r.json()).then(d=>{document.getElementById('foto-cnc-asli').src=(d.originalimage||d.thumbnail).source});</script>
+        <!-- HERO SECTION -->
+        <section id="home" class="min-h-[82vh] flex flex-col lg:flex-row items-center justify-between gap-12 py-8">
+            <!-- Left Column -->
+            <div class="w-full lg:w-7/12 space-y-6 text-left" data-aos="fade-right" data-aos-duration="1000">
+                <!-- Glowing Badge -->
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border-purple-500/30 text-xs font-medium text-purple-300">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-400"></i>
+                    <span data-i18n="hero_badge">Siap Berkontribusi & Bekerja Presisi</span>
+                </div>
+
+                <!-- Main Title -->
+                <div class="space-y-2">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.15]">
+                        <span class="block text-white" data-i18n="hero_greeting">Profesional</span>
+                        <span class="text-gradient">CNC, Warehouse & IT</span>
+                    </h1>
+                </div>
+
+                <!-- Typing Subtitle -->
+                <div class="flex items-center text-lg sm:text-xl font-semibold text-gray-300 h-8">
+                    <span id="typingText" class="text-gradient-blue"></span>
+                    <span class="cursor-blink ml-1 text-purple-400">|</span>
+                </div>
+
+                <!-- Description -->
+                <p class="text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl" data-i18n="hero_desc">
+                    Berpengalaman dalam pengoperasian mesin produksi CNC dengan kontrol kualitas presisi tinggi, pengelolaan operasional pergudangan berbasis WMS, serta dukungan teknis perangkat keras dan jaringan komputer.
+                </p>
+
+                <!-- Quick Skill Pills -->
+                <div class="flex flex-wrap gap-2 pt-1">
+                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-300">Turning, Facing, Boring, Grooving</span>
+                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-300">Jangka Sorong & Mikrometer Digital</span>
+                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-300">WMS & FIFO/LIFO</span>
+                    <span class="px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-300">IT & LAN/WAN Support</span>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap items-center gap-4 pt-3">
+                    <a href="#showcase" class="px-6 py-3 rounded-xl font-semibold text-sm bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-purple-600/25 transition flex items-center gap-2">
+                        <span data-i18n="btn_showcase">Lihat Keahlian</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#contact" class="px-6 py-3 rounded-xl font-semibold text-sm glass-card hover:bg-white/10 text-white transition flex items-center gap-2">
+                        <i data-lucide="mail" class="w-4 h-4 text-purple-400"></i>
+                        <span data-i18n="btn_contact">Hubungi Saya</span>
+                    </a>
+                </div>
+
+                <!-- Social Icons -->
+                <div class="flex items-center gap-3 pt-2">
+                    <a href="https://wa.me/6285173333525" target="_blank" class="p-2.5 rounded-xl glass-card text-gray-400 hover:text-white" title="WhatsApp">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                    </a>
+                    <a href="mailto:ahmadriyanto1603@gmail.com" class="p-2.5 rounded-xl glass-card text-gray-400 hover:text-white" title="Email">
+                        <i data-lucide="at-sign" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://github.com/AhmadRiyanto3" target="_blank" class="p-2.5 rounded-xl glass-card text-gray-400 hover:text-white" title="GitHub">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Column: Futuristic Interactive Visual Card -->
+            <div class="w-full lg:w-5/12 flex justify-center" data-aos="zoom-in" data-aos-duration="1200">
+                <div class="relative w-full max-w-md">
+                    <!-- Glow Effect Behind Card -->
+                    <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-30 animate-pulse-slow"></div>
+                    
+                    <div class="relative glass-card rounded-3xl p-6 sm:p-8 border border-white/15 space-y-6">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-lg font-extrabold shadow-inner">
+                                    AR
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-white text-base">Ahmad Riyanto</h2>
+                                    <p class="text-xs text-gray-400 flex items-center gap-1">
+                                        <i data-lucide="map-pin" class="w-3 h-3 text-purple-400"></i>
+                                        Cikarang Selatan, Bekasi
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                                Active
+                            </span>
+                        </div>
+
+                        <!-- 3 Core Pillars Mini Dashboard -->
+                        <div class="space-y-3">
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center gap-3.5">
+                                <div class="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-400">
+                                    <i data-lucide="cog" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white" data-i18n="card_cnc_title">Manufaktur & Operasi CNC</div>
+                                    <div class="text-[11px] text-gray-400">Turning, Facing, Boring, Grooving & QC</div>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center gap-3.5">
+                                <div class="p-2.5 rounded-xl bg-purple-500/20 text-purple-400">
+                                    <i data-lucide="package-check" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white" data-i18n="card_wh_title">Operasional Warehouse</div>
+                                    <div class="text-[11px] text-gray-400">WMS, Picking, Packing, FIFO/LIFO</div>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center gap-3.5">
+                                <div class="p-2.5 rounded-xl bg-pink-500/20 text-pink-400">
+                                    <i data-lucide="cpu" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-white" data-i18n="card_it_title">Dukungan IT & Jaringan</div>
+                                    <div class="text-[11px] text-gray-400">PC Troubleshooting, LAN/WAN, MS Office</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Status -->
+                        <div class="pt-2 flex items-center justify-between text-xs text-gray-400 border-t border-white/10">
+                            <span>Standar Kerja</span>
+                            <span class="font-semibold text-purple-300">K3 & Budaya 5R / 5S</span>
+                        </div>
                     </div>
-                    <div class="slide-content">
-                        <h3 data-en="CNC Machine Production Operator">Operator Produksi Mesin CNC</h3>
-                        <p data-en="Experienced in operating CNC machines (Turning, Facing, Boring, Grooving) to process Raw Materials into finished products. Skilled in measuring dimensional precision, top surface flatness, and center-to-side distances (mm) using Digital Calipers, Digital Micrometers, and Dial Indicators / Centricators.">Berpengalaman mengoperasikan mesin CNC (Turning, Facing, Boring, Grooving) untuk memproses Raw Material (material mentah) menjadi produk jadi. Terampil melakukan pengukuran kepresisian dimensi, kerataan permukaan atas, serta jarak titik tengah ke sisi samping (mm) menggunakan Jangka Sorong Digital, Micrometer Digital, dan Dial Indicator / Centricator.</p>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Turning, Facing, Boring, Grooving</span>
-                            <span class="skill-tag" data-en="Digital Vernier Caliper">Jangka Sorong Digital</span>
-                            <span class="skill-tag" data-en="Digital Micrometer">Micrometer Digital</span>
-                            <span class="skill-tag">Dial Indicator / Centricator</span>
+                </div>
+            </div>
+        </section>
+
+                    <!-- Highlight Info Box -->
+                    <div class="lg:col-span-4 bg-white/[0.02] border border-white/10 rounded-2xl p-5 space-y-3 text-sm">
+                        <div class="flex justify-between py-2 border-b border-white/10">
+                            <span class="text-gray-400" data-i18n="info_loc_label">Domisili</span>
+                            <span class="font-semibold text-white">Cikarang Selatan, Bekasi</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-white/10">
+                            <span class="text-gray-400" data-i18n="info_edu_label">Pendidikan</span>
+                            <span class="font-semibold text-white">SMK TKJ (2023)</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-white/10">
+                            <span class="text-gray-400" data-i18n="info_role_label">Posisi Saat Ini</span>
+                            <span class="font-semibold text-purple-400">Operator Produksi CNC</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="text-gray-400">Email</span>
+                            <span class="font-semibold text-white truncate max-w-[180px]">ahmadriyanto1603@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 EkiZR-Style Metric Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div onclick="switchTab('cnc')" class="cursor-pointer glass-card rounded-2xl p-6 flex items-center justify-between" data-aos="fade-up" data-aos-delay="150">
+                    <div>
+                        <div class="text-3xl font-extrabold text-white mb-1">3</div>
+                        <div class="text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="stat_1_title">Bidang Keahlian Utama</div>
+                        <div class="text-[11px] text-purple-400 mt-1" data-i18n="stat_1_sub">CNC, Warehouse & IT Support</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-indigo-500/15 text-indigo-400">
+                        <i data-lucide="award" class="w-7 h-7"></i>
+                    </div>
+                </div>
+
+                <div onclick="switchTab('warehouse')" class="cursor-pointer glass-card rounded-2xl p-6 flex items-center justify-between" data-aos="fade-up" data-aos-delay="250">
+                    <div>
+                        <div class="text-3xl font-extrabold text-white mb-1">2+</div>
+                        <div class="text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="stat_2_title">Tahun Pengalaman</div>
+                        <div class="text-[11px] text-purple-400 mt-1" data-i18n="stat_2_sub">Manufaktur & Logistik</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-purple-500/15 text-purple-400">
+                        <i data-lucide="briefcase" class="w-7 h-7"></i>
+                    </div>
+                </div>
+
+                <div onclick="switchTab('it')" class="cursor-pointer glass-card rounded-2xl p-6 flex items-center justify-between" data-aos="fade-up" data-aos-delay="350">
+                    <div>
+                        <div class="text-3xl font-extrabold text-white mb-1">100%</div>
+                        <div class="text-xs font-semibold uppercase tracking-wider text-gray-400" data-i18n="stat_3_title">Standar Keselamatan</div>
+                        <div class="text-[11px] text-purple-400 mt-1" data-i18n="stat_3_sub">Kepatuhan K3 & Budaya 5R/5S</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-pink-500/15 text-pink-400">
+                        <i data-lucide="shield-check" class="w-7 h-7"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO SHOWCASE SECTION (EkiZR Signature 3-Tab Switcher) -->
+        <section id="showcase" class="py-20">
+            <div class="text-center max-w-2xl mx-auto mb-10" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gradient mb-3" data-i18n="showcase_heading">Portfolio Showcase</h2>
+                <p class="text-gray-400 text-sm" data-i18n="showcase_sub">Jelajahi kompetensi teknis saya melalui tiga pilar keahlian di bawah ini.</p>
+            </div>
+
+            <!-- Interactive Tab Buttons -->
+            <div class="glass-card p-2 rounded-2xl max-w-2xl mx-auto mb-10 grid grid-cols-3 gap-2" data-aos="fade-up" data-aos-delay="100">
+                <button id="tabBtn-cnc" onclick="switchTab('cnc')" class="tab-active py-3 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex flex-col sm:flex-row items-center justify-center gap-2 border border-transparent">
+                    <i data-lucide="cog" class="w-4 h-4"></i>
+                    <span>CNC & QC</span>
+                </button>
+                <button id="tabBtn-warehouse" onclick="switchTab('warehouse')" class="py-3 px-3 rounded-xl text-xs sm:text-sm font-bold text-gray-400 hover:text-white transition flex flex-col sm:flex-row items-center justify-center gap-2 border border-transparent">
+                    <i data-lucide="package" class="w-4 h-4"></i>
+                    <span>Warehouse</span>
+                </button>
+                <button id="tabBtn-it" onclick="switchTab('it')" class="py-3 px-3 rounded-xl text-xs sm:text-sm font-bold text-gray-400 hover:text-white transition flex flex-col sm:flex-row items-center justify-center gap-2 border border-transparent">
+                    <i data-lucide="terminal" class="w-4 h-4"></i>
+                    <span>IT & Tools</span>
+                </button>
+            </div>
+
+            <!-- TAB 1 CONTENT: CNC & MANUFACTURING -->
+            <div id="tabContent-cnc" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card rounded-2xl p-6 space-y-4">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                        <i data-lucide="settings" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white" data-i18n="cnc_1_title">Operasi Mesin Produksi CNC</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="cnc_1_desc">
+                        Mengoperasikan mesin CNC untuk proses pemesinan presisi meliputi Turning, Facing, Boring, dan Grooving sesuai spesifikasi lembar kerja dan target produksi harian.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Turning</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Facing</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Boring</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Grooving</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 space-y-4">
+                    <div class="w-11 h-11 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                        <i data-lucide="ruler" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white" data-i18n="cnc_2_title">Inspeksi Alat Ukur Presisi</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="cnc_2_desc">
+                        Melakukan pengecekan kualitas dimensi benda kerja secara akurat menggunakan Jangka Sorong dan Mikrometer Digital untuk memastikan toleransi ukuran sesuai standar Quality Control (QC).
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">Jangka Sorong</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">Mikrometer Digital</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">Quality Control</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 space-y-4">
+                    <div class="w-11 h-11 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center">
+                        <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white" data-i18n="cnc_3_title">Setup Benda Kerja & Gambar Kerja</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="cnc_3_desc">
+                        Memasang benda kerja pada chuck/fixture dengan presisi, memantau kondisi pahat potong (cutting tool), serta memahami instruksi dan toleransi pada gambar teknik produksi.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-300 border border-blue-500/20">Workpiece Setup</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-300 border border-blue-500/20">SOP Manufaktur</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 space-y-4">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                        <i data-lucide="hard-hat" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white" data-i18n="cnc_4_title">Penerapan K3 & Budaya 5R/5S</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="cnc_4_desc">
+                        Menjalankan prosedur Keselamatan dan Kesehatan Kerja (K3) secara ketat di area mesin serta menjaga kerapian, kebersihan, dan perawatan harian area kerja dengan metode 5R/5S.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">K3 Industri</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">5R / 5S</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2 CONTENT: WAREHOUSE & LOGISTICS -->
+            <div id="tabContent-warehouse" class="hidden grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card rounded-2xl p-6 space-y-4">
+                    <div class="w-11 h-11 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                        <i data-lucide="scan-barcode" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white" data-i18n="wh_1_title">Warehouse Management System (WMS)</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="wh_1_desc">
+                        Mengoperasikan sistem WMS dan Microsoft Excel untuk pemindaian barang, pembaruan lokasi rak penyimpanan, serta pencatatan mutasi keluar-masuk barang secara real-time.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">WMS</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">Data Akurat</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 space-y-4">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                        <i data-lucide="boxes" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white" data-i18n="wh_2_title">Picking, Packing & Order Fulfillment</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="wh_2_desc">
+                        Melaksanakan pengambilan barang (picking) sesuai picking list, pengemasan (packing) yang aman, serta verifikasi kuantitas pesanan sebelum proses pengiriman (dispatch).
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Picking</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Packing</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Order Fulfillment</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 space-y-4">
+                    <div class="w-11 h-11 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center">
+                        <i data-lucide="clipboard-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white" data-i18n="wh_3_title">Kontrol Stok (FIFO/LIFO & Stock Opname)</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="wh_3_desc">
+                        Menerapkan perputaran barang dengan metode FIFO dan LIFO serta melakukan pengecekan stok fisik berkala (stock opname) untuk mencegah selisih inventori.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-pink-500/10 text-pink-300 border border-pink-500/20">FIFO / LIFO</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-pink-500/10 text-pink-300 border border-pink-500/20">Stock Opname</span>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 space-y-4">
+                    <div class="w-11 h-11 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+                        <i data-lucide="truck" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white" data-i18n="wh_4_title">Material Handling (Hand Pallet)</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="wh_4_desc">
+                        Terampil memindahkan dan menyusun palet muatan barang di area gudang menggunakan Hand Pallet secara aman sesuai pedoman K3 pergudangan.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20">Hand Pallet</span>
+                        <span class="text-[11px] px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20">Material Handling</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3 CONTENT: IT, NETWORK & TECH STACK -->
+            <div id="tabContent-it" class="hidden grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="p-3 rounded-xl bg-indigo-500/20 text-indigo-400"><i data-lucide="wrench" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">PC Troubleshooting</h4>
+                        <p class="text-xs text-gray-400">Perakitan PC, diagnosa Hardware & instalasi OS/Software</p>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="p-3 rounded-xl bg-purple-500/20 text-purple-400"><i data-lucide="network" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">Jaringan LAN / WAN</h4>
+                        <p class="text-xs text-gray-400">Instalasi kabel UTP, crimping, konfigurasi IP & Router</p>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="p-3 rounded-xl bg-emerald-500/20 text-emerald-400"><i data-lucide="table" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">Microsoft Excel</h4>
+                        <p class="text-xs text-gray-400">Pengolahan data laporan stok, produksi & rekap harian</p>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="p-3 rounded-xl bg-blue-500/20 text-blue-400"><i data-lucide="file-text" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">Microsoft Word</h4>
+                        <p class="text-xs text-gray-400">Penyusunan dokumen administrasi & laporan kerja</p>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="p-3 rounded-xl bg-pink-500/20 text-pink-400"><i data-lucide="gauge" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">Alat Ukur Presisi</h4>
+                        <p class="text-xs text-gray-400">Jangka Sorong & Mikrometer Digital</p>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="p-3 rounded-xl bg-amber-500/20 text-amber-400"><i data-lucide="database" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">Sistem WMS</h4>
+                        <p class="text-xs text-gray-400">Manajemen inventori gudang terkomputerisasi</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE & EDUCATION SECTION -->
+        <section id="experience" class="py-20">
+            <div class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gradient mb-3" data-i18n="exp_heading">Pengalaman & Pendidikan</h2>
+                <p class="text-gray-400 text-sm" data-i18n="exp_sub">Rekam jejak karier profesional dan latar belakang pendidikan saya.</p>
+            </div>
+
+            <div class="space-y-6 max-w-4xl mx-auto">
+                <!-- Exp 1: CNC -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden" data-aos="fade-up">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 mb-2" data-i18n="exp1_date">
+                                September 2026 – Sekarang
+                            </span>
+                            <h3 class="text-xl font-bold text-white" data-i18n="exp1_role">Operator Produksi CNC</h3>
+                            <p class="text-sm text-purple-400 font-medium">PT Bima Manufaktur Jaya</p>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-white/5 self-start">
+                            <i data-lucide="factory" class="w-6 h-6 text-indigo-400"></i>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-300 list-disc list-inside leading-relaxed">
+                        <li data-i18n="exp1_b1">Mengoperasikan mesin produksi CNC untuk proses Turning, Facing, Boring, dan Grooving sesuai standar operasional prosedur (SOP).</li>
+                        <li data-i18n="exp1_b2">Melaksanakan pemeriksaan kualitas dimensi (Quality Control) secara presisi menggunakan Jangka Sorong dan Mikrometer Digital.</li>
+                        <li data-i18n="exp1_b3">Menerapkan disiplin Keselamatan dan Kesehatan Kerja (K3) serta menjaga kerapian lingkungan kerja dengan prinsip 5R/5S.</li>
+                    </ul>
+                </div>
+
+                <!-- Exp 2: Warehouse -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-2" data-i18n="exp2_date">
+                                Oktober 2024 – Mei 2026
+                            </span>
+                            <h3 class="text-xl font-bold text-white" data-i18n="exp2_role">Warehouse Picker / Staf Pergudangan</h3>
+                            <p class="text-sm text-purple-400 font-medium">PT Absolut Servis Nusantara (Vendor PT Paragon Technology and Innovation)</p>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-white/5 self-start">
+                            <i data-lucide="warehouse" class="w-6 h-6 text-purple-400"></i>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-sm text-gray-300 list-disc list-inside leading-relaxed">
+                        <li data-i18n="exp2_b1">Menjalankan proses order fulfillment meliputi picking, packing, dan penyortiran barang secara cepat dan akurat menggunakan sistem WMS.</li>
+                        <li data-i18n="exp2_b2">Mengelola pencatatan stok dengan Microsoft Excel, melaksanakan stock opname berkala, serta menerapkan sistem rotasi FIFO/LIFO.</li>
+                        <li data-i18n="exp2_b3">Mengoperasikan Hand Pallet untuk pemindahan material secara aman sesuai standar K3 pergudangan.</li>
+                    </ul>
+                </div>
+
+                <!-- Education: SMK -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-pink-500/20 text-pink-300 border border-pink-500/30 mb-2">
+                                2020 – 2023
+                            </span>
+                            <h3 class="text-xl font-bold text-white" data-i18n="edu_role">Teknik Komputer dan Jaringan (TKJ)</h3>
+                            <p class="text-sm text-purple-400 font-medium">SMK Assalafiyah Tegal</p>
+                        </div>
+                        <div class="p-3 rounded-2xl bg-white/5 self-start">
+                            <i data-lucide="graduation-cap" class="w-6 h-6 text-pink-400"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 leading-relaxed" data-i18n="edu_desc">
+                        Fokus pada perakitan komputer, troubleshooting perangkat keras dan perangkat lunak, administrasi jaringan LAN/WAN, serta pengoperasian aplikasi perkantoran Microsoft Word dan Microsoft Excel.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION (EkiZR Glass Form + Direct Connect) -->
+        <section id="contact" class="py-20">
+            <div class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-gradient mb-3" data-i18n="contact_heading">Hubungi Saya</h2>
+                <p class="text-gray-400 text-sm" data-i18n="contact_sub">Tertarik untuk berdiskusi atau bekerja sama? Kirim pesan langsung melalui formulir atau kontak di bawah ini.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Contact Cards -->
+                <div class="lg:col-span-5 space-y-4" data-aos="fade-right">
+                    <a href="https://wa.me/6285173333525" target="_blank" class="glass-card rounded-2xl p-5 flex items-center gap-4 block">
+                        <div class="p-3.5 rounded-xl bg-emerald-500/20 text-emerald-400">
+                            <i data-lucide="message-circle" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-400">WhatsApp / Telepon</div>
+                            <div class="text-sm font-bold text-white">0851-7333-3525</div>
+                        </div>
+                    </a>
+
+                    <a href="mailto:ahmadriyanto1603@gmail.com" class="glass-card rounded-2xl p-5 flex items-center gap-4 block">
+                        <div class="p-3.5 rounded-xl bg-indigo-500/20 text-indigo-400">
+                            <i data-lucide="mail" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-400">Email</div>
+                            <div class="text-sm font-bold text-white">ahmadriyanto1603@gmail.com</div>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/AhmadRiyanto3" target="_blank" class="glass-card rounded-2xl p-5 flex items-center gap-4 block">
+                        <div class="p-3.5 rounded-xl bg-purple-500/20 text-purple-400">
+                            <i data-lucide="github" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-400">GitHub & Web</div>
+                            <div class="text-sm font-bold text-white">ahmadriyanto3.github.io</div>
+                        </div>
+                    </a>
+
+                    <div class="glass-card rounded-2xl p-5 flex items-center gap-4">
+                        <div class="p-3.5 rounded-xl bg-pink-500/20 text-pink-400">
+                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-400" data-i18n="info_loc_label">Domisili</div>
+                            <div class="text-sm font-bold text-white">Cikarang Selatan, Kabupaten Bekasi</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 2: GUDANG LOGISTIK -->
-                <div class="skill-slide">
-                    <div class="slide-image-box">
-                        <span class="slide-label" data-en="Logistics & Warehouse">Logistik & Pergudangan</span>
-                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80" alt="Logistik & Gudang">
-                    </div>
-                    <div class="slide-content">
-                        <h3 data-en="Logistics & Warehouse Operations">Operasional Logistik & Pergudangan</h3>
-                        <p data-en="Proficient in modern warehouse workflows using Warehouse Management Systems (WMS), covering order picking, packing, checking, physical inventory accuracy, and safe hand pallet operation under K3 standards.">Menguasai alur kerja pergudangan modern menggunakan Warehouse Management System (WMS), mulai dari pengambilan barang (picking), pengemasan (packing), pemeriksaan (checking), akurasi stok fisik, hingga penggunaan hand pallet sesuai standar K3.</p>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Warehouse Management System (WMS)</span>
-                            <span class="skill-tag">Picking, Packing & Checking</span>
-                            <span class="skill-tag">Inventory Control</span>
-                            <span class="skill-tag">Material Handling & Hand Pallet</span>
+                <!-- Direct WhatsApp Message Form -->
+                <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8" data-aos="fade-left">
+                    <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                        <i data-lucide="send" class="w-5 h-5 text-purple-400"></i>
+                        <span data-i18n="form_title">Kirim Pesan Cepat</span>
+                    </h3>
+                    <form onsubmit="sendToWhatsApp(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1.5" data-i18n="form_name">Nama Anda / Perusahaan</label>
+                            <input type="text" id="waName" required placeholder="Contoh: HRD PT Maju Jaya" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition">
                         </div>
-                    </div>
-                </div>
-
-                <!-- SLIDE 3: IT -->
-                <div class="skill-slide">
-                    <div class="slide-image-box">
-                        <span class="slide-label" data-en="IT, Networking & Admin">IT, Jaringan & Administrasi</span>
-                        <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=900&q=80" alt="Komputer & IT">
-                    </div>
-                    <div class="slide-content">
-                        <h3 data-en="Computer, Networking & Data Administration">Komputer, Jaringan & Administrasi Data</h3>
-                        <p data-en="Skilled in PC hardware/software assembly and troubleshooting, Windows OS optimization, LAN/WAN network maintenance, as well as operational data entry and reporting using Microsoft Excel & Word.">Ahli dalam perakitan dan troubleshooting hardware/software komputer, optimasi sistem operasi Windows, pemeliharaan jaringan LAN/WAN, serta pencatatan data operasional dan pembuatan laporan menggunakan Microsoft Excel & Word.</p>
-                        <div class="skill-tags">
-                            <span class="skill-tag" data-en="PC Assembly & Troubleshooting">Perakitan & Troubleshooting PC</span>
-                            <span class="skill-tag">Microsoft Excel & Word</span>
-                            <span class="skill-tag" data-en="LAN/WAN Networking">Jaringan LAN/WAN</span>
-                            <span class="skill-tag" data-en="OS Optimization">Optimasi Sistem Operasi</span>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1.5" data-i18n="form_msg">Pesan</label>
+                            <textarea id="waMessage" rows="4" required placeholder="Halo Ahmad, kami tertarik dengan profil Anda..." class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition"></textarea>
                         </div>
-                    </div>
+                        <button type="submit" class="w-full py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-purple-600/25 transition flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            <span data-i18n="form_btn">Kirim via WhatsApp</span>
+                        </button>
+                    </form>
                 </div>
-
             </div>
+        </section>
 
-            <div class="carousel-dots">
-                <button type="button" class="dot active" onclick="goToSlide(0)"></button>
-                <button type="button" class="dot" onclick="goToSlide(1)"></button>
-                <button type="button" class="dot" onclick="goToSlide(2)"></button>
-            </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-8 text-center text-xs text-gray-500 relative z-10">
+        <div class="max-w-6xl mx-auto px-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 <span class="text-gray-300 font-semibold">Ahmad Riyanto</span>. All Rights Reserved.</p>
+            <p class="text-gray-400">Cikarang Selatan, Kabupaten Bekasi</p>
         </div>
-    </section>
+    </footer>
 
-    <!-- STANDAR KERJA & BUDAYA INDUSTRI (5R/5S & K3) -->
-    <section id="standards">
-        <div class="section-header">
-            <h2 data-en="Industrial Work Culture & Standards">Budaya Kerja & Standar Industri</h2>
-            <p data-en="Consistent implementation of factory discipline, safety, and quality control">Penerapan disiplin lingkungan pabrik, keselamatan kerja, dan kendali mutu</p>
-        </div>
-        <div class="roles-grid">
-            <div class="role-card">
-                <h3 data-en="5S / 5R Workplace Culture">Budaya Kerja 5R / 5S</h3>
-                <p data-en="Consistently applying Seiri, Seiton, Seiso, Seiketsu, and Shitsuke (Ringkas, Rapi, Resik, Rawat, Rajin) to keep CNC machine areas and warehouse aisles clean, organized, and productive.">Menerapkan prinsip Ringkas, Rapi, Resik, Rawat, dan Rajin (Seiri, Seiton, Seiso, Seiketsu, Shitsuke) untuk menjaga area mesin CNC maupun gudang tetap bersih, tertata, dan produktif.</p>
-            </div>
-            <div class="role-card">
-                <h3 data-en="OHS (K3) & SOP Discipline">Disiplin K3 & Kepatuhan SOP</h3>
-                <p data-en="Prioritizing occupational safety (Zero Accident) through proper PPE usage, safe machine operation, and strict adherence to company Standard Operating Procedures.">Mengutamakan keselamatan kerja (Zero Accident) melalui penggunaan APD lengkap, pengoperasian mesin/hand pallet yang aman, serta kepatuhan penuh terhadap SOP perusahaan.</p>
-            </div>
-            <div class="role-card">
-                <h3 data-en="Self-Inspection & Quality">Self-Inspection (Kendali Mutu)</h3>
-                <p data-en="Performing thorough independent checks on every machined workpiece and warehouse order to prevent defects (No Defect) and ensure dimensional accuracy.">Melakukan pengecekan mandiri secara teliti pada setiap benda kerja hasil mesin CNC maupun pesanan gudang guna mencegah produk cacat (No Defect) dan menjamin akurasi.</p>
-            </div>
-        </div>
-    </section>
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize Lucide Icons & AOS Animations
+        lucide.createIcons();
+        AOS.init({ once: true, offset: 50 });
 
-    <!-- PENGALAMAN KERJA -->
-    <section id="experience">
-        <div class="section-header">
-            <h2 data-en="Work Experience & Technical Projects">Pengalaman Kerja & Proyek Teknis</h2>
-        </div>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
 
-        <div class="timeline">
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title" data-en="CNC Machine Production Operator">Operator Produksi Mesin CNC</div>
-                        <div class="card-subtitle" data-en="Manufacturing Company">PT Bima Manufaktur Jaya</div>
-                    </div>
-                    <span class="card-date" data-en="September 2026 – Present">September 2026 – Sekarang</span>
-                </div>
-                <ul>
-                    <li data-en="Operate CNC production machines (Turning, Facing, Boring, Grooving) to process Raw Materials into finished goods according to production targets.">Mengoperasikan mesin produksi CNC (Turning, Facing, Boring, Grooving) untuk mengolah Raw Material (material mentah) menjadi barang jadi sesuai target produksi.</li>
-                    <li data-en="Perform precision inspection and measurement of workpieces using Digital Vernier Calipers and Digital Micrometers.">Melakukan pengecekan dan pengukuran kepresisian benda kerja menggunakan Jangka Sorong Digital (Digital Caliper) dan Micrometer Digital.</li>
-                    <li data-en="Utilize Dial Indicators / Centricators to ensure top surface flatness and accurate center-to-side distances in millimeters (mm).">Menggunakan Dial Indicator / Centricator untuk memastikan kerataan bagian atas permukaan serta akurasi jarak titik tengah ke sisi samping dalam satuan milimeter (mm).</li>
-                    <li data-en="Implement 5R/5S workplace culture and industrial occupational safety (K3) standards to ensure consistent machining quality.">Menerapkan budaya kerja 5R/5S serta standar keselamatan kerja (K3) industri guna memastikan kualitas hasil pemesinan tetap konsisten.</li>
-                </ul>
-            </div>
+        // Tab Switcher Logic (EkiZR Showcase)
+        function switchTab(tabName) {
+            const tabs = ['cnc', 'warehouse', 'it'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tabBtn-' + t);
+                const content = document.getElementById('tabContent-' + t);
+                if (t === tabName) {
+                    btn.classList.add('tab-active');
+                    btn.classList.remove('text-gray-400');
+                    content.classList.remove('hidden');
+                    content.classList.add('grid');
+                } else {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('text-gray-400');
+                    content.classList.add('hidden');
+                    content.classList.remove('grid');
+                }
+            });
+        }
 
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title" data-en="Warehouse Picker / Warehouse Staff">Warehouse Picker / Staf Pergudangan</div>
-                        <div class="card-subtitle">PT Absolut Servis Nusantara</div>
-                    </div>
-                    <span class="card-date" data-en="October 2024 – May 2026">Oktober 2024 – Mei 2026</span>
-                </div>
-                <ul>
-                    <li data-en="Accurately operated the Warehouse Management System (WMS) for daily order processing and tracking.">Mengoperasikan Warehouse Management System (WMS) secara akurat untuk pemrosesan dan pelacakan pesanan harian.</li>
-                    <li data-en="Performed product verification, picking, packing, and checking in strict accordance with company SOPs.">Melakukan verifikasi, pemilahan (picking), pengemasan (packing), dan pemeriksaan (checking) produk sesuai SOP.</li>
-                    <li data-en="Recorded and verified inbound/outbound operational goods data using Microsoft Excel and internal systems.">Mencatat serta memverifikasi data operasional barang masuk/keluar menggunakan Microsoft Excel dan sistem internal.</li>
-                    <li data-en="Managed material handling and hand pallet operations following K3 safety standards while maintaining physical inventory accuracy.">Mengelola penanganan material (material handling) dan pengoperasian hand pallet sesuai standar K3 serta menjaga akurasi stok fisik.</li>
-                </ul>
-            </div>
+        // Send Form Directly to WhatsApp
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+            const name = document.getElementById('waName').value.trim();
+            const msg = document.getElementById('waMessage').value.trim();
+            const text = encodeURIComponent(`Halo Ahmad Riyanto, saya ${name}.\n\n${msg}`);
+            window.open(`https://wa.me/6285173333525?text=${text}`, '_blank');
+        }
 
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title" data-en="PC Hardware Configuration & System Optimization Specialist">Spesialis Konfigurasi Hardware & Optimasi Sistem PC</div>
-                        <div class="card-subtitle" data-en="Independent Project / Technical Freelance">Proyek Mandiri / Freelance Teknis</div>
-                    </div>
-                    <span class="card-date" data-en="June 2025 – Present">Juni 2025 – Sekarang</span>
-                </div>
-                <ul>
-                    <li data-en="Conducted assembly, testing, and asset management for high-specification computer hardware.">Melakukan perakitan, pengujian, dan manajemen aset hardware komputer berspesifikasi tinggi.</li>
-                    <li data-en="Analyzed and resolved hardware bottlenecks to achieve maximum RAM efficiency and system stability.">Menganalisis dan memecahkan masalah bottleneck pada perangkat keras untuk mencapai efisiensi RAM dan stabilitas sistem maksimal.</li>
-                    <li data-en="Installed and customized streamlined Windows OS builds to reduce unnecessary system resource usage.">Melakukan instalasi dan kustomisasi sistem operasi Windows minimalis guna memangkas penggunaan resource yang tidak diperlukan.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+        // Bilingual Dictionary (ID & EN)
+        let currentLang = 'id';
+        const translations = {
+            id: {
+                nav_home: "Beranda",
+                nav_about: "Tentang",
+                nav_showcase: "Keahlian",
+                nav_exp: "Pengalaman",
+                nav_contact: "Kontak",
+                hero_badge: "Siap Berkontribusi & Bekerja Presisi",
+                hero_greeting: "Profesional",
+                hero_desc: "Berpengalaman dalam pengoperasian mesin produksi CNC dengan kontrol kualitas presisi tinggi, pengelolaan operasional pergudangan berbasis WMS, serta dukungan teknis perangkat keras dan jaringan komputer.",
+                btn_showcase: "Lihat Keahlian",
+                btn_contact: "Hubungi Saya",
+                card_cnc_title: "Manufaktur & Operasi CNC",
+                card_wh_title: "Operasional Warehouse",
+                card_it_title: "Dukungan IT & Jaringan",
+                about_heading: "Tentang Saya",
+                about_sub: "Menggabungkan ketelitian manufaktur, kecepatan logistik, dan keahlian teknologi informasi.",
+                about_hello: "Halo, Saya",
+                about_p1: "Saya adalah lulusan Teknik Komputer dan Jaringan (TKJ) dari SMK Assalafiyah Tegal yang memiliki pengalaman kerja nyata lintas industri di bidang Manufaktur Mesin CNC serta Operasional Pergudangan (Warehouse).",
+                about_p2: "Saat ini saya berfokus sebagai Operator Produksi CNC di PT Bima Manufaktur Jaya, menjalankan proses pemesinan presisi (Turning, Facing, Boring, Grooving) serta inspeksi kualitas dimensi menggunakan Jangka Sorong dan Mikrometer Digital. Latar belakang saya di pergudangan dan IT menjadikan saya adaptif terhadap sistem digital maupun disiplin keselamatan kerja (K3 & 5R/5S).",
+                about_btn_contact: "Hubungi Sekarang",
+                about_btn_skills: "Eksplorasi Keahlian",
+                info_loc_label: "Domisili",
+                info_edu_label: "Pendidikan",
+                info_role_label: "Posisi Saat Ini",
+                stat_1_title: "Bidang Keahlian Utama",
+                stat_1_sub: "CNC, Warehouse & IT Support",
+                stat_2_title: "Tahun Pengalaman",
+                stat_2_sub: "Manufaktur & Logistik",
+                stat_3_title: "Standar Keselamatan",
+                stat_3_sub: "Kepatuhan K3 & Budaya 5R/5S",
+                showcase_heading: "Portfolio Showcase",
+                showcase_sub: "Jelajahi kompetensi teknis saya melalui tiga pilar keahlian di bawah ini.",
+                cnc_1_title: "Operasi Mesin Produksi CNC",
+                cnc_1_desc: "Mengoperasikan mesin CNC untuk proses pemesinan presisi meliputi Turning, Facing, Boring, dan Grooving sesuai spesifikasi lembar kerja dan target produksi harian.",
+                cnc_2_title: "Inspeksi Alat Ukur Presisi",
+                cnc_2_desc: "Melakukan pengecekan kualitas dimensi benda kerja secara akurat menggunakan Jangka Sorong dan Mikrometer Digital untuk memastikan toleransi ukuran sesuai standar Quality Control (QC).",
+                cnc_3_title: "Setup Benda Kerja & Gambar Kerja",
+                cnc_3_desc: "Memasang benda kerja pada chuck/fixture dengan presisi, memantau kondisi pahat potong (cutting tool), serta memahami instruksi dan toleransi pada gambar teknik produksi.",
+                cnc_4_title: "Penerapan K3 & Budaya 5R/5S",
+                cnc_4_desc: "Menjalankan prosedur Keselamatan dan Kesehatan Kerja (K3) secara ketat di area mesin serta menjaga kerapian, kebersihan, dan perawatan harian area kerja dengan metode 5R/5S.",
+                wh_1_title: "Warehouse Management System (WMS)",
+                wh_1_desc: "Mengoperasikan sistem WMS dan Microsoft Excel untuk pemindaian barang, pembaruan lokasi rak penyimpanan, serta pencatatan mutasi keluar-masuk barang secara real-time.",
+                wh_2_title: "Picking, Packing & Order Fulfillment",
+                wh_2_desc: "Melaksanakan pengambilan barang (picking) sesuai picking list, pengemasan (packing) yang aman, serta verifikasi kuantitas pesanan sebelum proses pengiriman (dispatch).",
+                wh_3_title: "Kontrol Stok (FIFO/LIFO & Stock Opname)",
+                wh_3_desc: "Menerapkan perputaran barang dengan metode FIFO dan LIFO serta melakukan pengecekan stok fisik berkala (stock opname) untuk mencegah selisih inventori.",
+                wh_4_title: "Material Handling (Hand Pallet)",
+                wh_4_desc: "Terampil memindahkan dan menyusun palet muatan barang di area gudang menggunakan Hand Pallet secara aman sesuai pedoman K3 pergudangan.",
+                exp_heading: "Pengalaman & Pendidikan",
+                exp_sub: "Rekam jejak karier profesional dan latar belakang pendidikan saya.",
+                exp1_date: "September 2026 – Sekarang",
+                exp1_role: "Operator Produksi CNC",
+                exp1_b1: "Mengoperasikan mesin produksi CNC untuk proses Turning, Facing, Boring, dan Grooving sesuai standar operasional prosedur (SOP).",
+                exp1_b2: "Melaksanakan pemeriksaan kualitas dimensi (Quality Control) secara presisi menggunakan Jangka Sorong dan Mikrometer Digital.",
+                exp1_b3: "Menerapkan disiplin Keselamatan dan Kesehatan Kerja (K3) serta menjaga kerapian lingkungan kerja dengan prinsip 5R/5S.",
+                exp2_date: "Oktober 2024 – Mei 2026",
+                exp2_role: "Warehouse Picker / Staf Pergudangan",
+                exp2_b1: "Menjalankan proses order fulfillment meliputi picking, packing, dan penyortiran barang secara cepat dan akurat menggunakan sistem WMS.",
+                exp2_b2: "Mengelola pencatatan stok dengan Microsoft Excel, melaksanakan stock opname berkala, serta menerapkan sistem rotasi FIFO/LIFO.",
+                exp2_b3: "Mengoperasikan Hand Pallet untuk pemindahan material secara aman sesuai standar K3 pergudangan.",
+                edu_role: "Teknik Komputer dan Jaringan (TKJ)",
+                edu_desc: "Fokus pada perakitan komputer, troubleshooting perangkat keras dan perangkat lunak, administrasi jaringan LAN/WAN, serta pengoperasian aplikasi perkantoran Microsoft Word dan Microsoft Excel.",
+                contact_heading: "Hubungi Saya",
+                contact_sub: "Tertarik untuk berdiskusi atau bekerja sama? Kirim pesan langsung melalui formulir atau kontak di bawah ini.",
+                form_title: "Kirim Pesan Cepat",
+                form_name: "Nama Anda / Perusahaan",
+                form_msg: "Pesan",
+                form_btn: "Kirim via WhatsApp"
+            },
+            en: {
+                nav_home: "Home",
+                nav_about: "About",
+                nav_showcase: "Showcase",
+                nav_exp: "Experience",
+                nav_contact: "Contact",
+                hero_badge: "Ready to Contribute & Deliver Precision",
+                hero_greeting: "Multi-Skilled",
+                hero_desc: "Experienced in operating CNC production machinery with strict dimensional quality control, managing WMS-based warehouse operations, and providing computer hardware & network technical support.",
+                btn_showcase: "Explore Skills",
+                btn_contact: "Contact Me",
+                card_cnc_title: "CNC & Manufacturing",
+                card_wh_title: "Warehouse Operations",
+                card_it_title: "IT & Network Support",
+                about_heading: "About Me",
+                about_sub: "Combining manufacturing precision, logistics efficiency, and information technology expertise.",
+                about_hello: "Hello, I'm",
+                about_p1: "I am a Computer and Network Engineering (TKJ) graduate from SMK Assalafiyah Tegal with hands-on cross-industry experience in CNC Manufacturing and Warehouse Operations.",
+                about_p2: "Currently working as a CNC Production Machine Operator at PT Bima Manufaktur Jaya, performing precision machining (Turning, Facing, Boring, Grooving) and dimensional quality inspections using Vernier Calipers and Digital Micrometers. My background in warehousing and IT makes me highly adaptable to digital systems and strict workplace safety standards (OHS/K3 & 5S).",
+                about_btn_contact: "Get In Touch",
+                about_btn_skills: "Explore Showcase",
+                info_loc_label: "Location",
+                info_edu_label: "Education",
+                info_role_label: "Current Role",
+                stat_1_title: "Core Skill Pillars",
+                stat_1_sub: "CNC, Warehouse & IT Support",
+                stat_2_title: "Years of Experience",
+                stat_2_sub: "Manufacturing & Logistics",
+                stat_3_title: "Safety Commitment",
+                stat_3_sub: "OHS (K3) & 5S Compliance",
+                showcase_heading: "Portfolio Showcase",
+                showcase_sub: "Explore my technical competencies across three core pillars below.",
+                cnc_1_title: "CNC Production Machining",
+                cnc_1_desc: "Operating CNC machines for precision Turning, Facing, Boring, and Grooving operations according to technical work sheets and daily production targets.",
+                cnc_2_title: "Precision Measurement & QC",
+                cnc_2_desc: "Performing accurate dimensional quality inspections using Vernier Calipers and Digital Micrometers to ensure strict Quality Control (QC) tolerances.",
+                cnc_3_title: "Workpiece Setup & Technical Drawings",
+                cnc_3_desc: "Mounting workpieces onto chucks/fixtures with precision, monitoring cutting tool wear, and interpreting manufacturing technical drawings.",
+                cnc_4_title: "OHS (K3) & 5S Implementation",
+                cnc_4_desc: "Strictly executing Occupational Health and Safety (K3) procedures in machining areas and maintaining daily workplace organization using 5S methodology.",
+                wh_1_title: "Warehouse Management System (WMS)",
+                wh_1_desc: "Operating WMS software and Microsoft Excel for item scanning, rack location updates, and real-time inbound/outbound inventory tracking.",
+                wh_2_title: "Picking, Packing & Order Fulfillment",
+                wh_2_desc: "Executing accurate item picking based on picking lists, secure packing, and quantity verification prior to dispatch.",
+                wh_3_title: "Inventory Control (FIFO/LIFO & Stock Opname)",
+                wh_3_desc: "Applying FIFO and LIFO stock rotation principles and conducting periodic physical stock counts (stock opname) to maintain inventory accuracy.",
+                wh_4_title: "Material Handling (Hand Pallet)",
+                wh_4_desc: "Safely moving and organizing palletized goods across warehouse zones using Hand Pallets in compliance with warehouse safety standards.",
+                exp_heading: "Experience & Education",
+                exp_sub: "My professional career track record and educational background.",
+                exp1_date: "September 2026 – Present",
+                exp1_role: "CNC Production Machine Operator",
+                exp1_b1: "Operate CNC production machinery for Turning, Facing, Boring, and Grooving processes in accordance with Standard Operating Procedures (SOP).",
+                exp1_b2: "Conduct precision dimensional Quality Control checks using Vernier Calipers and Digital Micrometers.",
+                exp1_b3: "Enforce strict Occupational Health & Safety (K3) protocols and maintain workplace organization through 5S standards.",
+                exp2_date: "October 2024 – May 2026",
+                exp2_role: "Warehouse Picker / Warehouse Staff",
+                exp2_b1: "Executed end-to-end order fulfillment including fast and accurate picking, packing, and sorting using Warehouse Management System (WMS).",
+                exp2_b2: "Managed inventory records via Microsoft Excel, conducted periodic stock opname, and applied FIFO/LIFO inventory rotation.",
+                exp2_b3: "Operated Hand Pallets for safe material handling across warehouse areas following OHS/K3 guidelines.",
+                edu_role: "Computer and Network Engineering (TKJ)",
+                edu_desc: "Focused on PC assembly, hardware and software troubleshooting, LAN/WAN network administration, and office productivity tools (Microsoft Word & Excel).",
+                contact_heading: "Contact Me",
+                contact_sub: "Interested in discussing an opportunity? Send a direct message via the form or contact links below.",
+                form_title: "Send Quick Message",
+                form_name: "Your Name / Company",
+                form_msg: "Message",
+                form_btn: "Send via WhatsApp"
+            }
+        };
 
-    <!-- PENDIDIKAN -->
-    <section id="education">
-        <div class="section-header">
-            <h2 data-en="Education">Pendidikan</h2>
-        </div>
-        <div class="card">
-            <div class="card-header">
-                <div>
-                    <div class="card-title" data-en="Computer and Network Engineering (TKJ)">Teknik Komputer dan Jaringan (TKJ)</div>
-                    <div class="card-subtitle">SMK Assalafiyah Tegal</div>
-                </div>
-                <span class="card-date" data-en="Graduated 2023">Lulus 2023</span>
-            </div>
-            <ul>
-                <li data-en="Studied LAN/WAN network administration, OS & software installation, as well as computer hardware assembly and maintenance.">Mempelajari administrasi jaringan LAN/WAN, instalasi sistem operasi & software, serta perakitan dan pemeliharaan hardware komputer.</li>
-            </ul>
-        </div>
-    </section>
+        function toggleLanguage() {
+            currentLang = currentLang === 'id' ? 'en' : 'id';
+            document.getElementById('langLabel').textContent = currentLang.toUpperCase();
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+            roleIndex = 0;
+            charIndex = 0;
+            isDeleting = false;
+        }
 
-    <!-- FOKUS POSISI -->
-    <section>
-        <div class="section-header">
-            <h2 data-en="Target Roles & Career Focus">Fokus & Relevansi Posisi</h2>
-        </div>
-        <div class="roles-grid">
-            <div class="role-card">
-                <h3 data-en="CNC / Production Operator">Operator CNC / Produksi</h3>
-                <p data-en="Operating CNC machines (Turning, Facing, Boring, Grooving) to process raw materials into finished goods with digital precision measurement, 5S, and K3 safety discipline.">Mengoperasikan mesin CNC (Turning, Facing, Boring, Grooving) untuk mengolah material mentah menjadi produk jadi dengan pengukuran presisi digital, 5R/5S, dan disiplin K3.</p>
-            </div>
-            <div class="role-card">
-                <h3 data-en="Logistics / Warehouse Picker">Logistik / Warehouse Picker</h3>
-                <p data-en="WMS operation, organizing, picking, packing, and stock checking executed rapidly, systematically, and with minimal error.">Pengoperasian WMS, penyusunan, pengambilan (picking), pengemasan (packing), dan pengecekan stok barang secara cepat, sistematis, dan minim eror.</p>
-            </div>
-            <div class="role-card">
-                <h3 data-en="IT Support / Hardware Technician">IT Support / Teknisi Hardware</h3>
-                <p data-en="Installation, LAN/WAN network maintenance, OS optimization, Excel data processing, and computer troubleshooting.">Instalasi, pemeliharaan jaringan LAN/WAN, optimasi sistem operasi, pengolahan data Excel, serta troubleshooting komputer.</p>
-            </div>
-        </div>
-    </section>
+        // Typing Effect (EkiZR Hero Style)
+        const roles = {
+            id: [
+                "Operator Produksi CNC",
+                "Spesialis Warehouse & WMS",
+                "Teknisi IT & Jaringan (TKJ)"
+            ],
+            en: [
+                "CNC Production Machine Operator",
+                "Warehouse & WMS Specialist",
+                "IT & Network Technician"
+            ]
+        };
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingEl = document.getElementById('typingText');
 
-    <!-- KONTAK -->
-    <section id="contact">
-        <div class="contact-box">
-            <h2 data-en="Get In Touch">Hubungi Saya</h2>
-            <p data-en="I am ready to bring my best contribution, dedication, and technical expertise to your company. Feel free to reach out via WhatsApp or Email below:">Saya siap memberikan kontribusi terbaik, dedikasi, dan keahlian teknis saya untuk perusahaan Anda. Silakan hubungi saya melalui WhatsApp atau Email di bawah ini:</p>
-            <div class="btn-group">
-                <a href="https://api.whatsapp.com/send?phone=6285173333525" target="_blank" class="btn btn-wa">
-                    💬 <span data-en="Chat on WhatsApp">Hubungi via WhatsApp</span>
-                </a>
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ahmadriyanto1603@gmail.com" target="_blank" class="btn btn-email">
-                    ✉️ <span data-en="Send an Email">Kirim Email</span>
-                </a>
-            </div>
-        </div>
-    </section>
+        function typeEffect() {
+            const currentRoles = roles[currentLang];
+            const currentWord = currentRoles[roleIndex];
 
-</div>
+            if (isDeleting) {
+                typingEl.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingEl.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
 
-<footer>
-    <p data-en="© 2026 Ahmad Riyanto. All Rights Reserved.">© 2026 Ahmad Riyanto. Hak Cipta Dilindungi.</p>
-</footer>
+            let speed = isDeleting ? 45 : 90;
 
+            if (!isDeleting && charIndex === currentWord.length) {
+                speed = 1800;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % currentRoles.length;
+                speed = 400;
+            }
+
+            setTimeout(typeEffect, speed);
+        }
+        typeEffect();
+    </script>
 </body>
 </html>
